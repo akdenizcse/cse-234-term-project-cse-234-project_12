@@ -138,7 +138,7 @@ fun LoginForm() {
 
             },
             shape = RoundedCornerShape(20.dp),
-            colors = ButtonDefaults.buttonColors(Color(0xFFFFFF)),
+            colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
             modifier = Modifier
                 .padding(horizontal = 8.dp)
                 .width(220.dp)
