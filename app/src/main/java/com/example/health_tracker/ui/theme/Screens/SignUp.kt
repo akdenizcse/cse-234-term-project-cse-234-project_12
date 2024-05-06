@@ -34,7 +34,7 @@ import com.example.health_tracker.R
 
 @Preview(showBackground = true)
 @Composable
-fun LoginForm() {
+fun SignUp() {
     //Temporary Values For Holding The UI
     val username: String = ""
     val password: String = ""
@@ -133,6 +133,27 @@ fun LoginForm() {
             }
         )
         Spacer(modifier = Modifier.height(35.dp))
+
+        OutlinedTextField(
+            value = username,
+            onValueChange = onUsernameChange,
+            shape = RoundedCornerShape(15.dp),
+            modifier = Modifier
+                .padding(horizontal = 4.dp)
+                .width(300.dp)
+                .height(50.dp)
+                .shadow(15.dp)
+                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 16.dp))
+                .align(alignment = Alignment.CenterHorizontally),
+            placeholder = {
+                Text(
+                    "Username", color = Color.Black
+                )
+            }
+        )
+
+        Spacer(modifier = Modifier.height(30.dp))
+
         Button(
             onClick = {
 
@@ -156,7 +177,7 @@ fun LoginForm() {
         Spacer(modifier = Modifier.height(25.dp))
         Row(modifier = Modifier.align(alignment = Alignment.CenterHorizontally)) {
             Text(
-                text = "Don’t have an account? ",
+                text = "Already have an account? ",
                 style = TextStyle(
                     fontSize = 12.sp,
                     lineHeight = 20.sp,
@@ -166,7 +187,7 @@ fun LoginForm() {
                 )
             )
 
-            Text(text = "Sign Up Now",
+            Text(text = "Log In Now",
                 style = TextStyle(
                     fontSize = 12.sp,
                     lineHeight = 20.sp,
@@ -181,22 +202,7 @@ fun LoginForm() {
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Forgot password?",
-            style = TextStyle(
-                fontSize = 12.sp,
-                lineHeight = 20.sp,
-                fontFamily = FontFamily.Default,
-                color = Color(0xFF000000),
-                letterSpacing = 0.1.sp,
-            ),
-            modifier = Modifier
-                .align(alignment = Alignment.CenterHorizontally)
-                .clickable {
 
-                }
-        )
-        Spacer(modifier = Modifier.height(40.dp))
         Text(
             text = "Contact For Support",
             style = TextStyle(
