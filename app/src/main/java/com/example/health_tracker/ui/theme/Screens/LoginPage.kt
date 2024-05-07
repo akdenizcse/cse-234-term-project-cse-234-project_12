@@ -165,7 +165,7 @@ fun LoginForm() {
                     letterSpacing = 0.1.sp,
                 )
             )
-
+            //TODO: convert sign up now to button to make clickable
             Text(text = "Sign Up Now",
                 style = TextStyle(
                     fontSize = 12.sp,
@@ -181,6 +181,7 @@ fun LoginForm() {
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
+        //TODO: convert password to button to make clickable
         Text(
             text = "Forgot password?",
             style = TextStyle(

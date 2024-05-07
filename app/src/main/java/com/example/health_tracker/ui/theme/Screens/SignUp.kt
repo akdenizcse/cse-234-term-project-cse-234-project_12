@@ -186,7 +186,7 @@ fun SignUp() {
                     letterSpacing = 0.1.sp,
                 )
             )
-
+            //TODO: convert login now to button to make clickable
             Text(text = "Log In Now",
                 style = TextStyle(
                     fontSize = 12.sp,

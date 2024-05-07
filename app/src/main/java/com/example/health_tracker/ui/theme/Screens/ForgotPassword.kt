@@ -125,6 +125,7 @@ fun ForgotPassword() {
                         letterSpacing = 0.13.sp,
                     )
                 )
+                //TODO: convert password to button to make clickable
                 Text(text = "Log In Here",
                     style = TextStyle(
                         fontSize = 12.sp,
