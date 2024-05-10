@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -34,7 +35,11 @@ import com.example.health_tracker.R
 
 @Preview(showBackground = true)
 @Composable
-fun SignUp() {
+fun SignUp(
+    onContactForSupportClicked: () -> Unit = {},
+    onLoginClicked: () -> Unit = {},
+    onSignupClicked: () -> Unit = {}
+) {
     //Temporary Values For Holding The UI
     val username: String = ""
     val password: String = ""
@@ -59,7 +64,7 @@ fun SignUp() {
             contentDescription = "App Icon"
         )
         Text(
-            text = "Solstice",
+            text = stringResource(id = R.string.app_name),
             style = TextStyle(
                 fontSize = 32.sp,
                 lineHeight = 20.sp,
@@ -71,7 +76,7 @@ fun SignUp() {
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
-            text = "Always Help You Track Your Health",
+            text = stringResource(id = R.string.mission_statement),
             style = TextStyle(
                 fontSize = 14.sp,
                 lineHeight = 20.sp,
@@ -97,7 +102,7 @@ fun SignUp() {
                 .align(alignment = Alignment.CenterHorizontally),
             placeholder = {
                 Text(
-                    "Username", color = Color.Black
+                    stringResource(id = R.string.e_mail), color = Color.Black
                 )
             }
         )
@@ -126,7 +131,7 @@ fun SignUp() {
                 .align(alignment = Alignment.CenterHorizontally),
             placeholder = {
                 Text(
-                    "Password",
+                    stringResource(id = R.string.password),
                     color = Color.Black,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
@@ -147,7 +152,7 @@ fun SignUp() {
                 .align(alignment = Alignment.CenterHorizontally),
             placeholder = {
                 Text(
-                    "Username", color = Color.Black
+                    stringResource(id = R.string.username), color = Color.Black
                 )
             }
         )
@@ -155,9 +160,7 @@ fun SignUp() {
         Spacer(modifier = Modifier.height(30.dp))
 
         Button(
-            onClick = {
-
-            },
+            onClick = onSignupClicked,
             shape = RoundedCornerShape(20.dp),
             colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
             modifier = Modifier
@@ -168,7 +171,7 @@ fun SignUp() {
                 .align(alignment = Alignment.CenterHorizontally),
         ) {
             Text(
-                text = "LOGIN",
+                text = stringResource(id = R.string.sign_up),
                 color = Color.Black,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,
@@ -177,7 +180,7 @@ fun SignUp() {
         Spacer(modifier = Modifier.height(25.dp))
         Row(modifier = Modifier.align(alignment = Alignment.CenterHorizontally)) {
             Text(
-                text = "Already have an account? ",
+                text = stringResource(id = R.string.have_account),
                 style = TextStyle(
                     fontSize = 12.sp,
                     lineHeight = 20.sp,
@@ -186,8 +189,8 @@ fun SignUp() {
                     letterSpacing = 0.1.sp,
                 )
             )
-            //TODO: convert login now to button to make clickable
-            Text(text = "Log In Now",
+
+            Text(text = stringResource(id = R.string.login),
                 style = TextStyle(
                     fontSize = 12.sp,
                     lineHeight = 20.sp,
@@ -197,14 +200,14 @@ fun SignUp() {
                     letterSpacing = 0.1.sp,
                 ),
                 modifier = Modifier.clickable {
-
+                    onLoginClicked()
                 }
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
 
         Text(
-            text = "Contact For Support",
+            text = stringResource(id = R.string.contact_for_support),
             style = TextStyle(
                 fontSize = 10.sp,
                 lineHeight = 20.sp,
@@ -215,9 +218,8 @@ fun SignUp() {
             modifier = Modifier
                 .align(alignment = Alignment.CenterHorizontally)
                 .clickable {
-
+                    onContactForSupportClicked()
                 }
-
         )
     }
 }

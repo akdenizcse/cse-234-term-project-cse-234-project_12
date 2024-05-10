@@ -16,13 +16,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.health_tracker.ui.theme.Screens.ForgotPassword
+import com.example.health_tracker.ui.theme.Screens.LoginForm
+import com.example.health_tracker.ui.theme.Screens.SignUp
 
 enum class HealthTrackerScreen(@StringRes val title: Int) {
     Login(title = R.string.login),
     SignUp(title = R.string.sign_up),
     Profile(title = R.string.profile),
+    ForgetPassword(title = R.string.forget_password)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,7 +62,7 @@ fun HealthTrackerApp() {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = HealthTrackerScreen.valueOf(
-        backStackEntry?.destination?.route ?: HealthTrackerScreen.Login    .name
+        backStackEntry?.destination?.route ?: HealthTrackerScreen.Login.name
     )
 
     //TODO: Add ViewModel
@@ -79,9 +84,59 @@ fun HealthTrackerApp() {
             modifier = Modifier.padding(innerPadding)
         ){
 
+            composable(HealthTrackerScreen.Login.name){
+                LoginForm(
+                    onForgetPasswordClicked ={
+                        navController.navigate(HealthTrackerScreen.ForgetPassword.name)
+                    },
+                    onSignUpButtonClicked = {
+                      navController.navigate(HealthTrackerScreen.SignUp.name)
+                    },
+                    //TODO navigate to profile
+                    /**
+                     * for now we will act like the user put the write email and password*/
+                    onLoginButtonClicked = {
+                        navController.navigate(HealthTrackerScreen.Profile.name)
+                    },
+                    onContactUsClicked = {
+                        contactUs()
+                    }
+                )
+            }
 
+
+            composable(HealthTrackerScreen.ForgetPassword.name){
+                ForgotPassword(
+                    onLoginClicked = {
+                        navController.navigate(HealthTrackerScreen.Login.name)
+                    },
+                    onResetPasswordClicked = {
+                        //will send e-mail to user
+                    }
+                )
+            }
+
+            composable(HealthTrackerScreen.SignUp.name){
+                SignUp(
+                    onLoginClicked = {
+                        navController.navigate(HealthTrackerScreen.Login.name)
+                    },
+                    onSignupClicked = {
+                        //TODO will send e-mail to user and navigate to login
+                        // we will act as the user put the write email and password
+                        navController.navigate(HealthTrackerScreen.Login.name)
+                    },
+                    onContactForSupportClicked = {
+                        contactUs()
+                    }
+                )
+            }
 
 
         }
     }
+}
+
+fun contactUs(){
+    //TODO will send e-mail to support
 }

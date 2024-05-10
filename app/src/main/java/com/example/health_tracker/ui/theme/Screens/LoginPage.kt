@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -34,7 +35,14 @@ import com.example.health_tracker.R
 
 @Preview(showBackground = true)
 @Composable
-fun LoginForm() {
+fun LoginForm(
+    onLoginButtonClicked: () -> Unit = {},
+    onSignUpButtonClicked: () -> Unit = {},
+    onForgetPasswordClicked: () -> Unit = {},
+    onContactUsClicked: () -> Unit = {}
+
+    //TODO should we pass the modifier
+) {
     //Temporary Values For Holding The UI
     val username: String = ""
     val password: String = ""
@@ -59,7 +67,7 @@ fun LoginForm() {
             contentDescription = "App Icon"
         )
         Text(
-            text = "Solstice",
+            text = stringResource(id = R.string.app_name),
             style = TextStyle(
                 fontSize = 32.sp,
                 lineHeight = 20.sp,
@@ -71,7 +79,7 @@ fun LoginForm() {
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
-            text = "Always Help You Track Your Health",
+            text = stringResource(id = R.string.mission_statement),
             style = TextStyle(
                 fontSize = 14.sp,
                 lineHeight = 20.sp,
@@ -96,8 +104,7 @@ fun LoginForm() {
                 .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 16.dp))
                 .align(alignment = Alignment.CenterHorizontally),
             placeholder = {
-                Text(
-                    "Username", color = Color.Black
+                Text(text = stringResource(id = R.string.username), color = Color.Black
                 )
             }
         )
@@ -126,7 +133,7 @@ fun LoginForm() {
                 .align(alignment = Alignment.CenterHorizontally),
             placeholder = {
                 Text(
-                    "Password",
+                    text = stringResource(id = R.string.password),
                     color = Color.Black,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
@@ -134,9 +141,7 @@ fun LoginForm() {
         )
         Spacer(modifier = Modifier.height(35.dp))
         Button(
-            onClick = {
-
-            },
+            onClick = onLoginButtonClicked,
             shape = RoundedCornerShape(20.dp),
             colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
             modifier = Modifier
@@ -147,7 +152,7 @@ fun LoginForm() {
                 .align(alignment = Alignment.CenterHorizontally),
         ) {
             Text(
-                text = "LOGIN",
+                text = stringResource(id = R.string.login),
                 color = Color.Black,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,
@@ -156,7 +161,7 @@ fun LoginForm() {
         Spacer(modifier = Modifier.height(25.dp))
         Row(modifier = Modifier.align(alignment = Alignment.CenterHorizontally)) {
             Text(
-                text = "Don’t have an account? ",
+                text = stringResource(id = R.string.do_not_account),
                 style = TextStyle(
                     fontSize = 12.sp,
                     lineHeight = 20.sp,
@@ -165,8 +170,7 @@ fun LoginForm() {
                     letterSpacing = 0.1.sp,
                 )
             )
-            //TODO: convert sign up now to button to make clickable
-            Text(text = "Sign Up Now",
+            Text(text = stringResource(id = R.string.sign_up_now),
                 style = TextStyle(
                     fontSize = 12.sp,
                     lineHeight = 20.sp,
@@ -176,14 +180,13 @@ fun LoginForm() {
                     letterSpacing = 0.1.sp,
                 ),
                 modifier = Modifier.clickable {
-
+                    onSignUpButtonClicked()
                 }
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
-        //TODO: convert password to button to make clickable
         Text(
-            text = "Forgot password?",
+            text = stringResource(id = R.string.forget_password),
             style = TextStyle(
                 fontSize = 12.sp,
                 lineHeight = 20.sp,
@@ -194,12 +197,12 @@ fun LoginForm() {
             modifier = Modifier
                 .align(alignment = Alignment.CenterHorizontally)
                 .clickable {
-
+                    onForgetPasswordClicked()
                 }
         )
         Spacer(modifier = Modifier.height(40.dp))
         Text(
-            text = "Contact For Support",
+            text = stringResource(id = R.string.contact_for_support),
             style = TextStyle(
                 fontSize = 10.sp,
                 lineHeight = 20.sp,
@@ -210,7 +213,7 @@ fun LoginForm() {
             modifier = Modifier
                 .align(alignment = Alignment.CenterHorizontally)
                 .clickable {
-
+                    onContactUsClicked()
                 }
 
         )
