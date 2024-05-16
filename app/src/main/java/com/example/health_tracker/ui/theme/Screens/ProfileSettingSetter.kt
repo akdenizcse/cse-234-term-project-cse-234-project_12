@@ -89,7 +89,6 @@ fun AllSettings(){
                         .align(Alignment.TopStart)
                         .padding(top = 55.dp, start = 20.dp)
                         .clickable {
-
                         }
                 ) {
                     Text(
@@ -97,7 +96,10 @@ fun AllSettings(){
                         style = TextStyle(
                             color = colorResource(id = R.color.black),
                             fontSize = 20.sp
-                        )
+                        ),
+                        modifier = Modifier.clickable {
+
+                        }
                     )
                 }
                 //Password row
@@ -114,7 +116,10 @@ fun AllSettings(){
                         style = TextStyle(
                             color = colorResource(id = R.color.black),
                             fontSize = 20.sp
-                        )
+                        ),
+                        modifier = Modifier.clickable {
+
+                        }
                     )
                 }
                 //Name row
@@ -131,7 +136,10 @@ fun AllSettings(){
                         style = TextStyle(
                             color = colorResource(id = R.color.black),
                             fontSize = 20.sp
-                        )
+                        ),
+                        modifier = Modifier.clickable {
+
+                        }
                     )
                 }
                 //Surname row
@@ -148,7 +156,11 @@ fun AllSettings(){
                         style = TextStyle(
                             color = colorResource(id = R.color.black),
                             fontSize = 20.sp
-                        ))
+                        ),
+                        modifier = Modifier.clickable {
+
+                        }
+                    )
                 }
                 //Age row
                 Row(
@@ -164,7 +176,10 @@ fun AllSettings(){
                         style = TextStyle(
                             color = colorResource(id = R.color.black),
                             fontSize = 20.sp
-                        )
+                        ),
+                        modifier = Modifier.clickable {
+
+                        }
                     )
                 }
                 //Weight row
@@ -181,7 +196,10 @@ fun AllSettings(){
                         style = TextStyle(
                             color = colorResource(id = R.color.black),
                             fontSize = 20.sp
-                        )
+                        ),
+                        modifier = Modifier.clickable {
+
+                        }
                     )
                 }
                 //Height row
@@ -198,7 +216,10 @@ fun AllSettings(){
                         style = TextStyle(
                             color = colorResource(id = R.color.black),
                             fontSize = 20.sp
-                        )
+                        ),
+                        modifier = Modifier.clickable {
+
+                        }
                     )
                 }
                 //Goal row
@@ -206,16 +227,16 @@ fun AllSettings(){
                     modifier = Modifier
                         .align(Alignment.TopStart)
                         .padding(top = 580.dp, start = 20.dp)
-                        .clickable {
-
-                        }
                 ) {
                     Text(
                         text = stringResource(id = R.string.goal_column),
                         style = TextStyle(
                             color = colorResource(id = R.color.black),
                             fontSize = 20.sp
-                        )
+                        ),
+                        modifier = Modifier.clickable {
+
+                        }
                     )
                 }
             }
