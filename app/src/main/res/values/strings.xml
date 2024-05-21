@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Solstice</string>
+    <string name="mission_statement">Always Help You Track Your Health</string>
+    <string name="username">Username</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login_button">Login</string>
+    <string name="do_not_account">"Don’t have an account? "</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="log_in_now">Log In Now</string>
+    <string name="have_account">"Already have an account? "</string>
+    <string name="sign_up_now">Sign Up Now</string>
+    <string name="back_button">Back</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+    <string name="forget_password">Forget Password ?</string>
+    <string name="pw_remember">"remember your password? </string>
+    <string name="reset_password">Reset Password</string>
+    <string name="e_mail">E-mail</string>
+    <string name="f_p_log_in">Log In Here</string>
+    <string name="reset_password_button">Save</string>
+    <string name="contact_for_support">Contact for Support</string>
+
+
+</resources>
