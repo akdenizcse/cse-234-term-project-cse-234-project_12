@@ -63,33 +63,9 @@ import com.example.health_tracker.R
 )
 fun TrackerSection() {
     val medications = remember { mutableStateListOf<String>() }
-    val colors1 = listOf(Color(0xFF979797), Color(0xFFDDD7D7), Color(0xFFF4F4F4))
-    val medicationDialog = remember { mutableStateOf(false) }
-    val waterDialog = remember { mutableStateOf(false) }
-    val currentLiters = remember { mutableStateOf(0.0) } // Initial liter value
-    val walkDialog = remember { mutableStateOf(false) }
-    val currentWalk = remember { mutableStateOf(0) } // Initial liter value
-    val sleepDialog = remember { mutableStateOf(false) }
-    val currentSleep = remember { mutableStateOf("0h 0m") } // Initial liter value
-    val relaxingDialog = remember { mutableStateOf(false) }
-    val currentRelaxing = remember { mutableStateOf("30m 0s") } // Initial liter value
-
-    if (waterDialog.value) {
-        WaterDialog(waterDialog, currentLiters)
-    }
-    if (walkDialog.value) {
-        WalkDialog(walkDialog, currentWalk)
-    }
-    if (sleepDialog.value) {
-        SleepDialog(sleepDialog, currentSleep)
-    }
-    if (relaxingDialog.value) {
-        RelaxingDialog(relaxingDialog, currentRelaxing)
-    }
-    if (medicationDialog.value) {
-        RecordMedication(medicationDialog, medications)
-    }
-
+    val totalWalk = remember { mutableStateOf(0) } // Initial liter value
+    val hydration = remember { mutableStateOf(0) } // Initial hour value
+    val meditations = remember { mutableStateOf(0) } // Initial hour value
 
 
     Column {
