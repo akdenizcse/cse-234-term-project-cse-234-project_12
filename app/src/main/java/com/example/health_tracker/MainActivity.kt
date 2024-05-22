@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.health_tracker.ui.theme.Health_TrackerTheme
-import com.example.health_tracker.ui.theme.Screens.LoginForm
 import com.example.health_tracker.ui.theme.Screens.SignUp
 
 
