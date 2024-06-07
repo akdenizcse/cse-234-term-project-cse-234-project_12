@@ -50,7 +50,14 @@ android {
 }
 
 dependencies {
+    implementation ("com.google.maps.android:maps-compose:5.0.3")
 
+    // Optionally, you can include the Compose utils library for Clustering,
+    // Street View metadata checks, etc.
+    implementation ("com.google.maps.android:maps-compose-utils:5.0.3")
+
+    // Optionally, you can include the widgets library for ScaleBar, etc.
+    implementation ("com.google.maps.android:maps-compose-widgets:5.0.3")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
