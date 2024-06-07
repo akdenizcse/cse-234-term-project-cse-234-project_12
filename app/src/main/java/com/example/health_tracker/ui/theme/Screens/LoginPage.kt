@@ -2,6 +2,7 @@ package com.example.health_tracker.ui.theme.Screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -61,7 +62,7 @@ fun LoginForm(
     var password by remember { mutableStateOf("") }
 
     //Gradient Colors
-    val colors1 = listOf(Color(0xFF979797), Color(0xFFDDD7D7), Color(0xFFF4F4F4))
+    val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -75,7 +76,7 @@ fun LoginForm(
                 .width(209.48944.dp)
                 .height(200.73366.dp)
                 .align(alignment = Alignment.CenterHorizontally),
-            painter = painterResource(id = R.drawable.app_logo),
+            painter = painterResource(id = R.drawable.icons),
             contentDescription = "App Icon"
         )
         Text(
@@ -102,7 +103,7 @@ fun LoginForm(
             modifier = Modifier.align(alignment = Alignment.CenterHorizontally)
         )
 
-        Spacer(modifier = Modifier.height(60.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
         OutlinedTextField(
             value = username,
@@ -125,7 +126,7 @@ fun LoginForm(
                 imeAction = ImeAction.Next
             )
         )
-        Spacer(modifier = Modifier.height(35.dp))
+        Spacer(modifier = Modifier.height(25.dp))
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
@@ -161,7 +162,7 @@ fun LoginForm(
                 imeAction = ImeAction.Done
             )
         )
-        Spacer(modifier = Modifier.height(35.dp))
+        Spacer(modifier = Modifier.height(25.dp))
         Button(
             onClick = onLoginButtonClicked,
             shape = RoundedCornerShape(20.dp),
@@ -171,7 +172,18 @@ fun LoginForm(
                 .width(220.dp)
                 .height(36.dp)
                 .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 30.dp))
-                .align(alignment = Alignment.CenterHorizontally),
+                .align(alignment = Alignment.CenterHorizontally)
+                .border(
+                    width = 1.dp,
+                    color = Color(0xFF000000),
+                    shape = RoundedCornerShape(size = 30.dp)
+                )
+                .shadow(
+                    elevation = 10.dp,
+                    spotColor = Color(0x4D000000),
+                    ambientColor = Color(0x4D000000),
+                    shape = RoundedCornerShape(10.dp)
+                )
         ) {
             Text(
                 text = stringResource(id = R.string.login),

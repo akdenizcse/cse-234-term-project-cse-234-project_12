@@ -3,6 +3,7 @@ package com.example.health_tracker.ui.theme.Screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,7 +13,9 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -61,7 +64,7 @@ fun SignUp(
 
 
     //Gradient Colors
-    val colors1 = listOf(Color(0xFF979797), Color(0xFFDDD7D7), Color(0xFFF4F4F4))
+    val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,39 +73,40 @@ fun SignUp(
                 brush = Brush.verticalGradient(colors = colors1)
             ), verticalArrangement = Arrangement.Center
     ) {
-        Image(
-            modifier = Modifier
-                .width(209.48944.dp)
-                .height(200.73366.dp)
-                .align(alignment = Alignment.CenterHorizontally),
-            painter = painterResource(id = R.drawable.app_logo),
-            contentDescription = "App Icon"
-        )
-        Text(
-            text = stringResource(id = R.string.app_name),
-            style = TextStyle(
-                fontSize = 32.sp,
-                lineHeight = 20.sp,
-                fontWeight = FontWeight(800),
-                color = Color(0xFF000000),
-                letterSpacing = 0.32.sp,
-            ),
-            modifier = Modifier.align(alignment = Alignment.CenterHorizontally)
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = stringResource(id = R.string.mission_statement),
-            style = TextStyle(
-                fontSize = 14.sp,
-                lineHeight = 20.sp,
-                fontWeight = FontWeight(450),
-                color = Color(0xFF000000),
-                letterSpacing = 0.14.sp,
-            ),
-            modifier = Modifier.align(alignment = Alignment.CenterHorizontally)
-        )
+        Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
+            Image(
+                modifier = Modifier
+                    .size(200.dp)
+                    .align(alignment = Alignment.CenterHorizontally),
+                painter = painterResource(id = R.drawable.icons),
+                contentDescription = "App Icon"
+            )
+            Text(
+                text = stringResource(id = R.string.app_name),
+                style = TextStyle(
+                    fontSize = 32.sp,
+                    lineHeight = 20.sp,
+                    fontWeight = FontWeight(800),
+                    color = Color(0xFF000000),
+                    letterSpacing = 0.32.sp,
+                ),
+                modifier = Modifier.align(alignment = Alignment.CenterHorizontally)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = stringResource(id = R.string.mission_statement),
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    lineHeight = 20.sp,
+                    fontWeight = FontWeight(450),
+                    color = Color(0xFF000000),
+                    letterSpacing = 0.14.sp,
+                ),
+                modifier = Modifier.align(alignment = Alignment.CenterHorizontally)
+            )
+        }
 
-        Spacer(modifier = Modifier.height(60.dp))
+        Spacer(modifier = Modifier.height(25.dp))
 
         OutlinedTextField(
             value = username,
@@ -142,7 +146,7 @@ fun SignUp(
             )
         )
 
-        Spacer(modifier = Modifier.height(35.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         OutlinedTextField(
             value = email,
@@ -180,7 +184,7 @@ fun SignUp(
             )
         )
 
-        Spacer(modifier = Modifier.height(35.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         OutlinedTextField(
             value = password,
@@ -203,7 +207,7 @@ fun SignUp(
                 imeAction = ImeAction.Done
             )
         )
-        Spacer(modifier = Modifier.height(35.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
 
 
@@ -217,7 +221,17 @@ fun SignUp(
                 .width(220.dp)
                 .height(36.dp)
                 .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 30.dp))
-                .align(alignment = Alignment.CenterHorizontally),
+                .align(alignment = Alignment.CenterHorizontally)
+                .border(
+                    width = 1.dp,
+                    color = Color(0xFF000000),
+                    shape = RoundedCornerShape(size = 30.dp)
+                )
+                .shadow(
+                    elevation = 10.dp,
+                    spotColor = Color(0x4D000000),
+                    ambientColor = Color(0x4D000000),
+                    shape = RoundedCornerShape(10.dp))
         ) {
             Text(
                 text = stringResource(id = R.string.sign_up),

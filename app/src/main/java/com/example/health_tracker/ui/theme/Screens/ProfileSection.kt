@@ -42,7 +42,7 @@ import com.example.health_tracker.R
 @Preview
 @Composable
 fun ProfilePage(){
-    val colors1 = listOf(Color(0xFF979797), Color(0xFFDDD7D7), Color(0xFFF4F4F4))
+    val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
 //Background
     Column(
     modifier = Modifier
@@ -65,7 +65,7 @@ Column(modifier = Modifier.fillMaxSize()
     Card(
         Modifier
             .padding(top = 50.dp, start = (27.5).dp, end = 20.dp)
-            .width(337.dp)
+            .width(400.dp)
             .height(155.dp)
             .background(
                 color = Color(0xFF79747E),
@@ -81,6 +81,7 @@ Column(modifier = Modifier.fillMaxSize()
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .background(Color(0xFFC8E3ED))
         ) {
             Row(modifier = Modifier
                 .align(Alignment.Center)
@@ -95,6 +96,7 @@ Column(modifier = Modifier.fillMaxSize()
                 Spacer(modifier = Modifier.width(20.dp))
 
                 Text(
+                    color = Color.Black,
                     text = "cn.dundar", style = TextStyle(
                         color = Color.White,
                         fontSize = 15.sp
@@ -104,6 +106,7 @@ Column(modifier = Modifier.fillMaxSize()
                 Spacer(modifier = Modifier.width(20.dp))
 
                 Text(
+                    color = Color.Black,
                     text = "Age:26",
                     style = TextStyle(
                         color = Color.White,
@@ -113,6 +116,7 @@ Column(modifier = Modifier.fillMaxSize()
                 Spacer(modifier = Modifier.width(20.dp))
 
                 Text(
+                    color = Color.Black,
                     text = "Height:182",
                     style = TextStyle(
                         color = Color.White,
@@ -122,19 +126,21 @@ Column(modifier = Modifier.fillMaxSize()
 
             Row(
                 modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(bottom = 5.dp, start = 5.dp)) {
-
+                    .align(Alignment.Center)) {
                 Text(
+                    color = Color.Black,
                     text = "Can Dündar",
                     style = TextStyle(
                         color = Color.White,
                         fontSize = 15.sp
-                    ))
+                    ),
+                    modifier = Modifier.padding(top = 5.dp, start = 10.dp)
+                )
 
             Spacer(modifier = Modifier.width(100.dp))
 
                 Text(
+                    color = Color.Black,
                     text = "Weight:90",
                     style = TextStyle(
                         color = Color.White,
@@ -145,6 +151,7 @@ Column(modifier = Modifier.fillMaxSize()
             Spacer(modifier = Modifier.width(20.dp))
 
                 Text(
+                    color = Color.Black,
                     text = "Goal:80",
                     style = TextStyle(
                         color = Color.White,
@@ -160,12 +167,14 @@ Column(modifier = Modifier.fillMaxSize()
                 ) {
 
                 Text(
+                    color = Color.Black,
                     text = "Remaining Calories:",
                     style = TextStyle(color = Color.White,
                         fontSize = 15.sp))
 
                 Spacer(modifier = Modifier.width(60.dp))
                 Text(
+                    color = Color.Black,
                     text = "Steps:",
                     style = TextStyle(color = Color.White,
                         fontSize = 15.sp))
@@ -178,6 +187,7 @@ Column(modifier = Modifier.fillMaxSize()
 
                 //Shows the remaining calories
                 Text(
+                    color = Color.Black,
                     text = "1991",
                     style = TextStyle(color = Color.White,
                         fontSize = 25.sp),
@@ -187,6 +197,7 @@ Column(modifier = Modifier.fillMaxSize()
 
                 //Shows the number of steps taken
                 Text(
+                    color = Color.Black,
                     text = "0",
                     style = TextStyle(color = Color.White,
                         fontSize = 25.sp),
@@ -194,7 +205,7 @@ Column(modifier = Modifier.fillMaxSize()
             }
         }
     }
-    Spacer(modifier = Modifier.height(200.dp))
+    Spacer(modifier = Modifier.height(75.dp))
 //OptionBox
         Card(
             modifier = Modifier
@@ -202,9 +213,11 @@ Column(modifier = Modifier.fillMaxSize()
                 .width(314.dp)
                 .height(200.dp)
                 .background(
-                    color = Color(0xFF79747E),
+                    color = Color(0xFFC8E3ED),
                     shape = RoundedCornerShape(size = 10.dp)
-                ),
+                )
+                .align(Alignment.CenterHorizontally)
+            ,
             colors = CardDefaults.cardColors(
                 containerColor = ashColor
             ),
@@ -215,19 +228,22 @@ Column(modifier = Modifier.fillMaxSize()
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(Color(0xFFC8E3ED))
             ) {
-                Column(modifier = Modifier.align(Alignment.CenterStart)) {
+                Column(modifier = Modifier.align(Alignment.CenterStart).background(Color(0xFFC8E3ED)) ) {
                     Text(
                         text = "Change Profile Settings",
+                        color = Color.Black,
                         modifier = Modifier
                             .clickable(
-                                onClickLabel = "Open change profile settings") {
+                                onClickLabel = "Open change profile settings"
+                            ) {
 
                             }
                             .padding(start = 60.dp, bottom = 10.dp)
                             .then(Modifier.drawBehind {
                                 val strokeWidth = 1.dp.toPx()
-                                val color = Color.White
+                                val color = Color.Black
                                 val y = size.height
                                 val lineEndX = size.width + 100.dp.toPx()
                                 drawLine(
@@ -248,6 +264,7 @@ Column(modifier = Modifier.fillMaxSize()
 
                     Text(
                         text = "Rate And Comment",
+                        color = Color.Black,
                         modifier = Modifier
                             .clickable(onClickLabel = "Open rate and comment") {
 
@@ -255,7 +272,7 @@ Column(modifier = Modifier.fillMaxSize()
                             .padding(start = 60.dp, bottom = 10.dp)
                             .then(Modifier.drawBehind {
                                 val strokeWidth = 1.dp.toPx()
-                                val color = Color.White
+                                val color = Color.Black
                                 val y = size.height
                                 val lineEndX = size.width + 130.dp.toPx()
                                 drawLine(
@@ -273,14 +290,16 @@ Column(modifier = Modifier.fillMaxSize()
 
                 Text(
                     text = "Share With Friends",
+                    color = Color.Black,
                     modifier = Modifier
                         .clickable(onClickLabel = "Open share with friends") {
 
                         }
+
                         .padding(start = 60.dp, bottom = 10.dp)
                         .then(Modifier.drawBehind {
                             val strokeWidth = 1.dp.toPx()
-                            val color = Color.White
+                            val color = Color.Black
                             val y = size.height
                             val lineEndX = size.width + 130.dp.toPx()
                             drawLine(
@@ -298,6 +317,7 @@ Column(modifier = Modifier.fillMaxSize()
 
             Text(
                 text = "Contact Us",
+                color = Color.Black,
                 modifier = Modifier
                     .clickable(onClickLabel = "Open contact us") {
 
@@ -305,7 +325,7 @@ Column(modifier = Modifier.fillMaxSize()
                     .padding(start = 60.dp, bottom = 10.dp)
                     .then(Modifier.drawBehind {
                         val strokeWidth = 1.dp.toPx()
-                        val color = Color.White
+                        val color = Color.Black
                         val y = size.height
                         val lineEndX = size.width + 180.dp.toPx()
                         drawLine(
@@ -367,7 +387,8 @@ Column(modifier = Modifier.fillMaxSize()
                     painter = painterResource(id = R.drawable.health),
                     contentDescription ="health icon",
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.size(40.dp)
+                    modifier = Modifier
+                        .size(40.dp)
                         .clickable(onClickLabel = "Open health tab") {
 
                         }

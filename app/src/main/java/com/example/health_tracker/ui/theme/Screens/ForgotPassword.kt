@@ -56,7 +56,7 @@ fun ForgotPassword(
     var email by remember { mutableStateOf("") }
 
     //Gradient Colors
-    val colors1 = listOf(Color(0xFF979797), Color(0xFFDDD7D7), Color(0xFFF4F4F4))
+    val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,7 +70,7 @@ fun ForgotPassword(
                 .width(209.48944.dp)
                 .height(200.73366.dp)
                 .align(alignment = Alignment.CenterHorizontally),
-            painter = painterResource(id = R.drawable.app_logo),
+            painter = painterResource(id = R.drawable.icons),
             contentDescription = "App Icon"
         )
         Text(
@@ -97,7 +97,7 @@ fun ForgotPassword(
             modifier = Modifier.align(alignment = Alignment.CenterHorizontally)
         )
 
-        Spacer(modifier = Modifier.height(60.dp))
+        Spacer(modifier = Modifier.height(35.dp))
 
         Column(
             Modifier
@@ -129,6 +129,7 @@ fun ForgotPassword(
                     .align(Alignment.CenterHorizontally)
 
             )
+            Spacer(modifier = Modifier.height(10.dp))
             Row(modifier = Modifier.align(alignment = Alignment.CenterHorizontally)) {
 
                 Text(
@@ -179,7 +180,7 @@ fun ForgotPassword(
                 )
 
             )
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             OutlinedButton(
                 onClick = onResetPasswordClicked,
                 border = BorderStroke(1.dp, Color.Black),

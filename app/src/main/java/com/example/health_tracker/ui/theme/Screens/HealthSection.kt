@@ -33,6 +33,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -54,8 +55,8 @@ import com.example.health_tracker.R
     showSystemUi = true
 )
 fun HealthSection() {
-    val medications = remember { mutableStateListOf<String>()}
-    val colors1 = listOf(Color(0xFF979797), Color(0xFFDDD7D7), Color(0xFFF4F4F4))
+    val medications = remember { mutableStateListOf<String>() }
+    val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
     val waterColor = listOf(Color(0xFFD3D3D3), Color(0xFF48DBFB))
     val bedColor = listOf(Color(0xFF6D6027), Color(0xFFD3CBB8))
     val walkingColor = listOf(Color(0xFF7BED9F), Color(0xFFD3D3D3))
@@ -82,7 +83,7 @@ fun HealthSection() {
     if (relaxingDialog.value) {
         RelaxingDialog(relaxingDialog, currentRelaxing)
     }
-    if(medicationDialog.value) {
+    if (medicationDialog.value) {
         RecordMedication(medicationDialog, medications)
     }
 
@@ -99,8 +100,8 @@ fun HealthSection() {
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(50.dp)
-                .width(286.dp)
-                .height(196.dp),
+                .width(250.dp)
+                .height(160.dp),
             colors = CardDefaults.cardColors(
                 containerColor = Color(0xFFD1FAD2)
             )
@@ -108,16 +109,14 @@ fun HealthSection() {
 
         {
             Box(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        color = Color(0xFFC8E3ED),
+                    ),
                 contentAlignment = Alignment.Center
             ) {
 
-                Image(
-                    painter = painterResource(id = R.drawable.imgbin_green_leaf_with_decorative_lines_lluwwxmr3ethsmzvxyrwccvs7),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.matchParentSize()
-                )
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -132,6 +131,7 @@ fun HealthSection() {
                     Text(
                         modifier = Modifier
                             .padding(10.dp)
+                            .padding(bottom = 2.dp)
                             .align(Alignment.Start),
                         text = "Medication Reminder",
                         style = TextStyle(
@@ -151,6 +151,7 @@ fun HealthSection() {
                             .size((70.dp))
                             .align(Alignment.CenterHorizontally),
                     )
+                    Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = "Record",
                         style = TextStyle(
@@ -159,15 +160,16 @@ fun HealthSection() {
                             fontWeight = FontWeight.Normal,
                             fontStyle = FontStyle.Normal,
                             color = Color(0xFF000000),
-                            letterSpacing = 0.2.sp,
+                            letterSpacing = 0.2.sp
                         ),
                         modifier = Modifier
-                            .padding(33.dp)
+                            .padding(2.dp)
                             .clickable {
                                 medicationDialog.value = true
                             }
                             .align(Alignment.CenterHorizontally)
-                            .width(150.dp)
+                            .width(100.dp)
+                            .height(15.dp)
                             .background(
                                 color = Color(0xFFFFFFFF),
                                 shape = RoundedCornerShape(10.dp)
@@ -194,10 +196,10 @@ fun HealthSection() {
                 Card(
                     modifier = Modifier
                         .padding(30.dp)
-                        .width(140.dp)
-                        .height(150.dp),
+                        .width(120.dp)
+                        .height(120.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFFD1FAD2)
+                        containerColor = Color(0xFFC8E3ED)
                     )
                 ) {
                     Box(
@@ -211,15 +213,8 @@ fun HealthSection() {
                                     .fillMaxSize()
                                     .border(
                                         width = 1.dp,
-                                        color = Color(0xFFD1FAD2),
+                                        color = Color(0xFFC8E3ED),
                                         shape = RoundedCornerShape(10.dp)
-                                    )
-                                    .background(
-                                        brush = Brush.verticalGradient(
-                                            colors = waterColor,
-                                            startY = 0f,
-                                            endY = Float.POSITIVE_INFINITY
-                                        )
                                     )
                                     .clickable {
                                         waterDialog.value = true
@@ -246,7 +241,7 @@ fun HealthSection() {
                                     contentScale = ContentScale.Fit,
                                     modifier = Modifier
                                         .padding(top = 10.dp, start = 5.dp)
-                                        .size(45.dp)
+                                        .size(35.dp)
 
                                 )
                             }
@@ -278,11 +273,11 @@ fun HealthSection() {
                 }
                 Card(
                     modifier = Modifier
-                        .padding(30.dp)
-                        .width(140.dp)
-                        .height(150.dp),
+                        .padding(start = 30.dp)
+                        .width(120.dp)
+                        .height(120.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFFD1FAD2)
+                        containerColor = Color(0xFFC8E3ED)
                     )
                 ) {
                     Box(
@@ -299,13 +294,6 @@ fun HealthSection() {
                                         color = Color(0xFFD1FAD2),
                                         shape = RoundedCornerShape(10.dp)
                                     )
-                                    .background(
-                                        brush = Brush.verticalGradient(
-                                            colors = bedColor,
-                                            startY = 0f,
-                                            endY = Float.POSITIVE_INFINITY
-                                        )
-                                    )
                                     .clickable {
                                         sleepDialog.value = true
                                     },
@@ -315,6 +303,7 @@ fun HealthSection() {
                                     modifier = Modifier
                                         .padding(top = 20.dp, start = 12.dp),
                                     text = "Sleep",
+                                    color = Color.Black,
                                     style = TextStyle(
                                         fontSize = 15.sp,
                                         lineHeight = 20.sp,
@@ -327,10 +316,10 @@ fun HealthSection() {
                                 Image(
                                     painter = painterResource(id = R.drawable.resource_double),
                                     contentDescription = "image description",
-                                    contentScale = ContentScale.Fit,
+                                    contentScale = ContentScale.FillBounds,
                                     modifier = Modifier
-                                        .padding(top = 10.dp, start = 30.dp)
-                                        .size(45.dp)
+                                        .padding(top = 10.dp, start = 10.dp)
+                                        .size(35.dp)
 
                                 )
                             }
@@ -349,7 +338,7 @@ fun HealthSection() {
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 25.sp,
                                 fontStyle = FontStyle.Normal,
-                                color = Color(0xFFFFFFFF)
+                                color = Color.Black
                             )
                         }
 
@@ -362,10 +351,10 @@ fun HealthSection() {
                 Card(
                     modifier = Modifier
                         .padding(30.dp)
-                        .width(140.dp)
-                        .height(150.dp),
+                        .width(120.dp)
+                        .height(120.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFFD1FAD2)
+                        containerColor = Color(0xFFC8E3ED)
                     )
                 ) {
                     Box(
@@ -379,20 +368,15 @@ fun HealthSection() {
                                     .fillMaxSize()
                                     .border(
                                         width = 1.dp,
-                                        color = Color(0xFFD1FAD2),
+                                        color = Color(0xFFC8E3ED),
                                         shape = RoundedCornerShape(10.dp)
-                                    )
-                                    .background(
-                                        brush = Brush.verticalGradient(
-                                            colors = walkingColor,
-                                            startY = 0f,
-                                            endY = Float.POSITIVE_INFINITY
-                                        )
                                     )
                                     .clickable {
                                         walkDialog.value = true
                                     },
                             ) {
+
+
                                 Text(
                                     modifier = Modifier
                                         .padding(top = 20.dp, start = 12.dp),
@@ -412,7 +396,7 @@ fun HealthSection() {
                                     contentScale = ContentScale.Fit,
                                     modifier = Modifier
                                         .padding(top = 10.dp, start = 10.dp)
-                                        .size(45.dp)
+                                        .size(35.dp)
 
                                 )
                             }
@@ -444,11 +428,11 @@ fun HealthSection() {
                 }
                 Card(
                     modifier = Modifier
-                        .padding(30.dp)
-                        .width(140.dp)
-                        .height(150.dp),
+                        .padding(start = 30.dp)
+                        .width(120.dp)
+                        .height(120.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFFD1FAD2)
+                        containerColor = Color(0xFFC8E3ED)
                     )
                 ) {
                     Box(
@@ -465,21 +449,16 @@ fun HealthSection() {
                                         color = Color(0xFFD1FAD2),
                                         shape = RoundedCornerShape(10.dp)
                                     )
-                                    .background(
-                                        brush = Brush.verticalGradient(
-                                            colors = meditationColor,
-                                            startY = 0f,
-                                            endY = Float.POSITIVE_INFINITY
-                                        )
-                                    )
                                     .clickable {
                                         relaxingDialog.value = true
                                     },
-                            ) {
+                            )
+                            {
                                 Text(
                                     modifier = Modifier
                                         .padding(top = 20.dp, start = 12.dp),
                                     text = "Relaxing",
+                                    color = Color.Black,
                                     style = TextStyle(
                                         fontSize = 15.sp,
                                         lineHeight = 20.sp,
@@ -494,8 +473,8 @@ fun HealthSection() {
                                     contentDescription = "image description",
                                     contentScale = ContentScale.Fit,
                                     modifier = Modifier
-                                        .padding(top = 10.dp, start = 8.dp)
-                                        .size(45.dp)
+                                        .padding(top = 10.dp, start = 10.dp)
+                                        .size(35.dp)
 
                                 )
                             }
@@ -514,9 +493,8 @@ fun HealthSection() {
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 25.sp,
                                 fontStyle = FontStyle.Normal,
-                                color = Color(0xFFFFFFFF)
+                                color = Color.Black
                             )
-
                         }
 
                     }
@@ -524,14 +502,15 @@ fun HealthSection() {
 
 
             }
-
         }
     }
 }
 
 @Composable
-fun RecordMedication(medicationDialog: MutableState<Boolean>, currentMedications: MutableList<String>)
-{
+fun RecordMedication(
+    medicationDialog: MutableState<Boolean>,
+    currentMedications: MutableList<String>
+) {
     val writtenMedication = remember { mutableStateOf("") }
     if (medicationDialog.value) {
         Dialog(onDismissRequest = { medicationDialog.value = false }) {
@@ -539,14 +518,17 @@ fun RecordMedication(medicationDialog: MutableState<Boolean>, currentMedications
                 modifier = Modifier
                     .fillMaxWidth(0.8f) // Adjust width as needed
                     .background(color = Color.Transparent)
+                    .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
+                    .shadow(16.dp, RoundedCornerShape(10.dp))
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text("Update Medication", style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.height(16.dp))
-                    TextField(value = writtenMedication.value,  onValueChange = {
+                    TextField(value = writtenMedication.value, onValueChange = {
                         writtenMedication.value = it
                         currentMedications.add(it)
                     })
+                    Spacer(modifier = Modifier.height(16.dp))
                     Row(modifier = Modifier) {
                         Button(
                             onClick = { medicationDialog.value = false }
@@ -575,6 +557,8 @@ fun RelaxingDialog(relaxingDialog: MutableState<Boolean>, currentRelaxing: Mutab
                 modifier = Modifier
                     .fillMaxWidth(0.8f) // Adjust width as needed
                     .background(color = Color.Transparent)
+                    .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
+                    .shadow(16.dp, RoundedCornerShape(10.dp))
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text("Edit Relax Time", style = MaterialTheme.typography.bodyMedium)
@@ -609,14 +593,15 @@ fun RelaxingDialog(relaxingDialog: MutableState<Boolean>, currentRelaxing: Mutab
 }
 
 @Composable
-fun SleepDialog(sleepDialog: MutableState<Boolean>, currentSleep: MutableState<String>)
-{
+fun SleepDialog(sleepDialog: MutableState<Boolean>, currentSleep: MutableState<String>) {
     if (sleepDialog.value) {
         Dialog(onDismissRequest = { sleepDialog.value = false }) {
             Surface(
                 modifier = Modifier
                     .fillMaxWidth(0.8f) // Adjust width as needed
                     .background(color = Color.Transparent)
+                    .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
+                    .shadow(16.dp, RoundedCornerShape(10.dp))
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text("Edit Sleep Hour", style = MaterialTheme.typography.bodyMedium)
@@ -629,7 +614,7 @@ fun SleepDialog(sleepDialog: MutableState<Boolean>, currentSleep: MutableState<S
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
 
-                    )
+                        )
                     Spacer(modifier = Modifier.height(16.dp))
                     Row(modifier = Modifier) {
                         Button(
@@ -659,6 +644,8 @@ fun WalkDialog(walkDialog: MutableState<Boolean>, currentWalk: MutableState<Int>
                 modifier = Modifier
                     .fillMaxWidth(0.8f) // Adjust width as needed
                     .background(color = Color.Transparent)
+                    .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
+                    .shadow(16.dp, RoundedCornerShape(10.dp))
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text("Edit Walking Amount", style = MaterialTheme.typography.bodyMedium)
@@ -666,11 +653,12 @@ fun WalkDialog(walkDialog: MutableState<Boolean>, currentWalk: MutableState<Int>
                     TextField(
                         value = currentWalk.value.toString(), // Convert double to String
                         onValueChange = {
-                            val newValue = it.toIntOrNull() ?: return@TextField // Handle invalid input
+                            val newValue =
+                                it.toIntOrNull() ?: return@TextField // Handle invalid input
                             currentWalk.value = newValue
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        label = { Text("Liters") },
+                        label = { Text("Steps") },
                         modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.height(16.dp))
@@ -694,13 +682,15 @@ fun WalkDialog(walkDialog: MutableState<Boolean>, currentWalk: MutableState<Int>
 }
 
 @Composable
-fun WaterDialog (waterDialog: MutableState<Boolean>, currentLiters: MutableState<Double>) {
+fun WaterDialog(waterDialog: MutableState<Boolean>, currentLiters: MutableState<Double>) {
     if (waterDialog.value) {
         Dialog(onDismissRequest = { waterDialog.value = false }) {
             Surface(
                 modifier = Modifier
                     .fillMaxWidth(0.8f) // Adjust width as needed
                     .background(color = Color.Transparent)
+                    .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
+                    .shadow(16.dp, RoundedCornerShape(10.dp))
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text("Edit Liters", style = MaterialTheme.typography.bodyMedium)
@@ -708,7 +698,8 @@ fun WaterDialog (waterDialog: MutableState<Boolean>, currentLiters: MutableState
                     TextField(
                         value = currentLiters.value.toString(), // Convert double to String
                         onValueChange = {
-                            val newValue = it.toDoubleOrNull() ?: return@TextField // Handle invalid input
+                            val newValue =
+                                it.toDoubleOrNull() ?: return@TextField // Handle invalid input
                             currentLiters.value = newValue
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
