@@ -10,6 +10,7 @@ import com.example.health_tracker.ui.theme.Screens.HealthSection
 import com.example.health_tracker.ui.theme.Screens.LoginForm
 
 import com.example.health_tracker.ui.theme.Screens.SignUp
+import com.example.health_tracker.ui.theme.Screens.TrackerSection
 
 
 class MainActivity : ComponentActivity() {
@@ -18,9 +19,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Health_TrackerTheme {
-
-                HealthSection()
-
 
             }
         }

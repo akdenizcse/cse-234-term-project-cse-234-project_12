@@ -3,10 +3,14 @@
   <component name="deploymentTargetSelector">
     <selectionStates>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <SelectionState runConfigName="Unnamed (1)">
 =======
       <SelectionState runConfigName="app">
 >>>>>>> HealthSection
+=======
+      <SelectionState runConfigName="Unnamed (1)">
+>>>>>>> trackerSection
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
