@@ -18,7 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
@@ -45,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.health_tracker.R
 
+
 @Preview(showBackground = true)
 @Composable
 fun ForgotPassword(
@@ -52,8 +52,8 @@ fun ForgotPassword(
     onResetPasswordClicked: () -> Unit = {}
 ) {
     //Temporary Values For Holding The UI
-    var email by remember { mutableStateOf("") }
 
+    var email by remember { mutableStateOf("") }
 
     //Gradient Colors
     val colors1 = listOf(Color(0xFF979797), Color(0xFFDDD7D7), Color(0xFFF4F4F4))
@@ -177,6 +177,7 @@ fun ForgotPassword(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Done
                 )
+
             )
             Spacer(modifier = Modifier.height(15.dp))
             OutlinedButton(

@@ -1,7 +1,6 @@
 package com.example.health_tracker.ui.theme.Screens
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,10 +24,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -57,9 +54,11 @@ fun SignUp(
     onSignupClicked: () -> Unit = {}
 ) {
     //Temporary Values For Holding The UI
+
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
+
 
     //Gradient Colors
     val colors1 = listOf(Color(0xFF979797), Color(0xFFDDD7D7), Color(0xFFF4F4F4))
@@ -107,13 +106,14 @@ fun SignUp(
 
         OutlinedTextField(
             value = username,
-            onValueChange = { username = it },
-            leadingIcon = { Icon(Icons.Default.Person, null) },
+            onValueChange = { username = it  } ,
+            leadingIcon = @Composable { Icon(Icons.Default.Person, null) },
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier
                 .padding(horizontal = 4.dp)
                 .width(300.dp)
                 .height(50.dp)
+
                 .shadow(
                     elevation = 10.dp,
                     spotColor = Color(0x4D000000),
@@ -126,11 +126,14 @@ fun SignUp(
                     ambientColor = Color(0x26000000),
                     shape = RoundedCornerShape(10.dp)
                 )
+
+                .shadow(15.dp)
+
                 .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 16.dp))
                 .align(alignment = Alignment.CenterHorizontally),
             placeholder = {
                 Text(
-                    stringResource(id = R.string.e_mail), color = Color.Black
+                    stringResource(id = R.string.username), color = Color.Black
                 )
             },
             keyboardOptions = KeyboardOptions.Default.copy(
@@ -142,10 +145,10 @@ fun SignUp(
         Spacer(modifier = Modifier.height(35.dp))
 
         OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
+            value = email,
+            onValueChange = { email = it  } ,
+            leadingIcon = @Composable { Icon(Icons.Default.Email, null)},
             shape = RoundedCornerShape(15.dp),
-            leadingIcon = { Icon(Icons.Default.Lock, null) },
             modifier = Modifier
                 .padding(horizontal = 4.dp)
                 .width(300.dp)
@@ -166,13 +169,13 @@ fun SignUp(
                 .align(alignment = Alignment.CenterHorizontally),
             placeholder = {
                 Text(
-                    stringResource(id = R.string.password),
+                    stringResource(id = R.string.email),
                     color = Color.Black,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
             },
             keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Password,
+                keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next
             )
         )
@@ -180,9 +183,9 @@ fun SignUp(
         Spacer(modifier = Modifier.height(35.dp))
 
         OutlinedTextField(
-            value = email,
-            onValueChange = {email =it },
-            leadingIcon = { Icon(Icons.Default.Email, null) },
+            value = password,
+            onValueChange = {password = it  },
+            leadingIcon = { Icon(Icons.Default.Lock, null) },
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier
                 .padding(horizontal = 4.dp)
@@ -193,16 +196,17 @@ fun SignUp(
                 .align(alignment = Alignment.CenterHorizontally),
             placeholder = {
                 Text(
-                    stringResource(id = R.string.username), color = Color.Black
-                )
-            },
+                    stringResource(id = R.string.password), color = Color.Black
+                )},
             keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Email,
+                keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
             )
         )
+        Spacer(modifier = Modifier.height(35.dp))
 
-        Spacer(modifier = Modifier.height(30.dp))
+
+
 
         Button(
             onClick = onSignupClicked,

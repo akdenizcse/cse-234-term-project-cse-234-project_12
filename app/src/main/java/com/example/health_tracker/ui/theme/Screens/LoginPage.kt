@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.health_tracker.R
 
+
 @Preview(showBackground = true)
 @Composable
 fun LoginForm(
@@ -55,8 +56,10 @@ fun LoginForm(
     //TODO should we pass the modifier
 ) {
     //Temporary Values For Holding The UI
+
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
     //Gradient Colors
     val colors1 = listOf(Color(0xFF979797), Color(0xFFDDD7D7), Color(0xFFF4F4F4))
     Column(
