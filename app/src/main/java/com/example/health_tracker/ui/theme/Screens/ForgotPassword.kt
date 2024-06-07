@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -46,7 +47,10 @@ import com.example.health_tracker.R
 
 @Preview(showBackground = true)
 @Composable
-fun ForgotPassword() {
+fun ForgotPassword(
+    onLoginClicked: () -> Unit = {},
+    onResetPasswordClicked: () -> Unit = {}
+) {
     //Temporary Values For Holding The UI
     var email by remember { mutableStateOf("") }
 
@@ -70,7 +74,7 @@ fun ForgotPassword() {
             contentDescription = "App Icon"
         )
         Text(
-            text = "Solstice",
+            text = stringResource(id = R.string.app_name),
             style = TextStyle(
                 fontSize = 32.sp,
                 lineHeight = 20.sp,
@@ -82,7 +86,7 @@ fun ForgotPassword() {
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
-            text = "Always Help You Track Your Health",
+            text = stringResource(id = R.string.mission_statement),
             style = TextStyle(
                 fontSize = 14.sp,
                 lineHeight = 20.sp,
@@ -104,14 +108,16 @@ fun ForgotPassword() {
                 .border(
                     shape = RoundedCornerShape(5.dp),
                     border = ButtonDefaults.outlinedButtonBorder
-                ).background(
-                    color = Color.White)
+                )
+                .background(
+                    color = Color.White
+                )
 
         )
         {
             Spacer(modifier = Modifier.height(20.dp))
             Text(
-                text = "Forgot Password?",
+                text = stringResource(R.string.forget_password),
                 style = TextStyle(
                     fontSize = 20.sp,
                     lineHeight = 20.sp,
@@ -126,7 +132,7 @@ fun ForgotPassword() {
             Row(modifier = Modifier.align(alignment = Alignment.CenterHorizontally)) {
 
                 Text(
-                    text = "remember your password? ",
+                    text = stringResource(id = R.string.pw_remember),
                     style = TextStyle(
                         fontSize = 13.sp,
                         lineHeight = 20.sp,
@@ -135,7 +141,8 @@ fun ForgotPassword() {
                         letterSpacing = 0.13.sp,
                     )
                 )
-                Text(text = "Log In Here",
+
+                Text(text = stringResource(id = R.string.f_p_log_in),
                     style = TextStyle(
                         fontSize = 12.sp,
                         lineHeight = 20.sp,
@@ -145,7 +152,7 @@ fun ForgotPassword() {
                         letterSpacing = 0.1.sp,
                     ),
                     modifier = Modifier.clickable {
-
+                        onLoginClicked()
                     }
                 )
             }
@@ -163,7 +170,7 @@ fun ForgotPassword() {
                     .align(alignment = Alignment.CenterHorizontally),
                 placeholder = {
                     Text(
-                        "Email Address", color = Color.Black
+                        stringResource(id = R.string.e_mail), color = Color.Black
                     )
                 },
                 keyboardOptions = KeyboardOptions(
@@ -173,7 +180,7 @@ fun ForgotPassword() {
             )
             Spacer(modifier = Modifier.height(15.dp))
             OutlinedButton(
-                onClick = { },
+                onClick = onResetPasswordClicked,
                 border = BorderStroke(1.dp, Color.Black),
                 shape = RoundedCornerShape(50),
                 modifier = Modifier
@@ -181,7 +188,9 @@ fun ForgotPassword() {
                     .width(150.dp),
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Black)
             ) {
-                Text(text = "Save")
+                Text(text = stringResource(id = R.string.reset_password_button))
+
+                //shouldn't be send ?
             }
 
         }
