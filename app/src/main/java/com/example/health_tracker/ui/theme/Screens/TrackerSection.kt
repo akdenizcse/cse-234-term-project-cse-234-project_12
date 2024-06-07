@@ -38,17 +38,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.health_tracker.R
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.Circle
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.rememberCameraPositionState
 
-
-val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
 
 @Preview(showSystemUi = true)
 @Composable
 fun TrackerSection() {
+    val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
+    val antalya = LatLng(36.8858, 30.7026)
+    val antalyaState = MarkerState(position = antalya)
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(antalya, 13f)
+    }
     Column(
         modifier = Modifier
             .background(brush = Brush.verticalGradient(colors = colors1))
-            .fillMaxSize(), verticalArrangement = Arrangement.SpaceEvenly
+            .fillMaxSize(), verticalArrangement = Arrangement.spacedBy(15.dp, alignment = Alignment.CenterVertically), horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         Card(
@@ -70,7 +81,7 @@ fun TrackerSection() {
                     ambientColor = Color(0x40000000)
                 )
                 .width(339.dp)
-                .height(91.dp)
+                .height(80.dp)
                 .padding(1.dp)
                 .align(Alignment.CenterHorizontally)
         ) {
@@ -133,7 +144,7 @@ fun TrackerSection() {
                     ambientColor = Color(0x40000000)
                 )
                 .width(339.dp)
-                .height(91.dp)
+                .height(80.dp)
                 .padding(1.dp)
                 .align(Alignment.CenterHorizontally)
         ) {
@@ -208,7 +219,7 @@ fun TrackerSection() {
                     ambientColor = Color(0x40000000)
                 )
                 .width(339.dp)
-                .height(91.dp)
+                .height(80.dp)
                 .padding(1.dp)
                 .align(Alignment.CenterHorizontally)
         )
@@ -345,7 +356,7 @@ fun TrackerSection() {
                     ambientColor = Color(0x40000000)
                 )
                 .width(339.dp)
-                .height(91.dp)
+                .height(80.dp)
                 .padding(1.dp)
                 .align(Alignment.CenterHorizontally)
         )
@@ -387,8 +398,60 @@ fun TrackerSection() {
                 }
             }
         }
+        Card(
+            colors = CardDefaults.cardColors(
+                containerColor = Color(0xFFC8E3ED)
+            ),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 4.dp
+            ),
+            modifier = Modifier
+                .shadow(
+                    elevation = 4.dp,
+                    spotColor = Color(0x40000000),
+                    ambientColor = Color(0x40000000)
+                )
+                .shadow(
+                    elevation = 4.dp,
+                    spotColor = Color(0x40000000),
+                    ambientColor = Color(0x40000000)
+                )
+                .width(250.dp)
+                .height(100.dp)
+                .padding(1.dp)
+                .align(Alignment.CenterHorizontally)
+        ) {
+            Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
 
+                GoogleMap(
+                    modifier = Modifier
+                        .wrapContentSize(Alignment.Center)
+                        .border(
+                            width = 1.dp,
+                            color = Color(0xFFC8E3ED),
+                            shape = RoundedCornerShape(10.dp)
+                        ),
+                    cameraPositionState = cameraPositionState,
+                ) {
+                    Circle(
+                        center = antalya,
+                        clickable = false,
+                        fillColor = Color.Red,
+                        radius = 50.0,
+                        strokeColor = Color.Red,
+                        strokePattern = null,
+                        strokeWidth = 1f,
+                        tag = "Circle",
+                        visible = true,
+                        zIndex = 1f,
+                        onClick = { /*TODO*/ }
 
+                    )
+
+                }
+            }
+        }
     }
+
 }
 
