@@ -21,6 +21,8 @@
     <string name="f_p_log_in">Log In Here</string>
     <string name="reset_password_button">Save</string>
     <string name="contact_for_support">Contact for Support</string>
-
+    <string name="health">Health</string>
+    <string name="tracker">Tracker</string>
+    <string name="activities">Activities</string>
 
 </resources>
