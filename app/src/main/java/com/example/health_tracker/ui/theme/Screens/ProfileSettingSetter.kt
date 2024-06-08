@@ -550,7 +550,8 @@ fun HeightPopUp(heightPopup: MutableState<Boolean>, currentHeight: MutableState<
                         onValueChange = {
                             val newValue = it
                             currentHeight.value = newValue
-                        })
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
 
                     Spacer(modifier = Modifier.height(16.dp))
 
