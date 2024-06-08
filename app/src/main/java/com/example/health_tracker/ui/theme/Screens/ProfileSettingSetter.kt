@@ -526,4 +526,49 @@ fun WeightPopUp(weightPopup: MutableState<Boolean>, currentWeight: MutableState<
     }
 }
 
+@Composable
+fun HeightPopUp(heightPopup: MutableState<Boolean>, currentHeight: MutableState<String>){
+    if(heightPopup.value){
+        Dialog(onDismissRequest = { heightPopup.value = false}) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .background(color = Color.Transparent)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = "Edit Username",
+                        style = MaterialTheme.typography.bodyMedium)
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    TextField(
+                        value = currentHeight.value.toString(),
+                        onValueChange = {
+                            val newValue = it
+                            currentHeight.value = newValue
+                        })
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Row(modifier = Modifier){
+                        Button(onClick = { heightPopup.value = false}) {
+                            Text(text = "Cancel")
+                        }
+
+                        Spacer(modifier = Modifier.size(53.dp))
+
+                        Button(onClick = {heightPopup.value = false}) {
+                            Text(text = "Save")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
