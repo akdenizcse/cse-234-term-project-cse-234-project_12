@@ -59,8 +59,102 @@ fun TrackerSection() {
     Column(
         modifier = Modifier
             .background(brush = Brush.verticalGradient(colors = colors1))
-            .fillMaxSize(), verticalArrangement = Arrangement.spacedBy(15.dp, alignment = Alignment.CenterVertically), horizontalAlignment = Alignment.CenterHorizontally
+            .padding(top = 100.dp)
+            .fillMaxSize(), verticalArrangement = Arrangement.spacedBy(35.dp, alignment = Alignment.Top), horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Column {
+            Card (
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0xFFC8E3ED)
+                ),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 4.dp
+                ),
+                modifier = Modifier
+                    .shadow(
+                        elevation = 4.dp,
+                        spotColor = Color(0x40000000),
+                        ambientColor = Color(0x40000000)
+                    )
+                    .shadow(
+                        elevation = 4.dp,
+                        spotColor = Color(0x40000000),
+                        ambientColor = Color(0x40000000)
+                    )
+                    .width(250.dp)
+                    .align(Alignment.CenterHorizontally)
+            ) {
+                Column {
+                    Text(
+                        text = "Activity Route",
+                        style = TextStyle(
+                            fontSize = 36.sp,
+                            lineHeight = 20.sp,
+                            fontWeight = FontWeight(500),
+                            color = Color.Black,
+                            letterSpacing = 0.36.sp,
+                        ),
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .align(Alignment.CenterHorizontally),
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0xFFC8E3ED)
+                ),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 4.dp
+                ),
+                modifier = Modifier
+                    .shadow(
+                        elevation = 4.dp,
+                        spotColor = Color(0x40000000),
+                        ambientColor = Color(0x40000000)
+                    )
+                    .shadow(
+                        elevation = 4.dp,
+                        spotColor = Color(0x40000000),
+                        ambientColor = Color(0x40000000)
+                    )
+                    .width(339.dp)
+                    .height(150.dp)
+                    .align(Alignment.CenterHorizontally)
+            ) {
+                Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
+
+                    GoogleMap(
+                        modifier = Modifier
+                            .wrapContentSize(Alignment.Center)
+                            .border(
+                                width = 1.dp,
+                                color = Color(0xFFC8E3ED),
+                                shape = RoundedCornerShape(10.dp)
+                            )
+                        ,
+                        cameraPositionState = cameraPositionState,
+                    ) {
+                        Circle(
+                            center = antalya,
+                            clickable = false,
+                            fillColor = Color.Red,
+                            radius = 50.0,
+                            strokeColor = Color.Red,
+                            strokePattern = null,
+                            strokeWidth = 1f,
+                            tag = "Circle",
+                            visible = true,
+                            zIndex = 1f,
+                            onClick = { /*TODO*/ }
+
+                        )
+
+                    }
+                }
+            }
+        }
 
         Card(
             colors = CardDefaults.cardColors(
@@ -87,7 +181,7 @@ fun TrackerSection() {
         ) {
             Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                 Text(
-                    text = "Relaxing",
+                    text = "Medication",
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
@@ -276,181 +370,131 @@ fun TrackerSection() {
                 }
             }
         }
-        Card(
-            colors = CardDefaults.cardColors(
-                containerColor = Color(0xFFC8E3ED)
-            ),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 4.dp
-            ),
-            modifier = Modifier
-                .shadow(
-                    elevation = 4.dp,
-                    spotColor = Color(0x40000000),
-                    ambientColor = Color(0x40000000)
-                )
-                .shadow(
-                    elevation = 4.dp,
-                    spotColor = Color(0x40000000),
-                    ambientColor = Color(0x40000000)
-                )
-                .width(339.dp)
-                .height(91.dp)
-                .padding(1.dp)
-                .align(Alignment.CenterHorizontally)
-        )
-        {
-            Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                Text(
-                    text = "Sleep",
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(top = 5.dp),
-                    fontStyle = FontStyle.Italic
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(2.dp)
-                        .padding(start = 15.dp),
-                    horizontalArrangement = Arrangement.spacedBy(20.dp)
-                ) {
-                    Image(
-                        painterResource(
-                            id = R.drawable.resource_double
-                        ),
-                        contentDescription = "Meditation",
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier.size(41.dp)
+        Row(modifier = Modifier, horizontalArrangement = Arrangement.spacedBy(40.dp)) {
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0xFFC8E3ED)
+                ),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 4.dp
+                ),
+                modifier = Modifier
+                    .shadow(
+                        elevation = 4.dp,
+                        spotColor = Color(0x40000000),
+                        ambientColor = Color(0x40000000)
                     )
+                    .shadow(
+                        elevation = 4.dp,
+                        spotColor = Color(0x40000000),
+                        ambientColor = Color(0x40000000)
+                    )
+                    .width(150.dp)
+                    .height(91.dp)
+                    .padding(1.dp)
+                    .align(Alignment.CenterVertically)
+            )
+            {
+                Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                     Text(
-                        text = "0h 0m",
-                        style = TextStyle(
-                            fontSize = 36.sp,
-                            lineHeight = 20.sp,
-                            fontWeight = FontWeight(500),
-                            color = Color(0xFF000000),
-                            letterSpacing = 0.36.sp,
-                        )
+                        text = "Sleep",
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(top = 5.dp),
+                        fontStyle = FontStyle.Italic
                     )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(2.dp)
+                            .padding(start = 15.dp),
+                        horizontalArrangement = Arrangement.spacedBy(20.dp)
+                    ) {
+                        Image(
+                            painterResource(
+                                id = R.drawable.resource_double
+                            ),
+                            contentDescription = "Meditation",
+                            contentScale = ContentScale.FillBounds,
+                            modifier = Modifier.size(41.dp)
+                        )
+                        Text(
+                            text = "0h 0m",
+                            style = TextStyle(
+                                fontSize = 25.sp,
+                                lineHeight = 20.sp,
+                                fontWeight = FontWeight(500),
+                                color = Color(0xFF000000),
+                                letterSpacing = 0.36.sp,
+                            )
+                        )
+                    }
                 }
             }
-        }
-        Card(
-            colors = CardDefaults.cardColors(
-                containerColor = Color(0xFFC8E3ED)
-            ),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 4.dp
-            ),
-            modifier = Modifier
-                .shadow(
-                    elevation = 4.dp,
-                    spotColor = Color(0x40000000),
-                    ambientColor = Color(0x40000000)
-                )
-                .shadow(
-                    elevation = 4.dp,
-                    spotColor = Color(0x40000000),
-                    ambientColor = Color(0x40000000)
-                )
-                .width(339.dp)
-                .height(80.dp)
-                .padding(1.dp)
-                .align(Alignment.CenterHorizontally)
-        )
-        {
-            Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                Text(
-                    text = "Relaxing",
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(top = 5.dp),
-                    fontStyle = FontStyle.Italic
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(2.dp)
-                        .padding(start = 15.dp),
-                    horizontalArrangement = Arrangement.spacedBy(20.dp)
-                ) {
-                    Image(
-                        painterResource(
-                            id = R.drawable.meditation
-                        ),
-                        contentDescription = "Meditation",
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier.size(41.dp)
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0xFFC8E3ED)
+                ),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 4.dp
+                ),
+                modifier = Modifier
+                    .shadow(
+                        elevation = 4.dp,
+                        spotColor = Color(0x40000000),
+                        ambientColor = Color(0x40000000)
                     )
+                    .shadow(
+                        elevation = 4.dp,
+                        spotColor = Color(0x40000000),
+                        ambientColor = Color(0x40000000)
+                    )
+                    .width(150.dp)
+                    .height(91.dp)
+                    .padding(1.dp)
+                    .align(Alignment.CenterVertically)
+            )
+            {
+                Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                     Text(
-                        text = "0m 0s",
-                        style = TextStyle(
-                            fontSize = 36.sp,
-                            lineHeight = 20.sp,
-                            fontWeight = FontWeight(500),
-                            color = Color(0xFF000000),
-                            letterSpacing = 0.36.sp,
+                        text = "Relaxing",
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(top = 5.dp),
+                        fontStyle = FontStyle.Italic
+                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(2.dp)
+                            .padding(start = 15.dp),
+                        horizontalArrangement = Arrangement.spacedBy(20.dp)
+                    ) {
+                        Image(
+                            painterResource(
+                                id = R.drawable.meditation
+                            ),
+                            contentDescription = "Meditation",
+                            contentScale = ContentScale.FillBounds,
+                            modifier = Modifier.size(41.dp)
                         )
-                    )
+                        Text(
+                            text = "0m 0s",
+                            style = TextStyle(
+                                fontSize = 25.sp,
+                                lineHeight = 20.sp,
+                                fontWeight = FontWeight(500),
+                                color = Color(0xFF000000),
+                                letterSpacing = 0.36.sp,
+                            )
+                        )
+                    }
                 }
             }
         }
-        Card(
-            colors = CardDefaults.cardColors(
-                containerColor = Color(0xFFC8E3ED)
-            ),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 4.dp
-            ),
-            modifier = Modifier
-                .shadow(
-                    elevation = 4.dp,
-                    spotColor = Color(0x40000000),
-                    ambientColor = Color(0x40000000)
-                )
-                .shadow(
-                    elevation = 4.dp,
-                    spotColor = Color(0x40000000),
-                    ambientColor = Color(0x40000000)
-                )
-                .width(250.dp)
-                .height(100.dp)
-                .padding(1.dp)
-                .align(Alignment.CenterHorizontally)
-        ) {
-            Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
 
-                GoogleMap(
-                    modifier = Modifier
-                        .wrapContentSize(Alignment.Center)
-                        .border(
-                            width = 1.dp,
-                            color = Color(0xFFC8E3ED),
-                            shape = RoundedCornerShape(10.dp)
-                        ),
-                    cameraPositionState = cameraPositionState,
-                ) {
-                    Circle(
-                        center = antalya,
-                        clickable = false,
-                        fillColor = Color.Red,
-                        radius = 50.0,
-                        strokeColor = Color.Red,
-                        strokePattern = null,
-                        strokeWidth = 1f,
-                        tag = "Circle",
-                        visible = true,
-                        zIndex = 1f,
-                        onClick = { /*TODO*/ }
-
-                    )
-
-                }
-            }
-        }
     }
 
 }

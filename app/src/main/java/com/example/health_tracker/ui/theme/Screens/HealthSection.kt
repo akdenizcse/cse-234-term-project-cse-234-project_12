@@ -90,18 +90,21 @@ fun HealthSection() {
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .fillMaxHeight()
             .background(
                 brush = Brush.verticalGradient(colors = colors1)
             )
+            .padding(top = 10.dp)
+        ,
+        verticalArrangement = Arrangement.Top,
     ) {
         Card(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(50.dp)
-                .width(250.dp)
-                .height(160.dp),
+                .padding(top = 75.dp)
+                .width(300.dp)
+                .height(200.dp),
             colors = CardDefaults.cardColors(
                 containerColor = Color(0xFFD1FAD2)
             )
@@ -148,14 +151,14 @@ fun HealthSection() {
                         contentDescription = "image description",
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier
-                            .size((70.dp))
+                            .size((110.dp))
                             .align(Alignment.CenterHorizontally),
                     )
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = "Record",
                         style = TextStyle(
-                            fontSize = 12.sp,
+                            fontSize = 15.sp,
                             lineHeight = 20.sp,
                             fontWeight = FontWeight.Normal,
                             fontStyle = FontStyle.Normal,
@@ -169,7 +172,7 @@ fun HealthSection() {
                             }
                             .align(Alignment.CenterHorizontally)
                             .width(100.dp)
-                            .height(15.dp)
+                            .height(20.dp)
                             .background(
                                 color = Color(0xFFFFFFFF),
                                 shape = RoundedCornerShape(10.dp)
@@ -190,14 +193,15 @@ fun HealthSection() {
             }
         }
 
+        Spacer(modifier = Modifier.height(40.dp))
         Row {
 
             Column {
                 Card(
                     modifier = Modifier
                         .padding(30.dp)
-                        .width(120.dp)
-                        .height(120.dp),
+                        .width(150.dp)
+                        .height(150.dp),
                     colors = CardDefaults.cardColors(
                         containerColor = Color(0xFFC8E3ED)
                     )
@@ -274,8 +278,8 @@ fun HealthSection() {
                 Card(
                     modifier = Modifier
                         .padding(start = 30.dp)
-                        .width(120.dp)
-                        .height(120.dp),
+                        .width(150.dp)
+                        .height(150.dp),
                     colors = CardDefaults.cardColors(
                         containerColor = Color(0xFFC8E3ED)
                     )
@@ -350,9 +354,9 @@ fun HealthSection() {
             Column {
                 Card(
                     modifier = Modifier
-                        .padding(30.dp)
-                        .width(120.dp)
-                        .height(120.dp),
+                        .padding(top = 30.dp, start = 30.dp)
+                        .width(150.dp)
+                        .height(150.dp),
                     colors = CardDefaults.cardColors(
                         containerColor = Color(0xFFC8E3ED)
                     )
@@ -428,9 +432,9 @@ fun HealthSection() {
                 }
                 Card(
                     modifier = Modifier
-                        .padding(start = 30.dp)
-                        .width(120.dp)
-                        .height(120.dp),
+                        .padding(top = 30.dp, start = 30.dp)
+                        .width(150.dp)
+                        .height(150.dp),
                     colors = CardDefaults.cardColors(
                         containerColor = Color(0xFFC8E3ED)
                     )

@@ -58,15 +58,14 @@ fun ProfilePage(){
 @Composable
 fun InformationBox(){
     val ashColor = Color(0xFF79747E)
-Column(modifier = Modifier.fillMaxSize()
-    ) {
+Column(modifier = Modifier.fillMaxSize().padding(top = 50.dp), verticalArrangement = Arrangement.spacedBy(50.dp)) {
 
     //InformationBox
     Card(
         Modifier
-            .padding(top = 50.dp, start = (27.5).dp, end = 20.dp)
+            .padding(top = 40.dp, start = (27.5).dp, end = 20.dp)
             .width(400.dp)
-            .height(155.dp)
+            .height(250.dp)
             .background(
                 color = Color(0xFF79747E),
                 shape = RoundedCornerShape(size = 10.dp)
@@ -86,7 +85,7 @@ Column(modifier = Modifier.fillMaxSize()
             Row(
                 modifier = Modifier
                     .align(Alignment.Center)
-                    .padding(bottom = 80.dp, start = 5.dp)
+                    .padding(bottom = 150.dp, start = 5.dp)
             ) {
 
                 Image(
@@ -132,7 +131,7 @@ Column(modifier = Modifier.fillMaxSize()
             Row(
                 modifier = Modifier
                     .align(Alignment.Center)
-                    .padding(bottom = 5.dp, start = 5.dp)
+                    .padding(bottom = 60.dp, start = 5.dp)
             ) {
 
                 Text(
@@ -172,7 +171,7 @@ Column(modifier = Modifier.fillMaxSize()
             Row(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 40.dp)
+                    .padding(bottom = 70.dp)
                     .offset(x = (-20).dp)
             ) {
 
@@ -199,7 +198,7 @@ Column(modifier = Modifier.fillMaxSize()
             Row(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 10.dp)
+                    .padding(bottom = 30.dp)
                     .offset(x = (-20).dp)
             ) {
 
@@ -237,11 +236,11 @@ Column(modifier = Modifier.fillMaxSize()
             .width(314.dp)
             .height(200.dp)
             .background(
-                color = Color(0xFF79747E),
+                color = Color(0xFFC8E3ED),
                 shape = RoundedCornerShape(size = 10.dp)
             ),
         colors = CardDefaults.cardColors(
-            containerColor = ashColor
+            containerColor = Color(0xFFC8E3ED)
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
@@ -251,7 +250,7 @@ Column(modifier = Modifier.fillMaxSize()
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            Column(modifier = Modifier.align(Alignment.CenterStart)) {
+            Column(modifier = Modifier.align(Alignment.TopStart).padding(top = 30.dp)) {
                 Text(
                     text = "Change Profile Settings",
                     modifier = Modifier
@@ -263,7 +262,7 @@ Column(modifier = Modifier.fillMaxSize()
                         .padding(start = 60.dp, bottom = 10.dp)
                         .then(Modifier.drawBehind {
                             val strokeWidth = 1.dp.toPx()
-                            val color = Color.White
+                            val color = Color.Black
                             val y = size.height
                             val lineEndX = size.width + 100.dp.toPx()
                             drawLine(
@@ -274,7 +273,7 @@ Column(modifier = Modifier.fillMaxSize()
                             )
                         }),
                     style = TextStyle(
-                        color = Color.White,
+                        color = Color.Black,
                         fontSize = 15.sp
                     ),
                     textAlign = TextAlign.Center
@@ -291,7 +290,7 @@ Column(modifier = Modifier.fillMaxSize()
                         .padding(start = 60.dp, bottom = 10.dp)
                         .then(Modifier.drawBehind {
                             val strokeWidth = 1.dp.toPx()
-                            val color = Color.White
+                            val color = Color.Black
                             val y = size.height
                             val lineEndX = size.width + 130.dp.toPx()
                             drawLine(
@@ -302,7 +301,7 @@ Column(modifier = Modifier.fillMaxSize()
                             )
                         }),
                     style = TextStyle(
-                        color = Color.White,
+                        color = Color.Black,
                         fontSize = 15.sp
                     ),
                     textAlign = TextAlign.Center
@@ -349,7 +348,7 @@ Column(modifier = Modifier.fillMaxSize()
                         .padding(start = 60.dp, bottom = 10.dp)
                         .then(Modifier.drawBehind {
                             val strokeWidth = 1.dp.toPx()
-                            val color = Color.White
+                            val color = Color.Black
                             val y = size.height
                             val lineEndX = size.width + 180.dp.toPx()
                             drawLine(
@@ -360,7 +359,7 @@ Column(modifier = Modifier.fillMaxSize()
                             )
                         }),
                     style = TextStyle(
-                        color = Color.White,
+                        color = Color.Black,
                         fontSize = 15.sp
                     ),
                     textAlign = TextAlign.Center
