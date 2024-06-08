@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(HealthTrackerScreen.Main.name){
-                        MainPart(navController = navController, modifier = Modifier)
+                        MainPart()
                     }
                 }
             }

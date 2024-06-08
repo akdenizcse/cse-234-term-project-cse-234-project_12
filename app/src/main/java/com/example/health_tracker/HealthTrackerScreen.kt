@@ -3,7 +3,10 @@ package com.example.health_tracker
 import android.annotation.SuppressLint
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -16,7 +19,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.health_tracker.ui.theme.Screens.Activities
 import com.example.health_tracker.ui.theme.Screens.HealthSection
@@ -38,19 +44,43 @@ enum class MainPart(@StringRes val title: Int){
     Profile(title = R.string.profile)
 }
 
+//data class BottomNavigationItem(
+//    @StringRes val title: Int,
+//    val selectedIcon: ImageVector,
+//     val unselectedIcon: ImageVector
+//)
 data class BottomNavigationItem(
     @StringRes val title: Int,
     @DrawableRes val selectedIcon: Int,
     @DrawableRes val unselectedIcon: Int
 )
 
-
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainPart(
-    modifier: Modifier,
-    navController: NavController
-){
+fun MainPart(){
+//    val items = listOf(
+//        BottomNavigationItem(
+//            title = R.string.activities,
+//            selectedIcon = ImageVector.vectorResource(id = R.drawable.dumbell_filled),
+//            unselectedIcon = ImageVector.vectorResource(id = R.drawable.dumbell)
+//        ),
+//        BottomNavigationItem(
+//            title = R.string.tracker,
+//            selectedIcon = ImageVector.vectorResource(id = R.drawable.clock_filled),
+//            unselectedIcon =ImageVector.vectorResource(id = R.drawable.clock)
+//        ),
+//        BottomNavigationItem(
+//            title = R.string.health,
+//            selectedIcon = ImageVector.vectorResource(id = R.drawable.health_filled),
+//            unselectedIcon = ImageVector.vectorResource(id = R.drawable.health)
+//        ),
+//        BottomNavigationItem(
+//            title = R.string.profile,
+//            selectedIcon = ImageVector.vectorResource(id = R.drawable.user_filled),
+//            unselectedIcon = ImageVector.vectorResource(id = R.drawable.user)
+//        ),
+//
+//    )
     val items = listOf(
         BottomNavigationItem(
             title = R.string.activities,
@@ -60,7 +90,7 @@ fun MainPart(
         BottomNavigationItem(
             title = R.string.tracker,
             selectedIcon = R.drawable.clock_filled,
-            unselectedIcon = R.drawable.clock
+            unselectedIcon =R.drawable.clock
         ),
         BottomNavigationItem(
             title = R.string.health,
@@ -69,12 +99,11 @@ fun MainPart(
         ),
         BottomNavigationItem(
             title = R.string.profile,
-            selectedIcon = R.drawable.user,
-            unselectedIcon = R.drawable.user_filled
+            selectedIcon = R.drawable.user_filled,
+            unselectedIcon = R.drawable.user
         ),
 
-    )
-
+        )
     var selectedItemIndex by rememberSaveable {
         mutableIntStateOf(0)
     }
@@ -88,7 +117,9 @@ fun MainPart(
     ) {
         Scaffold(
             bottomBar = {
-                NavigationBar {
+                NavigationBar(
+                    modifier = Modifier.height(90.dp)
+                ) {
                     items.forEachIndexed { index, item ->
                         NavigationBarItem(
                             selected = selectedItemIndex == index,
@@ -105,12 +136,17 @@ fun MainPart(
 
                             },
                             icon = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (selectedItemIndex == index) item.selectedIcon else item.unselectedIcon
-                                    ),
-                                    contentDescription = item.title.toString()
+                                val icon = if (selectedItemIndex == index) item.selectedIcon else item.unselectedIcon
+                                Image(
+                                    painter = painterResource(id = icon),
+                                    contentDescription = item.title.toString(),
+                                    modifier = Modifier.size(40.dp)
                                 )
+//                                Icon(
+//                                    imageVector = if (selectedItemIndex == index) item.selectedIcon
+//                                    else item.unselectedIcon,
+//                                    contentDescription = item.title.toString()
+//                                )
                             }
 
                         )
@@ -125,6 +161,7 @@ fun MainPart(
                 MainPart.Profile -> ProfilePage()
                 else -> HealthSection()
             }
+            
         }
     }
 }
