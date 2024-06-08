@@ -37,6 +37,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -125,6 +126,7 @@ fun ProfileSettings(){
                 .padding(top = 60.dp, start = 10.dp)
                 .width(370.dp)
                 .height(670.dp)
+                .shadow(shape = RoundedCornerShape(10.dp), elevation = 10.dp)
                 .background(
                     brush = Brush.verticalGradient(
                         colors = gradientColors
@@ -140,7 +142,8 @@ fun ProfileSettings(){
             ) {
                 Box(modifier = Modifier
                     .fillMaxSize()
-                    .background(color = Color(0xFFC8E3ED))){
+                    .background(color = Color(0xFFC8E3ED))
+                    ){
                     //Top right close button
 //                    Row(modifier = Modifier
 //                        .align(Alignment.TopEnd)) {
