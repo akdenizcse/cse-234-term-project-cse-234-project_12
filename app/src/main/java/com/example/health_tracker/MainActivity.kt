@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.health_tracker.ui.theme.Health_TrackerTheme
 import com.example.health_tracker.ui.theme.Screens.LoginForm
+import com.example.health_tracker.ui.theme.Screens.ProfileSettings
 import com.example.health_tracker.ui.theme.Screens.SignUp
 
 
@@ -15,7 +16,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Health_TrackerTheme {
-                HealthTrackerApp()
+                ProfileSettings()
             }
         }
     }
