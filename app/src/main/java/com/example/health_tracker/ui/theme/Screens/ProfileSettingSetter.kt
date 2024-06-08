@@ -138,12 +138,14 @@ fun ProfileSettings(){
                     defaultElevation = 8.dp
                 )
             ) {
-                Box(modifier = Modifier.fillMaxSize()){
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = Color(0xFFC8E3ED))){
                     //Top right close button
-                    Row(modifier = Modifier
-                        .align(Alignment.TopEnd)) {
-
-                    }
+//                    Row(modifier = Modifier
+//                        .align(Alignment.TopEnd)) {
+//
+//                    }
                     //Username row
                     Row(
                         modifier = Modifier
