@@ -460,7 +460,8 @@ fun AgePopUp(agePopup: MutableState<Boolean>, currentAge: MutableState<String>){
                             onValueChange = {
                                 val newValue = it
                                 currentAge.value = newValue
-                            })
+                            },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
 
                     Spacer(modifier = Modifier.height(16.dp))
 
