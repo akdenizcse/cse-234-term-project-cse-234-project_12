@@ -63,15 +63,48 @@ fun ProfileSettings(){
     val currentUsername = remember { mutableStateOf("") }
     val passwordPopup = remember { mutableStateOf(false) }
     val currentPassword = remember { mutableStateOf("") }
+    val namePopup = remember { mutableStateOf(false) }
+    val currentName = remember { mutableStateOf("") }
+    val surnamePopup = remember { mutableStateOf(false) }
+    val currentSurname = remember { mutableStateOf("") }
+    val agePopup = remember { mutableStateOf(false) }
+    val currentAge = remember { mutableStateOf("") }
+    val weightPopup = remember { mutableStateOf(false) }
+    val currentWeight = remember { mutableStateOf("") }
+    val heightPopup = remember { mutableStateOf(false) }
+    val currentHeight = remember { mutableStateOf("") }
+    val goalPopup = remember { mutableStateOf(false) }
+    val currentGoal = remember { mutableStateOf("") }
     //Conditions
     if(usernamePopup.value){
         UsernamePopUp(usernamePopup = usernamePopup, currentUsername = currentUsername)
     }
+    if (passwordPopup.value){
+        PasswordPopUp(passwordPopup = passwordPopup, currentPassword = currentPassword)
+    }
+    if (namePopup.value){
+        NamePopUp(namePopup = namePopup, currentName = currentName)
+    }
+    if (surnamePopup.value){
+        SurnamePopUp(surnamePopup = surnamePopup, currentSurname = currentSurname)
+    }
+    if (agePopup.value) {
+        AgePopUp(agePopup = agePopup, currentAge = currentAge)
+    }
+    if (weightPopup.value) {
+        WeightPopUp(weightPopup = weightPopup, currentWeight = currentWeight)
+    }
+    if (heightPopup.value) {
+        HeightPopUp(heightPopup = heightPopup, currentHeight = currentHeight)
+    }
+    if (goalPopup.value) {
+        GoalPopUp(goalPopup = goalPopup, currentGoal = currentGoal)
+    }
     //Colors
     val gradientColors = listOf(
-        colorResource(id = R.color.dark_gray),
-        colorResource(id = R.color.light_gray),
-        colorResource(id = R.color.light)
+        Color(0xFFFFEBD4),
+        Color(0xFFFCE0D7),
+        Color(0xFFFFFDC5)
     )
     //Background
     Column(
@@ -82,9 +115,9 @@ fun ProfileSettings(){
             )
     ) {
         val gradientColors = listOf(
-            colorResource(id = R.color.dark_gray),
-            colorResource(id = R.color.light_gray),
-            colorResource(id = R.color.light)
+            Color(0xFFFFEBD4),
+            Color(0xFFFCE0D7),
+            Color(0xFFFFFDC5)
         )
         Column(modifier = Modifier.fillMaxSize()) {
             //Settings Box
@@ -135,7 +168,7 @@ fun ProfileSettings(){
                             .align(Alignment.TopStart)
                             .padding(top = 130.dp, start = 20.dp)
                             .clickable {
-
+                                passwordPopup.value = true
                             }
                     ) {
                         Text(
@@ -152,7 +185,7 @@ fun ProfileSettings(){
                             .align(Alignment.TopStart)
                             .padding(top = 205.dp, start = 20.dp)
                             .clickable {
-
+                                namePopup.value = true
                             }
                     ) {
                         Text(
@@ -169,7 +202,7 @@ fun ProfileSettings(){
                             .align(Alignment.TopStart)
                             .padding(top = 280.dp, start = 20.dp)
                             .clickable {
-
+                                surnamePopup.value = true
                             }
                     ) {
                         Text(
@@ -186,7 +219,7 @@ fun ProfileSettings(){
                             .align(Alignment.TopStart)
                             .padding(top = 355.dp, start = 20.dp)
                             .clickable {
-
+                                agePopup.value = true
                             }
                     ) {
                         Text(
@@ -203,7 +236,7 @@ fun ProfileSettings(){
                             .align(Alignment.TopStart)
                             .padding(top = 430.dp, start = 20.dp)
                             .clickable {
-
+                                weightPopup.value = true
                             }
                     ) {
                         Text(
@@ -220,7 +253,7 @@ fun ProfileSettings(){
                             .align(Alignment.TopStart)
                             .padding(top = 505.dp, start = 20.dp)
                             .clickable {
-
+                                heightPopup.value = true
                             }
                     ) {
                         Text(
@@ -237,7 +270,7 @@ fun ProfileSettings(){
                             .align(Alignment.TopStart)
                             .padding(top = 580.dp, start = 20.dp)
                             .clickable {
-
+                                goalPopup.value = true
                             }
                     ) {
                         Text(
@@ -442,8 +475,8 @@ fun AgePopUp(agePopup: MutableState<Boolean>, currentAge: MutableState<String>){
         Dialog(onDismissRequest = { agePopup.value = false}) {
             Surface(
                     modifier = Modifier
-                            .fillMaxWidth(0.8f)
-                            .background(color = Color.Transparent)
+                        .fillMaxWidth(0.8f)
+                        .background(color = Color.Transparent)
             ) {
                 Column(
                         modifier = Modifier
