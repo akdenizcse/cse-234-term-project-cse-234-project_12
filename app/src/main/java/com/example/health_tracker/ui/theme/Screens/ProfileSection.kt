@@ -59,7 +59,7 @@ fun ProfilePage(){
 fun InformationBox(){
     val ashColor = Color(0xFF79747E)
 Column(modifier = Modifier.fillMaxSize()
-    ){
+    ) {
 
     //InformationBox
     Card(
@@ -83,15 +83,18 @@ Column(modifier = Modifier.fillMaxSize()
                 .fillMaxSize()
                 .background(Color(0xFFC8E3ED))
         ) {
-            Row(modifier = Modifier
-                .align(Alignment.Center)
-                .padding(bottom = 80.dp, start = 5.dp)) {
+            Row(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(bottom = 80.dp, start = 5.dp)
+            ) {
 
                 Image(
-                    painter = painterResource(id = R.drawable.user_images),
+                    painter = painterResource(id = R.drawable.user_filled),
                     contentDescription = "User profile photo",
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.size(50.dp))
+                    modifier = Modifier.size(50.dp)
+                )
 
                 Spacer(modifier = Modifier.width(20.dp))
 
@@ -111,7 +114,8 @@ Column(modifier = Modifier.fillMaxSize()
                     style = TextStyle(
                         color = Color.White,
                         fontSize = 15.sp
-                    ))
+                    )
+                )
 
                 Spacer(modifier = Modifier.width(20.dp))
 
@@ -121,23 +125,26 @@ Column(modifier = Modifier.fillMaxSize()
                     style = TextStyle(
                         color = Color.White,
                         fontSize = 15.sp
-                    ))
+                    )
+                )
             }
 
             Row(
                 modifier = Modifier
-                    .align(Alignment.Center)) {
+                    .align(Alignment.Center)
+                    .padding(bottom = 5.dp, start = 5.dp)
+            ) {
+
                 Text(
                     color = Color.Black,
                     text = "Can Dündar",
                     style = TextStyle(
                         color = Color.White,
                         fontSize = 15.sp
-                    ),
-                    modifier = Modifier.padding(top = 5.dp, start = 10.dp)
+                    )
                 )
 
-            Spacer(modifier = Modifier.width(100.dp))
+                Spacer(modifier = Modifier.width(100.dp))
 
                 Text(
                     color = Color.Black,
@@ -146,9 +153,10 @@ Column(modifier = Modifier.fillMaxSize()
                         color = Color.White,
                         fontSize = 15.sp
                     ),
-                    modifier = Modifier.offset(x = (-15).dp))
+                    modifier = Modifier.offset(x = (-15).dp)
+                )
 
-            Spacer(modifier = Modifier.width(20.dp))
+                Spacer(modifier = Modifier.width(20.dp))
 
                 Text(
                     color = Color.Black,
@@ -157,41 +165,54 @@ Column(modifier = Modifier.fillMaxSize()
                         color = Color.White,
                         fontSize = 15.sp
                     ),
-                    modifier = Modifier.offset(x = (-15).dp))
+                    modifier = Modifier.offset(x = (-15).dp)
+                )
             }
 
-            Row(modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 40.dp)
-                .offset(x = (-20).dp)
-                ) {
+            Row(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 40.dp)
+                    .offset(x = (-20).dp)
+            ) {
 
                 Text(
                     color = Color.Black,
                     text = "Remaining Calories:",
-                    style = TextStyle(color = Color.White,
-                        fontSize = 15.sp))
+                    style = TextStyle(
+                        color = Color.White,
+                        fontSize = 15.sp
+                    )
+                )
 
                 Spacer(modifier = Modifier.width(60.dp))
                 Text(
                     color = Color.Black,
                     text = "Steps:",
-                    style = TextStyle(color = Color.White,
-                        fontSize = 15.sp))
+                    style = TextStyle(
+                        color = Color.White,
+                        fontSize = 15.sp
+                    )
+                )
             }
 
-            Row(modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 10.dp)
-                .offset(x = (-20).dp)){
+            Row(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 10.dp)
+                    .offset(x = (-20).dp)
+            ) {
 
                 //Shows the remaining calories
                 Text(
                     color = Color.Black,
                     text = "1991",
-                    style = TextStyle(color = Color.White,
-                        fontSize = 25.sp),
-                    modifier = Modifier.offset(x = (-20).dp))
+                    style = TextStyle(
+                        color = Color.White,
+                        fontSize = 25.sp
+                    ),
+                    modifier = Modifier.offset(x = (-20).dp)
+                )
 
                 Spacer(modifier = Modifier.width(60.dp))
 
@@ -199,94 +220,95 @@ Column(modifier = Modifier.fillMaxSize()
                 Text(
                     color = Color.Black,
                     text = "0",
-                    style = TextStyle(color = Color.White,
-                        fontSize = 25.sp),
-                    modifier = Modifier.offset(x = 40.dp))
+                    style = TextStyle(
+                        color = Color.White,
+                        fontSize = 25.sp
+                    ),
+                    modifier = Modifier.offset(x = 40.dp)
+                )
             }
         }
     }
     Spacer(modifier = Modifier.height(75.dp))
 //OptionBox
-        Card(
-            modifier = Modifier
-                .padding(bottom = 5.dp, start = 40.dp, end = 20.dp)
-                .width(314.dp)
-                .height(200.dp)
-                .background(
-                    color = Color(0xFFC8E3ED),
-                    shape = RoundedCornerShape(size = 10.dp)
-                )
-                .align(Alignment.CenterHorizontally)
-            ,
-            colors = CardDefaults.cardColors(
-                containerColor = ashColor
+    Card(
+        modifier = Modifier
+            .padding(bottom = 5.dp, start = 40.dp, end = 20.dp)
+            .width(314.dp)
+            .height(200.dp)
+            .background(
+                color = Color(0xFF79747E),
+                shape = RoundedCornerShape(size = 10.dp)
             ),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 8.dp
-            )
+        colors = CardDefaults.cardColors(
+            containerColor = ashColor
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp
+        )
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color(0xFFC8E3ED))
-            ) {
-                Column(modifier = Modifier.align(Alignment.CenterStart).background(Color(0xFFC8E3ED)) ) {
-                    Text(
-                        text = "Change Profile Settings",
-                        color = Color.Black,
-                        modifier = Modifier
-                            .clickable(
-                                onClickLabel = "Open change profile settings"
-                            ) {
+            Column(modifier = Modifier.align(Alignment.CenterStart)) {
+                Text(
+                    text = "Change Profile Settings",
+                    modifier = Modifier
+                        .clickable(
+                            onClickLabel = "Open change profile settings"
+                        ) {
 
-                            }
-                            .padding(start = 60.dp, bottom = 10.dp)
-                            .then(Modifier.drawBehind {
-                                val strokeWidth = 1.dp.toPx()
-                                val color = Color.Black
-                                val y = size.height
-                                val lineEndX = size.width + 100.dp.toPx()
-                                drawLine(
-                                    color = color,
-                                    start = Offset(0f, y),
-                                    end = Offset(lineEndX, y),
-                                    strokeWidth = strokeWidth
-                                )
-                            }),
-                        style = TextStyle(
-                            color = Color.White,
-                            fontSize = 15.sp
-                        ),
-                        textAlign = TextAlign.Center
-                    )
+                        }
+                        .padding(start = 60.dp, bottom = 10.dp)
+                        .then(Modifier.drawBehind {
+                            val strokeWidth = 1.dp.toPx()
+                            val color = Color.White
+                            val y = size.height
+                            val lineEndX = size.width + 100.dp.toPx()
+                            drawLine(
+                                color = color,
+                                start = Offset(0f, y),
+                                end = Offset(lineEndX, y),
+                                strokeWidth = strokeWidth
+                            )
+                        }),
+                    style = TextStyle(
+                        color = Color.White,
+                        fontSize = 15.sp
+                    ),
+                    textAlign = TextAlign.Center
+                )
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
-                    Text(
-                        text = "Rate And Comment",
-                        color = Color.Black,
-                        modifier = Modifier
-                            .clickable(onClickLabel = "Open rate and comment") {
+                Text(
+                    text = "Rate And Comment",
+                    modifier = Modifier
+                        .clickable(onClickLabel = "Open rate and comment") {
 
-                            }
-                            .padding(start = 60.dp, bottom = 10.dp)
-                            .then(Modifier.drawBehind {
-                                val strokeWidth = 1.dp.toPx()
-                                val color = Color.Black
-                                val y = size.height
-                                val lineEndX = size.width + 130.dp.toPx()
-                                drawLine(
-                                    color = color,
-                                    start = Offset(0f, y),
-                                    end = Offset(lineEndX, y),
-                                    strokeWidth = strokeWidth
-                                )
-                            }),
-                        style = TextStyle(color = Color.White,
-                            fontSize = 15.sp),
-                        textAlign = TextAlign.Center)
+                        }
+                        .padding(start = 60.dp, bottom = 10.dp)
+                        .then(Modifier.drawBehind {
+                            val strokeWidth = 1.dp.toPx()
+                            val color = Color.White
+                            val y = size.height
+                            val lineEndX = size.width + 130.dp.toPx()
+                            drawLine(
+                                color = color,
+                                start = Offset(0f, y),
+                                end = Offset(lineEndX, y),
+                                strokeWidth = strokeWidth
+                            )
+                        }),
+                    style = TextStyle(
+                        color = Color.White,
+                        fontSize = 15.sp
+                    ),
+                    textAlign = TextAlign.Center
+                )
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
                     text = "Share With Friends",
@@ -309,143 +331,45 @@ Column(modifier = Modifier.fillMaxSize()
                                 strokeWidth = strokeWidth
                             )
                         }),
-                    style = TextStyle(color = Color.White,
-                        fontSize = 15.sp),
-                    textAlign = TextAlign.Center)
+                    style = TextStyle(
+                        color = Color.White,
+                        fontSize = 15.sp
+                    ),
+                    textAlign = TextAlign.Center
+                )
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
-            Text(
-                text = "Contact Us",
-                color = Color.Black,
-                modifier = Modifier
-                    .clickable(onClickLabel = "Open contact us") {
+                Text(
+                    text = "Contact Us",
+                    modifier = Modifier
+                        .clickable(onClickLabel = "Open contact us") {
 
-                    }
-                    .padding(start = 60.dp, bottom = 10.dp)
-                    .then(Modifier.drawBehind {
-                        val strokeWidth = 1.dp.toPx()
-                        val color = Color.Black
-                        val y = size.height
-                        val lineEndX = size.width + 180.dp.toPx()
-                        drawLine(
-                            color = color,
-                            start = Offset(0f, y),
-                            end = Offset(lineEndX, y),
-                            strokeWidth = strokeWidth
-                        )
-                    }),
-                style = TextStyle(color = Color.White,
-                    fontSize = 15.sp),
-                textAlign = TextAlign.Center)
-                }
-
+                        }
+                        .padding(start = 60.dp, bottom = 10.dp)
+                        .then(Modifier.drawBehind {
+                            val strokeWidth = 1.dp.toPx()
+                            val color = Color.White
+                            val y = size.height
+                            val lineEndX = size.width + 180.dp.toPx()
+                            drawLine(
+                                color = color,
+                                start = Offset(0f, y),
+                                end = Offset(lineEndX, y),
+                                strokeWidth = strokeWidth
+                            )
+                        }),
+                    style = TextStyle(
+                        color = Color.White,
+                        fontSize = 15.sp
+                    ),
+                    textAlign = TextAlign.Center
+                )
             }
+
         }
+    }
 
     //Navigation
-    Card(
-        modifier = Modifier
-            .offset(y = 170.dp)
-            .width(400.dp)
-            .height(70.dp)
-            .background(color = Color(0xFFD8D8D8))
-    ) {
-
-        Box(modifier = Modifier.fillMaxSize()) {
-            Row(modifier = Modifier
-                .align(Alignment.BottomStart)
-                .padding(start = 30.dp, bottom = 15.dp)) {
-                Image(
-                    painter = painterResource(id = R.drawable.dumbell),
-                    contentDescription ="activities icon",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(45.dp)
-                        .clickable(onClickLabel = "Open activities tab") {
-
-                        }
-                )
-
-                Spacer(modifier = Modifier.width(50.dp))
-
-                Image(
-                    painter = painterResource(id = R.drawable.water),
-                    contentDescription ="tracker icon",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(45.dp)
-                        .padding(bottom = 8.dp)
-                        .clickable(onClickLabel = "Open tracker tab") {
-
-                        }
-                )
-
-                Spacer(modifier = Modifier.width(50.dp))
-
-                Image(
-                    painter = painterResource(id = R.drawable.health),
-                    contentDescription ="health icon",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(40.dp)
-                        .clickable(onClickLabel = "Open health tab") {
-
-                        }
-                )
-
-                Spacer(modifier = Modifier.width(50.dp))
-
-                Image(
-                    painter = painterResource(id = R.drawable.user_images),
-                    contentDescription = "profile icon",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.size(40.dp))
-
-                Image(
-                    painter = painterResource(id = R.drawable.orange_circle),
-                    contentDescription = "orange overlay",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(45.dp)
-                        .offset(x = (-41).dp, y = (-1).dp))
-            }
-
-            Row(
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-            ) {
-
-                Text(
-                    text ="Activities",
-                    style = TextStyle(color = Color.Black, fontSize = 15.sp),
-                    modifier = Modifier
-                        .padding(start = 25.dp)
-                    )
-
-                Spacer(modifier = Modifier.width(40.dp))
-
-                Text(
-                    text ="Tracker",
-                    style = TextStyle(color = Color.Black, fontSize = 15.sp)
-                )
-
-                Spacer(modifier = Modifier.width(47.dp))
-
-                Text(
-                    text ="Health",
-                    style = TextStyle(color = Color.Black, fontSize = 15.sp)
-                )
-
-                Spacer(modifier = Modifier.width(47.dp))
-
-                Text(
-                    text ="Profile",
-                    style = TextStyle(color = Color.Black, fontSize = 15.sp)
-                )
-
-            }
-        }
-    }
-    }
+}
 }

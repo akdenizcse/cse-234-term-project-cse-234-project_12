@@ -42,14 +42,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.R
 
 
-@Preview(showBackground = true)
 @Composable
 fun ForgotPassword(
-    onLoginClicked: () -> Unit = {},
-    onResetPasswordClicked: () -> Unit = {}
+    navController: NavController
 ) {
     //Temporary Values For Holding The UI
 
@@ -153,7 +153,7 @@ fun ForgotPassword(
                         letterSpacing = 0.1.sp,
                     ),
                     modifier = Modifier.clickable {
-                        onLoginClicked()
+                        navController.navigate(HealthTrackerScreen.Login.name)
                     }
                 )
             }
@@ -182,7 +182,8 @@ fun ForgotPassword(
             )
             Spacer(modifier = Modifier.height(10.dp))
             OutlinedButton(
-                onClick = onResetPasswordClicked,
+                onClick = {},
+                // TODO: we will send a mail to user
                 border = BorderStroke(1.dp, Color.Black),
                 shape = RoundedCornerShape(50),
                 modifier = Modifier

@@ -43,16 +43,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.R
 
 
-@Preview(showBackground = true)
+
 @Composable
 fun LoginForm(
-    onLoginButtonClicked: () -> Unit = {},
-    onSignUpButtonClicked: () -> Unit = {},
-    onForgetPasswordClicked: () -> Unit = {},
-    onContactUsClicked: () -> Unit = {}
+    navController: NavController
 
     //TODO should we pass the modifier
 ) {
@@ -164,7 +163,7 @@ fun LoginForm(
         )
         Spacer(modifier = Modifier.height(25.dp))
         Button(
-            onClick = onLoginButtonClicked,
+            onClick = { navController.navigate(HealthTrackerScreen.Main.name) },
             shape = RoundedCornerShape(20.dp),
             colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
             modifier = Modifier
@@ -214,7 +213,7 @@ fun LoginForm(
                     letterSpacing = 0.1.sp,
                 ),
                 modifier = Modifier.clickable {
-                    onSignUpButtonClicked()
+                    navController.navigate(HealthTrackerScreen.SignUp.name)
                 }
             )
         }
@@ -231,7 +230,7 @@ fun LoginForm(
             modifier = Modifier
                 .align(alignment = Alignment.CenterHorizontally)
                 .clickable {
-                    onForgetPasswordClicked()
+                    navController.navigate(HealthTrackerScreen.ForgetPassword.name)
                 }
         )
         Spacer(modifier = Modifier.height(40.dp))
@@ -247,7 +246,7 @@ fun LoginForm(
             modifier = Modifier
                 .align(alignment = Alignment.CenterHorizontally)
                 .clickable {
-                    onContactUsClicked()
+                    // TODO: we will add later 
                 }
 
         )

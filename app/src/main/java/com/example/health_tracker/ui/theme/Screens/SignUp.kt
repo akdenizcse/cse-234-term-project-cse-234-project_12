@@ -44,17 +44,16 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.R
 
-@Preview(showBackground = true)
+
 @Composable
 fun SignUp(
-    onContactForSupportClicked: () -> Unit = {},
-    onLoginClicked: () -> Unit = {},
-    onSignupClicked: () -> Unit = {}
+    navController: NavController
 ) {
     //Temporary Values For Holding The UI
 
@@ -213,7 +212,8 @@ fun SignUp(
 
 
         Button(
-            onClick = onSignupClicked,
+            onClick = {},
+            // TODO: it save the user to the database
             shape = RoundedCornerShape(20.dp),
             colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
             modifier = Modifier
@@ -263,7 +263,7 @@ fun SignUp(
                     letterSpacing = 0.1.sp,
                 ),
                 modifier = Modifier.clickable {
-                    onLoginClicked()
+                    navController.navigate(HealthTrackerScreen.Login.name)
                 }
             )
         }
@@ -281,7 +281,7 @@ fun SignUp(
             modifier = Modifier
                 .align(alignment = Alignment.CenterHorizontally)
                 .clickable {
-                    onContactForSupportClicked()
+                    // TODO: we will add later 
                 }
         )
     }
