@@ -571,4 +571,50 @@ fun HeightPopUp(heightPopup: MutableState<Boolean>, currentHeight: MutableState<
     }
 }
 
+@Composable
+fun GoalPopUp(goalPopup: MutableState<Boolean>, currentGoal: MutableState<String>){
+    if(goalPopup.value){
+        Dialog(onDismissRequest = { goalPopup.value = false}) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .background(color = Color.Transparent)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = "Edit Username",
+                        style = MaterialTheme.typography.bodyMedium)
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    TextField(
+                        value = currentGoal.value.toString(),
+                        onValueChange = {
+                            val newValue = it
+                            currentGoal.value = newValue
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Row(modifier = Modifier){
+                        Button(onClick = { goalPopup.value = false}) {
+                            Text(text = "Cancel")
+                        }
+
+                        Spacer(modifier = Modifier.size(53.dp))
+
+                        Button(onClick = {goalPopup.value = false}) {
+                            Text(text = "Save")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
