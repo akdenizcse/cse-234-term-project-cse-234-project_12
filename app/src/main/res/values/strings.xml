@@ -24,5 +24,6 @@
     <string name="health">Health</string>
     <string name="tracker">Tracker</string>
     <string name="activities">Activities</string>
+    <string name="entry">Entry</string>
 
 </resources>

@@ -162,7 +162,7 @@ fun LoginForm(
         )
         Spacer(modifier = Modifier.height(35.dp))
         Button(
-            onClick = { navController.navigate(HealthTrackerScreen.Health.name) },
+            onClick = { navController.navigate(HealthTrackerScreen.Main.name) },
             shape = RoundedCornerShape(20.dp),
             colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
             modifier = Modifier

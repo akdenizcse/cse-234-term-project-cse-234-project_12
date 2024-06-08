@@ -50,11 +50,13 @@ class MainActivity : ComponentActivity() {
                         ForgotPassword(navController = navController)
                     }
 
-                    composable(HealthTrackerScreen.Health.name){
-                        HealthSection()
+                    composable(HealthTrackerScreen.Main.name){
+                        MainPart(navController = navController, modifier = Modifier)
                     }
                 }
             }
         }
     }
 }
+
+
