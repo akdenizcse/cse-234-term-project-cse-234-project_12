@@ -61,6 +61,8 @@ fun ProfileSettings(){
     //Popups
     val usernamePopup = remember { mutableStateOf(false) }
     val currentUsername = remember { mutableStateOf("") }
+    val passwordPopup = remember { mutableStateOf(false) }
+    val currentPassword = remember { mutableStateOf("") }
     //Conditions
     if(usernamePopup.value){
         UsernamePopUp(usernamePopup = usernamePopup, currentUsername = currentUsername)
@@ -298,3 +300,49 @@ fun UsernamePopUp(usernamePopup: MutableState<Boolean>, currentUsername: Mutable
         }
     }
 }
+
+@Composable
+fun PasswordPopUp(passwordPopup: MutableState<Boolean>, currentPassword: MutableState<String>){
+    if(passwordPopup.value){
+        Dialog(onDismissRequest = { passwordPopup.value = false}) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .background(color = Color.Transparent)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = "Edit Username",
+                        style = MaterialTheme.typography.bodyMedium)
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    TextField(
+                        value = currentPassword.value.toString(),
+                        onValueChange = {
+                            val newValue = it
+                            currentPassword.value = newValue
+                        })
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Row(modifier = Modifier){
+                        Button(onClick = { passwordPopup.value = false}) {
+                            Text(text = "Cancel")
+                        }
+
+                        Spacer(modifier = Modifier.size(53.dp))
+
+                        Button(onClick = {passwordPopup.value = false}) {
+                            Text(text = "Save")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
