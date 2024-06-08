@@ -505,7 +505,8 @@ fun WeightPopUp(weightPopup: MutableState<Boolean>, currentWeight: MutableState<
                         onValueChange = {
                             val newValue = it
                             currentWeight.value = newValue
-                        })
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
 
                     Spacer(modifier = Modifier.height(16.dp))
 
