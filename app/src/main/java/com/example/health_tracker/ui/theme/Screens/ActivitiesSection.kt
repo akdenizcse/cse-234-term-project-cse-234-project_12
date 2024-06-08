@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -50,6 +52,11 @@ import com.example.health_tracker.R
 fun ActivitiesScreen(){
     val gradientColors = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
     var searchText by remember { mutableStateOf("") }
+    val yourCardDataList = listOf(
+        "Push Day",
+        "Pull Day",
+        "Leg Day"
+    )
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -109,101 +116,104 @@ fun ActivitiesScreen(){
                 shape = RectangleShape
             )){
 
-            Column(
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                Card(
-                    modifier = Modifier
-                        .padding(start = 16.dp, top = 20.dp)
-                        .shadow(
-                            elevation = 20.dp,
-                            shape = RoundedCornerShape(12.dp),
-                            spotColor = Color.Black
-                        )
-                        .width(297.dp)
-                        .height(72.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFFC8E3ED))
-                ) {
-                    Text(text = "Push Day",
-                        style = TextStyle(
-                            color = Color.Black,
-                            fontSize = 16.sp,
-                        ),
+                items(yourCardDataList){
+                    cardData ->
+                    Card(
                         modifier = Modifier
-                            .padding(start = 20.dp, top = 10.dp))
+                            .padding(start = 16.dp, top = 20.dp)
+                            .shadow(
+                                elevation = 20.dp,
+                                shape = RoundedCornerShape(12.dp),
+                                spotColor = Color.Black
+                            )
+                            .width(297.dp)
+                            .height(72.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFC8E3ED))
+                    ) {
+                        Text(text = "Push Day",
+                            style = TextStyle(
+                                color = Color.Black,
+                                fontSize = 16.sp,
+                            ),
+                            modifier = Modifier
+                                .padding(start = 20.dp, top = 10.dp))
                         Spacer(modifier = Modifier.height(3.dp))
 
-                    Text(text = "Incline Bench Press",
-                        style = TextStyle(
-                            color = Color.Black,
-                            fontSize = 10.sp,
-                        ),
-                        modifier = Modifier
-                            .padding(start = 20.dp, top = 5.dp)
-                    )
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-                Card(
-                    modifier = Modifier
-                        .padding(start = 16.dp, top = 20.dp)
-                        .shadow(
-                            elevation = 20.dp,
-                            shape = RoundedCornerShape(12.dp),
-                            spotColor = Color.Black
+                        Text(text = "Incline Bench Press",
+                            style = TextStyle(
+                                color = Color.Black,
+                                fontSize = 10.sp,
+                            ),
+                            modifier = Modifier
+                                .padding(start = 20.dp, top = 5.dp)
                         )
-                        .width(297.dp)
-                        .height(72.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFC8E3ED))
-                ) {
-                    Text(text = "Pull Day",
-                        style = TextStyle(
-                            color = Color.Black,
-                            fontSize = 16.sp,
-                        ),
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Card(
                         modifier = Modifier
-                            .padding(start = 20.dp, top = 10.dp))
-                    Spacer(modifier = Modifier.height(3.dp))
+                            .padding(start = 16.dp, top = 20.dp)
+                            .shadow(
+                                elevation = 20.dp,
+                                shape = RoundedCornerShape(12.dp),
+                                spotColor = Color.Black
+                            )
+                            .width(297.dp)
+                            .height(72.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFC8E3ED))
+                    ) {
+                        Text(text = "Pull Day",
+                            style = TextStyle(
+                                color = Color.Black,
+                                fontSize = 16.sp,
+                            ),
+                            modifier = Modifier
+                                .padding(start = 20.dp, top = 10.dp))
+                        Spacer(modifier = Modifier.height(3.dp))
 
-                    Text(text = "Lat Pulldown",
-                        style = TextStyle(
-                            color = Color.Black,
-                            fontSize = 10.sp,
-                        ),
-                        modifier = Modifier
-                            .padding(start = 20.dp, top = 5.dp)
-                    )
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-                Card(
-                    modifier = Modifier
-                        .padding(start = 16.dp, top = 20.dp)
-                        .shadow(
-                            elevation = 20.dp,
-                            shape = RoundedCornerShape(12.dp),
-                            spotColor = Color.Black
+                        Text(text = "Lat Pulldown",
+                            style = TextStyle(
+                                color = Color.Black,
+                                fontSize = 10.sp,
+                            ),
+                            modifier = Modifier
+                                .padding(start = 20.dp, top = 5.dp)
                         )
-                        .width(297.dp)
-                        .height(72.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFC8E3ED))
-                ) {
-                    Text(text = "Leg Day",
-                        style = TextStyle(
-                            color = Color.Black,
-                            fontSize = 16.sp,
-                        ),
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Card(
                         modifier = Modifier
-                            .padding(start = 20.dp, top = 10.dp))
-                    Spacer(modifier = Modifier.height(3.dp))
+                            .padding(start = 16.dp, top = 20.dp)
+                            .shadow(
+                                elevation = 20.dp,
+                                shape = RoundedCornerShape(12.dp),
+                                spotColor = Color.Black
+                            )
+                            .width(297.dp)
+                            .height(72.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFC8E3ED))
+                    ) {
+                        Text(text = "Leg Day",
+                            style = TextStyle(
+                                color = Color.Black,
+                                fontSize = 16.sp,
+                            ),
+                            modifier = Modifier
+                                .padding(start = 20.dp, top = 10.dp))
+                        Spacer(modifier = Modifier.height(3.dp))
 
-                    Text(text = "Leg Press",
-                        style = TextStyle(
-                            color = Color.Black,
-                            fontSize = 10.sp,
-                        ),
-                        modifier = Modifier
-                            .padding(start = 20.dp, top = 5.dp)
-                    )
+                        Text(text = "Leg Press",
+                            style = TextStyle(
+                                color = Color.Black,
+                                fontSize = 10.sp,
+                            ),
+                            modifier = Modifier
+                                .padding(start = 20.dp, top = 5.dp)
+                        )
+                    }
                 }
             }
         }
