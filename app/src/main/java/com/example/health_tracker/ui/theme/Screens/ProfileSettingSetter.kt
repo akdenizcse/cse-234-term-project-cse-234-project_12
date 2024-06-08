@@ -481,3 +481,49 @@ fun AgePopUp(agePopup: MutableState<Boolean>, currentAge: MutableState<String>){
     }
 }
 
+@Composable
+fun WeightPopUp(weightPopup: MutableState<Boolean>, currentWeight: MutableState<String>){
+    if(weightPopup.value){
+        Dialog(onDismissRequest = { weightPopup.value = false}) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .background(color = Color.Transparent)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = "Edit Username",
+                        style = MaterialTheme.typography.bodyMedium)
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    TextField(
+                        value = currentWeight.value.toString(),
+                        onValueChange = {
+                            val newValue = it
+                            currentWeight.value = newValue
+                        })
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Row(modifier = Modifier){
+                        Button(onClick = { weightPopup.value = false}) {
+                            Text(text = "Cancel")
+                        }
+
+                        Spacer(modifier = Modifier.size(53.dp))
+
+                        Button(onClick = {weightPopup.value = false}) {
+                            Text(text = "Save")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
