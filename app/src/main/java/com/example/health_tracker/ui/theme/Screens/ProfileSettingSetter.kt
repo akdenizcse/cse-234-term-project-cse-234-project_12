@@ -346,3 +346,48 @@ fun PasswordPopUp(passwordPopup: MutableState<Boolean>, currentPassword: Mutable
     }
 }
 
+@Composable
+fun NamePopUp(namePopup: MutableState<Boolean>, currentName: MutableState<String>){
+    if(namePopup.value){
+        Dialog(onDismissRequest = { namePopup.value = false}) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .background(color = Color.Transparent)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = "Edit Username",
+                        style = MaterialTheme.typography.bodyMedium)
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    TextField(
+                        value = currentName.value.toString(),
+                        onValueChange = {
+                            val newValue = it
+                            currentName.value = newValue
+                        })
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Row(modifier = Modifier){
+                        Button(onClick = { namePopup.value = false}) {
+                            Text(text = "Cancel")
+                        }
+
+                        Spacer(modifier = Modifier.size(53.dp))
+
+                        Button(onClick = {namePopup.value = false}) {
+                            Text(text = "Save")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
