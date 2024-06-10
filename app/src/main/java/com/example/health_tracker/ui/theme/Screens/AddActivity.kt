@@ -1,5 +1,6 @@
 package com.example.health_tracker.ui.theme.Screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -11,7 +12,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
@@ -20,6 +25,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -52,6 +58,66 @@ fun AddActivityScreen(){
     var isTuesday by remember { mutableStateOf(false) }
     var isThursday by remember { mutableStateOf(false) }
     var isWednesday by remember { mutableStateOf(false) }
+    val exercises = listOf(
+        "Arnold Press",
+        "Back Extention",
+        "Barbell Bench Press",
+        "Barbell Biceps Curl",
+        "Cable Fly",
+        "Deadlift",
+        "Dumbell Fly",
+        "Barbell bent-over row",
+        "Barbell shoulder press",
+        "Barbell shrug",
+        "Cable lateral raise",
+        "Cable pull-down",
+        "Chest fly",
+        "Chin up",
+        "Close-grip pull-up",
+        "Crunch",
+        "Decline bench press",
+        "Diamond push-up",
+        "Dumbell bench press",
+        "Dumbell biceps curl",
+        "Dumbell bent-over row",
+        "Dumbell lateral raise",
+        "Dumbell shoulder press",
+        "Dumbell shrug",
+        "Good morning",
+        "Hanging leg raise",
+        "Hyperextension",
+        "Incline bench press",
+        "Lat pull-down",
+        "Leg curl",
+        "Leg extension",
+        "Leg press",
+        "Leg raise",
+        "Lunge",
+        "Narrow-grip push-up",
+        "Neck curl",
+        "Overhead triceps extension",
+        "Preacher curl",
+        "Pull-down",
+        "Pull-up",
+        "Push-up",
+        "Reverse grip pull-down",
+        "Reverse grip push-down",
+        "Roman chair leg raise",
+        "Romanian deadlift",
+        "Russian twist",
+        "Seated calf raise",
+        "Shoulder shrug",
+        "Squat",
+        "Standing calf raise",
+        "T-bar row",
+        "Triceps dip",
+        "Triceps extension",
+        "Triceps push-down",
+        "Upright row",
+        "Weighted Russian twist",
+        "Wide-grip pull-up",
+        "Wide-grip push-up"
+    )
 
     Column(
         modifier = Modifier
@@ -271,6 +337,55 @@ fun AddActivityScreen(){
                     uncheckedColor = Color(0xFFC8E3ED),
                     checkmarkColor = Color.Black
                 ))
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(text = "Exercise",
+            style = TextStyle(
+                fontSize = 30.sp
+            ),
+            modifier = Modifier.padding(start = 40.dp))
+        //Exercise list
+        Checklist(items = exercises)
+
+
+    }
+}
+//Exercise List maker function
+@Composable
+fun Checklist(items: List<String>) {
+    val checkedStates = remember { mutableStateListOf(*items.map { false }.toTypedArray()) }
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(300.dp)
+    ) {
+        items(items.size) { index ->
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(start = 35.dp, top = 20.dp)
+            ) {
+                Text(
+                    text = items[index],
+                    style = TextStyle(fontSize = 16.sp),
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Checkbox(
+                    checked = checkedStates[index],
+                    modifier = Modifier
+                        .size(30.dp),
+                    enabled = true,
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = Color(0xFFC8E3ED),
+                        uncheckedColor = Color(0xFFC8E3ED),
+                        checkmarkColor = Color.Black
+                    ),
+                    onCheckedChange = { checked ->
+                        checkedStates[index] = checked
+                    }
+                )
+            }
         }
     }
 }
