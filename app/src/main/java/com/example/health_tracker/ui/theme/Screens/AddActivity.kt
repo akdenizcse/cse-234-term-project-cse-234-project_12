@@ -3,6 +3,7 @@ package com.example.health_tracker.ui.theme.Screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -20,12 +23,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.health_tracker.R
 
 @Preview(
@@ -38,6 +45,13 @@ fun AddActivityScreen(){
 
     var searchText by remember { mutableStateOf("") }
     var titleText by remember { mutableStateOf("") }
+    var isMonday by remember { mutableStateOf(false) }
+    var isFriday by remember { mutableStateOf(false) }
+    var isSaturday by remember { mutableStateOf(false) }
+    var isSunday by remember { mutableStateOf(false) }
+    var isTuesday by remember { mutableStateOf(false) }
+    var isThursday by remember { mutableStateOf(false) }
+    var isWednesday by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -94,6 +108,169 @@ fun AddActivityScreen(){
                 focusedContainerColor = Color.White.copy(alpha = 0.9f), // Slightly transparent
                 unfocusedContainerColor = Color.White.copy(alpha = 0.5f) // Fully opaque
             ))
-
+        Spacer(modifier = Modifier.height(20.dp))
+        //Days
+        Text(
+            text = "Days",
+            style = TextStyle(
+                fontSize = 30.sp
+            ),
+            modifier = Modifier.padding(start = 40.dp)
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        //1st row
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Monday",
+                style = TextStyle(
+                    fontSize = 20.sp
+                ),
+                modifier = Modifier.padding(start = 40.dp)
+            )
+            Spacer(modifier = Modifier.width(5.dp))
+            Checkbox(checked = isMonday,
+                onCheckedChange ={isMonday = it},
+                modifier = Modifier
+                    .size(30.dp),
+                enabled = true,
+                colors = CheckboxDefaults.colors(
+                    checkedColor = Color(0xFFC8E3ED),
+                    uncheckedColor = Color(0xFFC8E3ED),
+                    checkmarkColor = Color.Black
+                ))
+            Spacer(modifier = Modifier.width(110.dp))
+            Text(text = "Friday",
+                style = TextStyle(
+                    fontSize = 20.sp
+                )
+            )
+            Spacer(modifier = Modifier.width(5.dp))
+            Checkbox(checked = isFriday,
+                onCheckedChange ={isFriday = it},
+                modifier = Modifier
+                    .size(30.dp),
+                enabled = true,
+                colors = CheckboxDefaults.colors(
+                    checkedColor = Color(0xFFC8E3ED),
+                    uncheckedColor = Color(0xFFC8E3ED),
+                    checkmarkColor = Color.Black
+                ))
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+        //2nd row
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Tuesday",
+                style = TextStyle(
+                    fontSize = 20.sp
+                ),
+                modifier = Modifier.padding(start = 40.dp)
+            )
+            Spacer(modifier = Modifier.width(5.dp))
+            Checkbox(checked = isTuesday,
+                onCheckedChange ={isTuesday = it},
+                modifier = Modifier
+                    .size(30.dp),
+                enabled = true,
+                colors = CheckboxDefaults.colors(
+                    checkedColor = Color(0xFFC8E3ED),
+                    uncheckedColor = Color(0xFFC8E3ED),
+                    checkmarkColor = Color.Black
+                ))
+            Spacer(modifier = Modifier.width(100.dp))
+            Text(text = "Saturday",
+                style = TextStyle(
+                    fontSize = 20.sp
+                )
+            )
+            Spacer(modifier = Modifier.width(5.dp))
+            Checkbox(checked = isSaturday,
+                onCheckedChange ={isSaturday = it},
+                modifier = Modifier
+                    .size(30.dp),
+                enabled = true,
+                colors = CheckboxDefaults.colors(
+                    checkedColor = Color(0xFFC8E3ED),
+                    uncheckedColor = Color(0xFFC8E3ED),
+                    checkmarkColor = Color.Black
+                ))
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+        //3rd row
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Wednesday",
+                style = TextStyle(
+                    fontSize = 20.sp
+                ),
+                modifier = Modifier.padding(start = 40.dp)
+            )
+            Spacer(modifier = Modifier.width(5.dp))
+            Checkbox(checked = isWednesday,
+                onCheckedChange ={isWednesday = it},
+                modifier = Modifier
+                    .size(30.dp),
+                enabled = true,
+                colors = CheckboxDefaults.colors(
+                    checkedColor = Color(0xFFC8E3ED),
+                    uncheckedColor = Color(0xFFC8E3ED),
+                    checkmarkColor = Color.Black
+                ))
+            Spacer(modifier = Modifier.width(70.dp))
+            Text(text = "Sunday",
+                style = TextStyle(
+                    fontSize = 20.sp
+                )
+            )
+            Spacer(modifier = Modifier.width(5.dp))
+            Checkbox(checked = isSunday,
+                onCheckedChange ={isSunday = it},
+                modifier = Modifier
+                    .size(30.dp),
+                enabled = true,
+                colors = CheckboxDefaults.colors(
+                    checkedColor = Color(0xFFC8E3ED),
+                    uncheckedColor = Color(0xFFC8E3ED),
+                    checkmarkColor = Color.Black
+                ))
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+        //4th row
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Text(
+                text = "Thursday",
+                style = TextStyle(
+                    fontSize = 20.sp
+                ),
+                modifier = Modifier.padding(start = 40.dp)
+            )
+            Spacer(modifier = Modifier.width(5.dp))
+            Checkbox(checked = isThursday,
+                onCheckedChange ={isThursday = it},
+                modifier = Modifier
+                    .size(30.dp),
+                enabled = true,
+                colors = CheckboxDefaults.colors(
+                    checkedColor = Color(0xFFC8E3ED),
+                    uncheckedColor = Color(0xFFC8E3ED),
+                    checkmarkColor = Color.Black
+                ))
+        }
     }
 }
