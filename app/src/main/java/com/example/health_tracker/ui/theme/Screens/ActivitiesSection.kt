@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,10 +31,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -51,12 +55,16 @@ import com.example.health_tracker.R
 @Composable
 fun ActivitiesScreen(){
     val gradientColors = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
+    val greyscaleMatrix = ColorMatrix().apply {
+        setToSaturation(1f)
+    }
     var searchText by remember { mutableStateOf("") }
     val yourCardDataList = listOf(
         "Push Day",
         "Pull Day",
         "Leg Day"
     )
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -69,7 +77,7 @@ fun ActivitiesScreen(){
         TextField(value = searchText,
             onValueChange ={searchText = it},
             modifier = Modifier
-                .padding(start = 45.dp, top = 20.dp)
+                .padding(start = 55.dp, top = 40.dp)
                 .background(
                     color = Color.White,
                     shape = RoundedCornerShape(20.dp)
@@ -120,98 +128,142 @@ fun ActivitiesScreen(){
                 modifier = Modifier
                     .fillMaxSize()
             ) {
+
                 items(yourCardDataList){
                     cardData ->
-                    Card(
+                    Row(
                         modifier = Modifier
-                            .padding(start = 16.dp, top = 20.dp)
-                            .shadow(
-                                elevation = 20.dp,
-                                shape = RoundedCornerShape(12.dp),
-                                spotColor = Color.Black
-                            )
-                            .width(297.dp)
-                            .height(72.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFFC8E3ED))
-                    ) {
-                        Text(text = "Push Day",
-                            style = TextStyle(
-                                color = Color.Black,
-                                fontSize = 16.sp,
-                            ),
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+                        Card(
                             modifier = Modifier
-                                .padding(start = 20.dp, top = 10.dp))
-                        Spacer(modifier = Modifier.height(3.dp))
+                                .padding(start = 16.dp, top = 20.dp)
+                                .shadow(
+                                    elevation = 20.dp,
+                                    shape = RoundedCornerShape(12.dp),
+                                    spotColor = Color.Black
+                                )
+                                .width(297.dp)
+                                .height(72.dp),
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFFC8E3ED))
+                        ) {
+                            Text(text = "Push Day",
+                                style = TextStyle(
+                                    color = Color.Black,
+                                    fontSize = 16.sp,
+                                ),
+                                modifier = Modifier
+                                    .padding(start = 20.dp, top = 10.dp))
+                            Spacer(modifier = Modifier.height(3.dp))
 
-                        Text(text = "Incline Bench Press",
-                            style = TextStyle(
-                                color = Color.Black,
-                                fontSize = 10.sp,
-                            ),
+                            Text(text = "Incline Bench Press",
+                                style = TextStyle(
+                                    color = Color.Black,
+                                    fontSize = 10.sp,
+                                ),
+                                modifier = Modifier
+                                    .padding(start = 20.dp, top = 5.dp)
+                            )
+                        }
+
+                        Image(painter = painterResource(id = R.drawable.remove_4),
+                            contentDescription = "Remove button",
+                            colorFilter = ColorFilter.colorMatrix(greyscaleMatrix),
                             modifier = Modifier
-                                .padding(start = 20.dp, top = 5.dp)
+                                .padding(start = 30.dp, top = 20.dp)
+                                .size(30.dp)
+                                .clickable {
+
+                                }
                         )
                     }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Card(
-                        modifier = Modifier
-                            .padding(start = 16.dp, top = 20.dp)
-                            .shadow(
-                                elevation = 20.dp,
-                                shape = RoundedCornerShape(12.dp),
-                                spotColor = Color.Black
-                            )
-                            .width(297.dp)
-                            .height(72.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFFC8E3ED))
-                    ) {
-                        Text(text = "Pull Day",
-                            style = TextStyle(
-                                color = Color.Black,
-                                fontSize = 16.sp,
-                            ),
-                            modifier = Modifier
-                                .padding(start = 20.dp, top = 10.dp))
-                        Spacer(modifier = Modifier.height(3.dp))
 
-                        Text(text = "Lat Pulldown",
-                            style = TextStyle(
-                                color = Color.Black,
-                                fontSize = 10.sp,
-                            ),
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+
+
+                        Card(
                             modifier = Modifier
-                                .padding(start = 20.dp, top = 5.dp)
+                                .padding(start = 16.dp, top = 20.dp)
+                                .shadow(
+                                    elevation = 20.dp,
+                                    shape = RoundedCornerShape(12.dp),
+                                    spotColor = Color.Black
+                                )
+                                .width(297.dp)
+                                .height(72.dp),
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFFC8E3ED))
+                        ) {
+                            Text(text = "Pull Day",
+                                style = TextStyle(
+                                    color = Color.Black,
+                                    fontSize = 16.sp,
+                                ),
+                                modifier = Modifier
+                                    .padding(start = 20.dp, top = 10.dp))
+                            Spacer(modifier = Modifier.height(3.dp))
+
+                            Text(text = "Lat Pulldown",
+                                style = TextStyle(
+                                    color = Color.Black,
+                                    fontSize = 10.sp,
+                                ),
+                                modifier = Modifier
+                                    .padding(start = 20.dp, top = 5.dp)
+                            )
+                        }
+
+                        Image(painter = painterResource(id = R.drawable.remove_4),
+                            contentDescription = "Remove button",
+                            colorFilter = ColorFilter.colorMatrix(greyscaleMatrix),
+                            modifier = Modifier
+                                .padding(start = 30.dp, top = 20.dp)
+                                .size(30.dp)
                         )
                     }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Card(
-                        modifier = Modifier
-                            .padding(start = 16.dp, top = 20.dp)
-                            .shadow(
-                                elevation = 20.dp,
-                                shape = RoundedCornerShape(12.dp),
-                                spotColor = Color.Black
-                            )
-                            .width(297.dp)
-                            .height(72.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFFC8E3ED))
-                    ) {
-                        Text(text = "Leg Day",
-                            style = TextStyle(
-                                color = Color.Black,
-                                fontSize = 16.sp,
-                            ),
+                    Row(modifier = Modifier
+                        .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically){
+                        Card(
                             modifier = Modifier
-                                .padding(start = 20.dp, top = 10.dp))
-                        Spacer(modifier = Modifier.height(3.dp))
+                                .padding(start = 16.dp, top = 20.dp)
+                                .shadow(
+                                    elevation = 20.dp,
+                                    shape = RoundedCornerShape(12.dp),
+                                    spotColor = Color.Black
+                                )
+                                .width(297.dp)
+                                .height(72.dp),
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFFC8E3ED))
+                        ) {
+                            Text(text = "Leg Day",
+                                style = TextStyle(
+                                    color = Color.Black,
+                                    fontSize = 16.sp,
+                                ),
+                                modifier = Modifier
+                                    .padding(start = 20.dp, top = 10.dp))
+                            Spacer(modifier = Modifier.height(3.dp))
 
-                        Text(text = "Leg Press",
-                            style = TextStyle(
-                                color = Color.Black,
-                                fontSize = 10.sp,
-                            ),
+                            Text(text = "Leg Press",
+                                style = TextStyle(
+                                    color = Color.Black,
+                                    fontSize = 10.sp,
+                                ),
+                                modifier = Modifier
+                                    .padding(start = 20.dp, top = 5.dp)
+                            )
+                        }
+                        Image(painter = painterResource(id = R.drawable.remove_4),
+                            contentDescription = "Remove button",
+                            colorFilter = ColorFilter.colorMatrix(greyscaleMatrix),
                             modifier = Modifier
-                                .padding(start = 20.dp, top = 5.dp)
+                                .padding(start = 30.dp, top = 20.dp)
+                                .size(30.dp)
                         )
                     }
                 }
