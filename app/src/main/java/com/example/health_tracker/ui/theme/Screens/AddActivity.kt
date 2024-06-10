@@ -3,6 +3,7 @@ package com.example.health_tracker.ui.theme.Screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -36,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -127,6 +129,7 @@ fun AddActivityScreen(){
                 brush = Brush.verticalGradient(gradientColors)
             )
     ) {
+
         // Search bar
         TextField(value = searchText,
             onValueChange ={searchText = it},
@@ -344,9 +347,67 @@ fun AddActivityScreen(){
                 fontSize = 30.sp
             ),
             modifier = Modifier.padding(start = 40.dp))
+        
         //Exercise list
         Checklist(items = exercises)
 
+        //Buttons
+        Column(
+            modifier = Modifier
+                .padding(start = 200.dp)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top,
+        ) {
+            Button(onClick = { /*TODO*/ },
+                colors = ButtonColors(
+                    containerColor = Color(0xFFC8E3ED),
+                    contentColor = Color.Black,
+                    disabledContainerColor = Color(0xFFC8E3ED),
+                    disabledContentColor = Color.Black),
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp),
+                modifier = Modifier
+
+            ) {
+                Text(
+                    text = "Turn Back",
+                    style = TextStyle(
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+                Image(painter = painterResource(id = R.drawable.turn_back_1),
+                    contentDescription ="Turn Back icon" ,
+                    modifier = Modifier
+                        .padding(start = 10.dp)
+                        .size(15.dp))
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            Button(onClick = { /*TODO*/ },
+                colors = ButtonColors(
+                    containerColor = Color(0xFFC8E3ED),
+                    contentColor = Color.Black,
+                    disabledContainerColor = Color(0xFFC8E3ED),
+                    disabledContentColor = Color.Black),
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp),
+                modifier = Modifier
+                    .padding(start = 35.dp)
+
+            ) {
+                Text(
+                    text = "Save",
+                    style = TextStyle(
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+                Image(painter = painterResource(id = R.drawable.diskette_1),
+                    contentDescription ="Save diskette icon",
+                    modifier = Modifier
+                        .padding(start = 10.dp)
+                        .size(15.dp))
+            }
+        }
 
     }
 }
