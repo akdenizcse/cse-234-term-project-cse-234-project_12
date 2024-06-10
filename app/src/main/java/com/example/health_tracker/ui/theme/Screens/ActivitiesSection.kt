@@ -4,6 +4,7 @@ import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -117,6 +122,7 @@ fun ActivitiesScreen(){
         Spacer(modifier = Modifier.height(5.dp))
 
         Box(modifier = Modifier
+            .height(450.dp)
             .fillMaxSize()
             .border(
                 width = 2.dp,
@@ -126,7 +132,8 @@ fun ActivitiesScreen(){
 
             LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .height(450.dp)
+                    .fillMaxWidth()
             ) {
 
                 items(yourCardDataList){
@@ -171,11 +178,11 @@ fun ActivitiesScreen(){
                             contentDescription = "Remove button",
                             colorFilter = ColorFilter.colorMatrix(greyscaleMatrix),
                             modifier = Modifier
-                                .padding(start = 30.dp, top = 20.dp)
-                                .size(30.dp)
                                 .clickable {
 
                                 }
+                                .padding(start = 30.dp, top = 20.dp)
+                                .size(30.dp)
                         )
                     }
 
@@ -269,5 +276,27 @@ fun ActivitiesScreen(){
                 }
             }
         }
+        Spacer(modifier = Modifier.height(40.dp))
+
+        Button(onClick = { /*TODO*/ },
+            colors = ButtonColors(
+                containerColor = Color(0xFFC8E3ED),
+                contentColor = Color.Black,
+                disabledContainerColor = Color(0xFFC8E3ED),
+                disabledContentColor = Color.Black),
+            elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp),
+            modifier = Modifier
+                .padding(start = 15.dp)
+        ) {
+            Text(
+                text = "Activity History",
+                style = TextStyle(
+                    fontSize = 13.sp
+                )
+            )
+        }
+
     }
 }
+
+
