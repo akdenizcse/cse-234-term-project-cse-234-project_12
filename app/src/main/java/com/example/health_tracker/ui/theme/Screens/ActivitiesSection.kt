@@ -278,24 +278,32 @@ fun ActivitiesScreen(){
         }
         Spacer(modifier = Modifier.height(40.dp))
 
-        Button(onClick = { /*TODO*/ },
-            colors = ButtonColors(
-                containerColor = Color(0xFFC8E3ED),
-                contentColor = Color.Black,
-                disabledContainerColor = Color(0xFFC8E3ED),
-                disabledContentColor = Color.Black),
-            elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp),
-            modifier = Modifier
-                .padding(start = 15.dp)
-        ) {
-            Text(
-                text = "Activity History",
-                style = TextStyle(
-                    fontSize = 13.sp
+        Row (){
+            Button(onClick = { /*TODO*/ },
+                colors = ButtonColors(
+                    containerColor = Color(0xFFC8E3ED),
+                    contentColor = Color.Black,
+                    disabledContainerColor = Color(0xFFC8E3ED),
+                    disabledContentColor = Color.Black),
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp),
+                modifier = Modifier
+                    .padding(start = 15.dp)
+            ) {
+                Text(
+                    text = "Activity History",
+                    style = TextStyle(
+                        fontSize = 13.sp
+                    )
                 )
-            )
-        }
+            }
+            Spacer(modifier = Modifier.width(170.dp))
 
+            Image(painter = painterResource(id = R.drawable.add),
+                contentDescription = "Add button",
+                modifier = Modifier
+                    .clickable {  }
+                    .size(50.dp))
+        }
     }
 }
 
