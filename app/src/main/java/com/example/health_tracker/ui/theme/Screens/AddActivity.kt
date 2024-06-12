@@ -1,5 +1,7 @@
 package com.example.health_tracker.ui.theme.Screens
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -34,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -41,14 +44,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.health_tracker.HealthTrackerScreen
+import com.example.health_tracker.MainPart
 import com.example.health_tracker.R
 
-@Preview(
-    showBackground = true,
-    showSystemUi = true
-)
+
 @Composable
-fun AddActivityScreen(){
+fun AddActivityScreen(
+    navController: NavController
+){
     val gradientColors = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
 
     var searchText by remember { mutableStateOf("") }
@@ -60,67 +65,9 @@ fun AddActivityScreen(){
     var isTuesday by remember { mutableStateOf(false) }
     var isThursday by remember { mutableStateOf(false) }
     var isWednesday by remember { mutableStateOf(false) }
-    //var savedItems by remember {mutableStateOf(emptyList<Item>())}
-    val exercises = listOf(
-        "Arnold Press",
-        "Back Extention",
-        "Barbell Bench Press",
-        "Barbell Biceps Curl",
-        "Cable Fly",
-        "Deadlift",
-        "Dumbell Fly",
-        "Barbell bent-over row",
-        "Barbell shoulder press",
-        "Barbell shrug",
-        "Cable lateral raise",
-        "Cable pull-down",
-        "Chest fly",
-        "Chin up",
-        "Close-grip pull-up",
-        "Crunch",
-        "Decline bench press",
-        "Diamond push-up",
-        "Dumbell bench press",
-        "Dumbell biceps curl",
-        "Dumbell bent-over row",
-        "Dumbell lateral raise",
-        "Dumbell shoulder press",
-        "Dumbell shrug",
-        "Good morning",
-        "Hanging leg raise",
-        "Hyperextension",
-        "Incline bench press",
-        "Lat pull-down",
-        "Leg curl",
-        "Leg extension",
-        "Leg press",
-        "Leg raise",
-        "Lunge",
-        "Narrow-grip push-up",
-        "Neck curl",
-        "Overhead triceps extension",
-        "Preacher curl",
-        "Pull-down",
-        "Pull-up",
-        "Push-up",
-        "Reverse grip pull-down",
-        "Reverse grip push-down",
-        "Roman chair leg raise",
-        "Romanian deadlift",
-        "Russian twist",
-        "Seated calf raise",
-        "Shoulder shrug",
-        "Squat",
-        "Standing calf raise",
-        "T-bar row",
-        "Triceps dip",
-        "Triceps extension",
-        "Triceps push-down",
-        "Upright row",
-        "Weighted Russian twist",
-        "Wide-grip pull-up",
-        "Wide-grip push-up"
-    )
+    var savedExercise by remember { mutableStateOf(emptyList<String>()) }
+
+
 
     Column(
         modifier = Modifier
@@ -350,7 +297,9 @@ fun AddActivityScreen(){
             modifier = Modifier.padding(start = 40.dp))
         
         //Exercise list
-        Checklist(items = exercises)
+        Checklist(items = exercises){checkedItems ->
+            savedExercise = checkedItems
+        }
 
         //Buttons
         Column(
@@ -361,7 +310,7 @@ fun AddActivityScreen(){
             verticalArrangement = Arrangement.Top,
         ) {
             //Turn Back Button
-            Button(onClick = { /*TODO*/ },
+            Button(onClick = { navController.navigate(HealthTrackerScreen.Main.name) },
                 colors = ButtonColors(
                     containerColor = Color(0xFFC8E3ED),
                     contentColor = Color.Black,
@@ -369,6 +318,7 @@ fun AddActivityScreen(){
                     disabledContentColor = Color.Black),
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp),
                 modifier = Modifier
+
 
             ) {
                 Text(
@@ -384,16 +334,45 @@ fun AddActivityScreen(){
                         .padding(start = 10.dp)
                         .size(15.dp))
             }
-            Spacer(modifier = Modifier.height(10.dp))
+//            Spacer(modifier = Modifier.height(10.dp))
             //Save Button
-
+//            Button(onClick = {
+//
+//            },
+//                colors = ButtonColors(
+//                    containerColor = Color(0xFFC8E3ED),
+//                    contentColor = Color.Black,
+//                    disabledContainerColor = Color(0xFFC8E3ED),
+//                    disabledContentColor = Color.Black),
+//                elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp),
+//                modifier = Modifier
+//                    .padding(start = 35.dp)
+//
+//            ) {
+//                Text(
+//                    text = "Save",
+//                    style = TextStyle(
+//                        fontSize = 13.sp,
+//                        fontWeight = FontWeight.Bold
+//                    )
+//                )
+//                Image(painter = painterResource(id = R.drawable.diskette_1),
+//                    contentDescription ="Save diskette icon",
+//                    modifier = Modifier
+//                        .padding(start = 10.dp)
+//                        .size(15.dp))
+//            }
         }
 
     }
 }
+
 //Exercise List maker function
 @Composable
-fun Checklist(items: List<String>) {
+fun Checklist(
+    items: List<String>,
+    onCheckedItemsSaved: (List<String>) -> Unit,
+) {
     val checkedStates = remember { mutableStateListOf(*items.map { false }.toTypedArray()) }
 
     LazyColumn(
@@ -429,4 +408,103 @@ fun Checklist(items: List<String>) {
             }
         }
     }
+
+
+    Spacer(modifier = Modifier.height(20.dp))
+    fun ToastMessage(context: Context){
+        Toast.makeText(context, "No items selected to save", Toast.LENGTH_LONG).show()
+    }
+    val context = LocalContext.current
+
+    Button(onClick = {
+        val checkedItems = items.filterIndexed { index, _ -> checkedStates[index] }
+        if(checkedItems.isNotEmpty()){
+            onCheckedItemsSaved(checkedItems)
+        }else{
+            ToastMessage(context = context)
+        }
+
+    },
+        colors = ButtonColors(
+                    containerColor = Color(0xFFC8E3ED),
+                    contentColor = Color.Black,
+                    disabledContainerColor = Color(0xFFC8E3ED),
+                    disabledContentColor = Color.Black),
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp),
+                modifier = Modifier
+                    .padding(start = 260.dp)){
+        Text(
+                    text = "Save",
+                    style = TextStyle(
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+                Image(painter = painterResource(id = R.drawable.diskette_1),
+                    contentDescription ="Save diskette icon",
+                    modifier = Modifier
+                        .padding(start = 10.dp)
+                        .size(15.dp))
+    }
 }
+
+val exercises = listOf(
+    "Arnold Press",
+    "Back Extention",
+    "Barbell Bench Press",
+    "Barbell Biceps Curl",
+    "Cable Fly",
+    "Deadlift",
+    "Dumbell Fly",
+    "Barbell bent-over row",
+    "Barbell shoulder press",
+    "Barbell shrug",
+    "Cable lateral raise",
+    "Cable pull-down",
+    "Chest fly",
+    "Chin up",
+    "Close-grip pull-up",
+    "Crunch",
+    "Decline bench press",
+    "Diamond push-up",
+    "Dumbell bench press",
+    "Dumbell biceps curl",
+    "Dumbell bent-over row",
+    "Dumbell lateral raise",
+    "Dumbell shoulder press",
+    "Dumbell shrug",
+    "Good morning",
+    "Hanging leg raise",
+    "Hyperextension",
+    "Incline bench press",
+    "Lat pull-down",
+    "Leg curl",
+    "Leg extension",
+    "Leg press",
+    "Leg raise",
+    "Lunge",
+    "Narrow-grip push-up",
+    "Neck curl",
+    "Overhead triceps extension",
+    "Preacher curl",
+    "Pull-down",
+    "Pull-up",
+    "Push-up",
+    "Reverse grip pull-down",
+    "Reverse grip push-down",
+    "Roman chair leg raise",
+    "Romanian deadlift",
+    "Russian twist",
+    "Seated calf raise",
+    "Shoulder shrug",
+    "Squat",
+    "Standing calf raise",
+    "T-bar row",
+    "Triceps dip",
+    "Triceps extension",
+    "Triceps push-down",
+    "Upright row",
+    "Weighted Russian twist",
+    "Wide-grip pull-up",
+    "Wide-grip push-up"
+)

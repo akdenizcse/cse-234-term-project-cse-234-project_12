@@ -51,14 +51,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.R
 
-@Preview(
-    showBackground = true,
-    showSystemUi = true
-)
+
 @Composable
-fun ActivityHistoryScreen(){
+fun ActivityHistoryScreen(
+    navController: NavController
+){
     val gradientColors = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
     val greyscaleMatrix = ColorMatrix().apply {
         setToSaturation(1f)
@@ -281,7 +282,7 @@ fun ActivityHistoryScreen(){
         Row (
 
         ){
-            Button(onClick = { /*TODO*/ },
+            Button(onClick = { navController.navigate(HealthTrackerScreen.Main.name) },
                 colors = ButtonColors(
                     containerColor = Color(0xFFC8E3ED),
                     contentColor = Color.Black,

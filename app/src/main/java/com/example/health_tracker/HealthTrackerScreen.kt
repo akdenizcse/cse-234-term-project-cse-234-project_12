@@ -35,7 +35,10 @@ enum class HealthTrackerScreen(@StringRes val title: Int) {
     Login(title = R.string.login),
     SignUp(title = R.string.sign_up),
     ForgetPassword(title = R.string.forget_password),
-    Main(title = R.string.entry)
+    Main(title = R.string.entry),
+    ActivityMain(R.string.activities),
+    ActivityHistory(R.string.activitiesHistory),
+    AddActivity(R.string.addActivity)
 }
 
 enum class MainPart(@StringRes val title: Int){
@@ -58,7 +61,9 @@ data class BottomNavigationItem(
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainPart(context: Context){
+fun MainPart(context: Context
+    navController: NavController
+){
 //    val items = listOf(
 //        BottomNavigationItem(
 //            title = R.string.activities,
@@ -155,12 +160,13 @@ fun MainPart(context: Context){
                 }
             }
         ) {
+
             when (selectedUserSelection) {
                 MainPart.Tracker -> TrackerSection(context)
-                MainPart.Activities -> ActivitiesScreen()
+                MainPart.Activities -> ActivitiesScreen(navController)
                 MainPart.Health -> HealthSection()
                 MainPart.Profile -> ProfilePage()
-                else -> HealthSection()
+                else -> ActivitiesScreen(navController)
             }
             
         }

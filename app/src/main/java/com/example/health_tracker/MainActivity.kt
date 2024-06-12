@@ -20,9 +20,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.health_tracker.data.checkForPermission
 import com.example.health_tracker.ui.theme.Health_TrackerTheme
+import com.example.health_tracker.ui.theme.Screens.ActivitiesScreen
+import com.example.health_tracker.ui.theme.Screens.ActivityHistoryScreen
 import com.example.health_tracker.ui.theme.Screens.AddActivityScreen
 import com.example.health_tracker.ui.theme.Screens.ForgotPassword
-import com.example.health_tracker.ui.theme.Screens.HealthSection
 import com.example.health_tracker.ui.theme.Screens.LocationPermissionScreen
 import com.example.health_tracker.ui.theme.Screens.LoginForm
 import com.example.health_tracker.ui.theme.Screens.ProfilePage
