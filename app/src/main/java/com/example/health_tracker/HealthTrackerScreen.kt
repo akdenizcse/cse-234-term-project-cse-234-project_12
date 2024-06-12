@@ -61,7 +61,7 @@ data class BottomNavigationItem(
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainPart(context: Context
+fun MainPart(context: Context,
     navController: NavController
 ){
 //    val items = listOf(

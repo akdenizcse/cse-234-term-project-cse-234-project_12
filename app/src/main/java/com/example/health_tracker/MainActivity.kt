@@ -76,7 +76,15 @@ class MainActivity : ComponentActivity() {
                             }
 
                             composable(HealthTrackerScreen.Main.name) {
-                                MainPart(context = this@MainActivity)
+                                MainPart(context = this@MainActivity, navController = navController)
+                            }
+
+                            composable(HealthTrackerScreen.ActivityHistory.name) {
+                                ActivityHistoryScreen(navController = navController)
+                            }
+
+                            composable(HealthTrackerScreen.AddActivity.name) {
+                                AddActivityScreen(navController = navController)
                             }
                         }
                     } else {
