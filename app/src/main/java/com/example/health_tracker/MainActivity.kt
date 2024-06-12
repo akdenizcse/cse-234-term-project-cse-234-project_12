@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.health_tracker.ui.theme.Health_TrackerTheme
+import com.example.health_tracker.ui.theme.Screens.AddActivityScreen
 import com.example.health_tracker.ui.theme.Screens.ForgotPassword
 import com.example.health_tracker.ui.theme.Screens.HealthSection
 import com.example.health_tracker.ui.theme.Screens.LoginForm
@@ -33,29 +34,30 @@ class MainActivity : ComponentActivity() {
         setContent {
             Health_TrackerTheme {
 
-                val navController = rememberNavController()
-                val backStackEntry by navController.currentBackStackEntryAsState()
-                val currentScreen = HealthTrackerScreen.valueOf(
-                    backStackEntry?.destination?.route ?: HealthTrackerScreen.Login.name
-                )
-
-                NavHost(navController = navController, startDestination = HealthTrackerScreen.Login.name) {
-                    composable(HealthTrackerScreen.Login.name){
-                        LoginForm(navController = navController)
-                    }
-
-                    composable(HealthTrackerScreen.SignUp.name){
-                        SignUp(navController = navController)
-                    }
-
-                    composable(HealthTrackerScreen.ForgetPassword.name){
-                        ForgotPassword(navController = navController)
-                    }
-
-                    composable(HealthTrackerScreen.Main.name){
-                        MainPart()
-                    }
-                }
+//                val navController = rememberNavController()
+//                val backStackEntry by navController.currentBackStackEntryAsState()
+//                val currentScreen = HealthTrackerScreen.valueOf(
+//                    backStackEntry?.destination?.route ?: HealthTrackerScreen.Login.name
+//                )
+//
+//                NavHost(navController = navController, startDestination = HealthTrackerScreen.Login.name) {
+//                    composable(HealthTrackerScreen.Login.name){
+//                        LoginForm(navController = navController)
+//                    }
+//
+//                    composable(HealthTrackerScreen.SignUp.name){
+//                        SignUp(navController = navController)
+//                    }
+//
+//                    composable(HealthTrackerScreen.ForgetPassword.name){
+//                        ForgotPassword(navController = navController)
+//                    }
+//
+//                    composable(HealthTrackerScreen.Main.name){
+//                        MainPart()
+//                    }
+//                }
+                AddActivityScreen()
             }
         }
     }

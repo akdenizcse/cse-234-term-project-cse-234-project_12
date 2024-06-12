@@ -60,6 +60,7 @@ fun AddActivityScreen(){
     var isTuesday by remember { mutableStateOf(false) }
     var isThursday by remember { mutableStateOf(false) }
     var isWednesday by remember { mutableStateOf(false) }
+    var savedItems by remember {mutableStateOf(emptyList<Item>())}
     val exercises = listOf(
         "Arnold Press",
         "Back Extention",
@@ -359,6 +360,7 @@ fun AddActivityScreen(){
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
         ) {
+            //Turn Back Button
             Button(onClick = { /*TODO*/ },
                 colors = ButtonColors(
                     containerColor = Color(0xFFC8E3ED),
@@ -383,7 +385,10 @@ fun AddActivityScreen(){
                         .size(15.dp))
             }
             Spacer(modifier = Modifier.height(10.dp))
-            Button(onClick = { /*TODO*/ },
+            //Save Button
+            Button(onClick = {
+
+            },
                 colors = ButtonColors(
                     containerColor = Color(0xFFC8E3ED),
                     contentColor = Color.Black,

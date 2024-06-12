@@ -24,7 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.health_tracker.ui.theme.Screens.Activities
+import com.example.health_tracker.ui.theme.Screens.ActivitiesScreen
 import com.example.health_tracker.ui.theme.Screens.HealthSection
 import com.example.health_tracker.ui.theme.Screens.ProfilePage
 import com.example.health_tracker.ui.theme.Screens.TrackerSection
@@ -156,7 +156,7 @@ fun MainPart(){
         ) {
             when (selectedUserSelection) {
                 MainPart.Tracker -> TrackerSection()
-                MainPart.Activities -> Activities()
+                MainPart.Activities -> ActivitiesScreen()
                 MainPart.Health -> HealthSection()
                 MainPart.Profile -> ProfilePage()
                 else -> HealthSection()
