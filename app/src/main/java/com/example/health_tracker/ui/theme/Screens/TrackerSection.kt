@@ -1,5 +1,18 @@
 package com.example.health_tracker.ui.theme.Screens
 
+import android.Manifest
+import android.content.Context
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -21,12 +34,19 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -37,33 +57,48 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
+import com.example.health_tracker.MainActivity
 import com.example.health_tracker.R
+import com.example.health_tracker.data.checkForPermission
+import com.example.health_tracker.data.getCurrentLocation
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.rememberCameraPositionState
 
 
-@Preview(showSystemUi = true)
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun TrackerSection() {
-    val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
-    val antalya = LatLng(36.8858, 30.7026)
-    val antalyaState = MarkerState(position = antalya)
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(antalya, 13f)
+fun TrackerSection(context: Context) {
+    var showMap by remember { mutableStateOf(false) }
+    var location by remember { mutableStateOf(LatLng(0.0, 0.0)) }
+
+        getCurrentLocation(context) {
+        location = it
+        showMap = true
     }
+    Log.d("LOCATION", location.toString())
+
+    val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(location, 2f)
+    }
+    Log.d("position", cameraPositionState.toString())
+
     Column(
         modifier = Modifier
             .background(brush = Brush.verticalGradient(colors = colors1))
             .padding(top = 100.dp)
-            .fillMaxSize(), verticalArrangement = Arrangement.spacedBy(35.dp, alignment = Alignment.Top), horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(35.dp, alignment = Alignment.Top),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Column {
-            Card (
+            Card(
                 colors = CardDefaults.cardColors(
                     containerColor = Color(0xFFC8E3ED)
                 ),
@@ -124,33 +159,38 @@ fun TrackerSection() {
                     .align(Alignment.CenterHorizontally)
             ) {
                 Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                    if(checkForPermission(context)){
+                        Log.d("Do we get error from here", "No error")
 
-                    GoogleMap(
-                        modifier = Modifier
-                            .wrapContentSize(Alignment.Center)
-                            .border(
-                                width = 1.dp,
-                                color = Color(0xFFC8E3ED),
-                                shape = RoundedCornerShape(10.dp)
-                            )
-                        ,
-                        cameraPositionState = cameraPositionState,
-                    ) {
-                        Circle(
-                            center = antalya,
-                            clickable = false,
-                            fillColor = Color.Red,
-                            radius = 50.0,
-                            strokeColor = Color.Red,
-                            strokePattern = null,
-                            strokeWidth = 1f,
-                            tag = "Circle",
-                            visible = true,
-                            zIndex = 1f,
-                            onClick = { /*TODO*/ }
+                        GoogleMap(
+                            modifier = Modifier
+                                .wrapContentSize(Alignment.Center)
+                                .border(
+                                    width = 1.dp,
+                                    color = Color(0xFFC8E3ED),
+                                    shape = RoundedCornerShape(10.dp)
+                                ),
+                            cameraPositionState = cameraPositionState,
 
-                        )
+                            ) {
 
+                            Circle(
+                                center = location,
+                                clickable = false,
+                                fillColor = Color.Red,
+                                radius = 50.0,
+                                strokeColor = Color.Red,
+                                strokePattern = null,
+                                strokeWidth = 1f,
+                                tag = "Circle",
+                                visible = true,
+                                zIndex = 1f,
+                                onClick = { },
+
+
+                                )
+
+                        }
                     }
                 }
             }

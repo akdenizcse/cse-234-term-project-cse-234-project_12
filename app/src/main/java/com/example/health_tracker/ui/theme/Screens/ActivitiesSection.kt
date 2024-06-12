@@ -59,6 +59,7 @@ import com.example.health_tracker.R
 )
 @Composable
 fun ActivitiesScreen(){
+
     val gradientColors = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
     val greyscaleMatrix = ColorMatrix().apply {
         setToSaturation(1f)

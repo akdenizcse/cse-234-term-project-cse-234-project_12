@@ -60,7 +60,7 @@ fun AddActivityScreen(){
     var isTuesday by remember { mutableStateOf(false) }
     var isThursday by remember { mutableStateOf(false) }
     var isWednesday by remember { mutableStateOf(false) }
-    var savedItems by remember {mutableStateOf(emptyList<Item>())}
+    //var savedItems by remember {mutableStateOf(emptyList<Item>())}
     val exercises = listOf(
         "Arnold Press",
         "Back Extention",
@@ -386,32 +386,7 @@ fun AddActivityScreen(){
             }
             Spacer(modifier = Modifier.height(10.dp))
             //Save Button
-            Button(onClick = {
 
-            },
-                colors = ButtonColors(
-                    containerColor = Color(0xFFC8E3ED),
-                    contentColor = Color.Black,
-                    disabledContainerColor = Color(0xFFC8E3ED),
-                    disabledContentColor = Color.Black),
-                elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp),
-                modifier = Modifier
-                    .padding(start = 35.dp)
-
-            ) {
-                Text(
-                    text = "Save",
-                    style = TextStyle(
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-                Image(painter = painterResource(id = R.drawable.diskette_1),
-                    contentDescription ="Save diskette icon",
-                    modifier = Modifier
-                        .padding(start = 10.dp)
-                        .size(15.dp))
-            }
         }
 
     }

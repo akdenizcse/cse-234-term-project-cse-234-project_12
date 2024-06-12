@@ -1,6 +1,7 @@
 package com.example.health_tracker
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -57,7 +58,7 @@ data class BottomNavigationItem(
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainPart(){
+fun MainPart(context: Context){
 //    val items = listOf(
 //        BottomNavigationItem(
 //            title = R.string.activities,
@@ -155,7 +156,7 @@ fun MainPart(){
             }
         ) {
             when (selectedUserSelection) {
-                MainPart.Tracker -> TrackerSection()
+                MainPart.Tracker -> TrackerSection(context)
                 MainPart.Activities -> ActivitiesScreen()
                 MainPart.Health -> HealthSection()
                 MainPart.Profile -> ProfilePage()
