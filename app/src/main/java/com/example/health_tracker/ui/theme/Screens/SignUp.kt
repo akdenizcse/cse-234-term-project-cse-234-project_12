@@ -48,6 +48,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -69,7 +70,6 @@ fun SignUp(
     //Temporary Values For Holding The UI
     var firebase: Firebase by remember { mutableStateOf(Firebase) }
     var password by remember { mutableStateOf("") }
-    var passwordVisible by rememberSaveable { mutableStateOf(false) }
     var email by remember { mutableStateOf("") }
     var currentUser by remember { mutableStateOf<FirebaseUser?>(firebase.auth.currentUser) }
     val db = Firebase.firestore
@@ -172,6 +172,7 @@ fun SignUp(
             onValueChange = { password = it },
             leadingIcon = { Icon(Icons.Default.Lock, null) },
             shape = RoundedCornerShape(15.dp),
+            visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier
                 .padding(horizontal = 4.dp)
                 .width(300.dp)

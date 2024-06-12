@@ -41,6 +41,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -132,6 +133,7 @@ fun LoginForm(
             value = password,
             onValueChange = { password = it },
             leadingIcon = { Icon(Icons.Default.Lock, null) },
+            visualTransformation = PasswordVisualTransformation(),
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier
                 .padding(horizontal = 4.dp)
