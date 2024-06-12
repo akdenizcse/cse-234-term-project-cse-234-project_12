@@ -43,5 +43,7 @@
     <string name="entry">Entry</string>
     <string name="activitiesHistory">Activity History</string>
     <string name="addActivity">Add Activity</string>
+    <string name="profileSetting">Set Settings\n</string>
+    <string name="turn_back">Turn Back\n</string>
 
 </resources>

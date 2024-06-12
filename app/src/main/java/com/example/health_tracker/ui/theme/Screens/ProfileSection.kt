@@ -1,7 +1,10 @@
 package com.example.health_tracker.ui.theme.Screens
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.text.Layout
+import android.net.Uri
+import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsClient.getPackageName
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,9 +13,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -21,12 +22,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -36,15 +39,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
-import com.example.health_tracker.MainPart
+import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.R
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+
 
 @Composable
-fun ProfilePage(){
+fun ProfilePage(navController: NavController){
     val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
 //Background
     Column(
@@ -54,15 +60,18 @@ fun ProfilePage(){
             brush = Brush.verticalGradient(colors = colors1)
         )
 ) {
-        InformationBox()
+        InformationBox(navController)
 }
 }
 
 @Composable
-fun InformationBox(){
+fun InformationBox(navController: NavController){
+    var firebase: Firebase by remember { mutableStateOf(Firebase) }
     val ctx = LocalContext.current
     val ashColor = Color(0xFF79747E)
-Column(modifier = Modifier.fillMaxSize().padding(top = 50.dp), verticalArrangement = Arrangement.spacedBy(50.dp)) {
+Column(modifier = Modifier
+    .fillMaxSize()
+    .padding(top = 50.dp), verticalArrangement = Arrangement.spacedBy(50.dp)) {
 
     //InformationBox
     Card(
@@ -254,13 +263,16 @@ Column(modifier = Modifier.fillMaxSize().padding(top = 50.dp), verticalArrangeme
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            Column(modifier = Modifier.align(Alignment.TopStart).padding(top = 30.dp)) {
+            Column(modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(top = 20.dp)) {
                 Text(
                     text = "Change Profile Settings",
                     modifier = Modifier
                         .clickable(
                             onClickLabel = "Open change profile settings"
                         ) {
+                            navController.navigate(HealthTrackerScreen.ProfileSetting.name)
                         }
                         .padding(start = 60.dp, bottom = 10.dp)
                         .then(Modifier.drawBehind {
@@ -288,7 +300,19 @@ Column(modifier = Modifier.fillMaxSize().padding(top = 50.dp), verticalArrangeme
                     text = "Rate And Comment",
                     modifier = Modifier
                         .clickable(onClickLabel = "Open rate and comment") {
-
+                            try {
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" ))
+                                intent.setPackage("com.android.vending")
+                                /*
+                                 This will automatically not work because
+                                 we are not on Google Play Store, If we were,
+                                 we could implement it like this.
+                                */
+                                Toast.makeText(ctx, "Unable to find play store", Toast.LENGTH_LONG).show()
+                                //This one is temporary because it won't create an exception for now!
+                            } catch (e: ActivityNotFoundException) {
+                                Toast.makeText(ctx, "Unable to find play store", Toast.LENGTH_LONG).show()
+                            }
                         }
                         .padding(start = 60.dp, bottom = 10.dp)
                         .then(Modifier.drawBehind {
@@ -317,7 +341,13 @@ Column(modifier = Modifier.fillMaxSize().padding(top = 50.dp), verticalArrangeme
                     color = Color.Black,
                     modifier = Modifier
                         .clickable(onClickLabel = "Open share with friends") {
-
+                            val shareIntent = Intent().apply {
+                                action = Intent.ACTION_SEND
+                                putExtra(Intent.EXTRA_TEXT, "I am using Health Tracker, you should try it too! It's called Solstice!")
+                                type = "text/plain"
+                            }
+                            val chooser = Intent.createChooser(shareIntent, "Share with")
+                            ctx.startActivity(chooser)
                         }
 
                         .padding(start = 60.dp, bottom = 10.dp)
@@ -348,10 +378,10 @@ Column(modifier = Modifier.fillMaxSize().padding(top = 50.dp), verticalArrangeme
                         .clickable(onClickLabel = "Open contact us") {
                             val i = Intent(Intent.ACTION_SEND)
                             i.putExtra(Intent.EXTRA_EMAIL, "Put Your Mail")
-                            i.putExtra(Intent.EXTRA_SUBJECT,"Health Tracker Support")
-                            i.putExtra(Intent.EXTRA_TEXT,"Please describe your issue here" )
+                            i.putExtra(Intent.EXTRA_SUBJECT, "Health Tracker Support")
+                            i.putExtra(Intent.EXTRA_TEXT, "Please describe your issue here")
                             i.setType("message/rfc822")
-                            ctx.startActivity(Intent.createChooser(i,"Choose an Email client : "))
+                            ctx.startActivity(Intent.createChooser(i, "Choose an Email client : "))
                         }
                         .padding(start = 60.dp, bottom = 10.dp)
                         .then(Modifier.drawBehind {
@@ -359,6 +389,35 @@ Column(modifier = Modifier.fillMaxSize().padding(top = 50.dp), verticalArrangeme
                             val color = Color.Black
                             val y = size.height
                             val lineEndX = size.width + 180.dp.toPx()
+                            drawLine(
+                                color = color,
+                                start = Offset(0f, y),
+                                end = Offset(lineEndX, y),
+                                strokeWidth = strokeWidth
+                            )
+                        }),
+                    style = TextStyle(
+                        color = Color.Black,
+                        fontSize = 15.sp
+                    ),
+                    textAlign = TextAlign.Center
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Text(
+                    text = "Log Out",
+                    modifier = Modifier
+                        .clickable(onClickLabel = "Log Out") {
+                            firebase.auth.signOut()
+                            navController.navigate(HealthTrackerScreen.Login.name)
+
+                        }
+                        .padding(start = 60.dp, bottom = 10.dp)
+                        .then(Modifier.drawBehind {
+                            val strokeWidth = 1.dp.toPx()
+                            val color = Color.Black
+                            val y = size.height
+                            val lineEndX = size.width + 200.dp.toPx()
                             drawLine(
                                 color = color,
                                 start = Offset(0f, y),

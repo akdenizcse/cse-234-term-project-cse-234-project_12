@@ -73,9 +73,11 @@ fun MyMap(
             )
             Circle(
                 center = latLng,
-                radius = 500.0,
-                fillColor = Color(0x220000FF),
-                strokeColor = Color(0x660000FF),
+                radius = 200.0,
+                fillColor = Color(0x22FF0000),
+                strokeColor = Color(0x66FF0000),
+                strokeWidth = 30f,
+
                 )
         }
 

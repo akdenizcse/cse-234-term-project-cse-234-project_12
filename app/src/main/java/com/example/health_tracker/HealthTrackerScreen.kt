@@ -40,7 +40,8 @@ enum class HealthTrackerScreen(@StringRes val title: Int) {
     Main(title = R.string.entry),
     ActivityMain(R.string.activities),
     ActivityHistory(R.string.activitiesHistory),
-    AddActivity(R.string.addActivity)
+    AddActivity(R.string.addActivity),
+    ProfileSetting(R.string.profileSetting),
 }
 
 enum class MainPart(@StringRes val title: Int){
@@ -168,7 +169,7 @@ fun MainPart(context: Context,
                 MainPart.Tracker -> TrackerSection(context)
                 MainPart.Activities -> ActivitiesScreen(navController)
                 MainPart.Health -> HealthSection()
-                MainPart.Profile -> ProfilePage()
+                MainPart.Profile -> ProfilePage(navController)
                 else -> ActivitiesScreen(navController)
             }
             

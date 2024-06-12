@@ -1,10 +1,12 @@
 package com.example.health_tracker
 
+import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract.Profile
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -29,6 +31,7 @@ import com.example.health_tracker.ui.theme.Screens.InternetConnectionScreen
 import com.example.health_tracker.ui.theme.Screens.LocationPermissionScreen
 import com.example.health_tracker.ui.theme.Screens.LoginForm
 import com.example.health_tracker.ui.theme.Screens.ProfilePage
+import com.example.health_tracker.ui.theme.Screens.ProfileSettings
 
 import com.example.health_tracker.ui.theme.Screens.SignUp
 import com.example.health_tracker.ui.theme.Screens.TrackerSection
@@ -40,6 +43,7 @@ import com.google.maps.android.compose.rememberCameraPositionState
 
 class MainActivity : ComponentActivity() {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -90,6 +94,9 @@ class MainActivity : ComponentActivity() {
 
                             composable(HealthTrackerScreen.AddActivity.name) {
                                 AddActivityScreen(navController = navController)
+                            }
+                            composable(HealthTrackerScreen.ProfileSetting.name) {
+                                ProfileSettings(navController = navController)
                             }
                         }
                     } else {

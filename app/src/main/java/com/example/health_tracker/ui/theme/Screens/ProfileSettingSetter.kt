@@ -21,6 +21,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -41,9 +43,12 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,14 +56,12 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import androidx.core.graphics.toColor
+import androidx.navigation.NavController
+import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.R
 
-@Preview(
-    showBackground = true,
-    showSystemUi = true
-)
 @Composable
-fun ProfileSettings(){
+fun ProfileSettings(navController: NavController){
     //Popups
     val usernamePopup = remember { mutableStateOf(false) }
     val currentUsername = remember { mutableStateOf("") }
@@ -288,9 +291,36 @@ fun ProfileSettings(){
                     }
                 }
             }
+            Button(onClick = { navController.popBackStack()},
+                colors = ButtonColors(
+                    containerColor = Color(0xFFC8E3ED),
+                    contentColor = Color.Black,
+                    disabledContainerColor = Color(0xFFC8E3ED),
+                    disabledContentColor = Color.Black),
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp),
+                modifier = Modifier
+                    .padding(start = 270.dp, top = 20.dp)
+            ) {
+                Text(
+                    text = "Back",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+                Spacer(modifier = Modifier.width(5.dp))
+                Image(painter = painterResource(id = R.drawable.turn_back_1),
+                    contentDescription = "Turn back icon",
+                    modifier = Modifier
+                        .size(20.dp))
+            }
+
         }
 
+
+
     }
+
 }
 
 

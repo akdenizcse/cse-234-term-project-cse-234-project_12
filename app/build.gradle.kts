@@ -70,6 +70,7 @@ dependencies {
     implementation ("com.google.maps.android:maps-compose-utils:5.0.3")
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.datastore.core.android)
 
     val mapsComposeVersion = "4.4.1"
     implementation("com.google.maps.android:maps-compose:$mapsComposeVersion")
