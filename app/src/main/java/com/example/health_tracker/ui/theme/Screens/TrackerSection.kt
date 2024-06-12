@@ -62,32 +62,23 @@ import com.example.health_tracker.MainActivity
 import com.example.health_tracker.R
 import com.example.health_tracker.data.checkForPermission
 import com.example.health_tracker.data.getCurrentLocation
+import com.example.health_tracker.ui.theme.Screens.Map.MapScreen
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 
 
-@SuppressLint("CoroutineCreationDuringComposition")
+
+@SuppressLint("MutableCollectionMutableState")
 @Composable
 fun TrackerSection(context: Context) {
-    var showMap by remember { mutableStateOf(false) }
-    var location by remember { mutableStateOf(LatLng(0.0, 0.0)) }
-
-        getCurrentLocation(context) {
-        location = it
-        showMap = true
-    }
-    Log.d("LOCATION", location.toString())
 
     val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(location, 2f)
-    }
-    Log.d("position", cameraPositionState.toString())
 
     Column(
         modifier = Modifier
@@ -158,40 +149,8 @@ fun TrackerSection(context: Context) {
                     .height(150.dp)
                     .align(Alignment.CenterHorizontally)
             ) {
-                Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                    if(checkForPermission(context)){
-                        Log.d("Do we get error from here", "No error")
-
-                        GoogleMap(
-                            modifier = Modifier
-                                .wrapContentSize(Alignment.Center)
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFFC8E3ED),
-                                    shape = RoundedCornerShape(10.dp)
-                                ),
-                            cameraPositionState = cameraPositionState,
-
-                            ) {
-
-                            Circle(
-                                center = location,
-                                clickable = false,
-                                fillColor = Color.Red,
-                                radius = 50.0,
-                                strokeColor = Color.Red,
-                                strokePattern = null,
-                                strokeWidth = 1f,
-                                tag = "Circle",
-                                visible = true,
-                                zIndex = 1f,
-                                onClick = { },
-
-
-                                )
-
-                        }
-                    }
+                Column(modifier = Modifier.align(Alignment.CenterHorizontally), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    MapScreen(context)
                 }
             }
         }
