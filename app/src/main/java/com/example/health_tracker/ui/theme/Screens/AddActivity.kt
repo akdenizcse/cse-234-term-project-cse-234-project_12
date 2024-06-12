@@ -1,5 +1,7 @@
 package com.example.health_tracker.ui.theme.Screens
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -34,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -400,9 +403,19 @@ fun Checklist(items: List<String>, onCheckedItemsSaved: (List<String>) -> Unit) 
         }
     }
     Spacer(modifier = Modifier.height(20.dp))
+    fun ToastMessage(context: Context){
+        Toast.makeText(context, "No items selected to save", Toast.LENGTH_LONG).show()
+    }
+    val context = LocalContext.current
+
     Button(onClick = {
         val checkedItems = items.filterIndexed { index, _ -> checkedStates[index] }
-        onCheckedItemsSaved(checkedItems)
+        if(checkedItems.isNotEmpty()){
+            onCheckedItemsSaved(checkedItems)
+        }else{
+            ToastMessage(context = context)
+        }
+
     },
         colors = ButtonColors(
                     containerColor = Color(0xFFC8E3ED),
