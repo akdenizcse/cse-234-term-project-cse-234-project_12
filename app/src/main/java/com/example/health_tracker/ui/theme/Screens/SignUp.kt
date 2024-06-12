@@ -2,6 +2,7 @@ package com.example.health_tracker.ui.theme.Screens
 
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -40,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -73,7 +75,7 @@ fun SignUp(
     var email by remember { mutableStateOf("") }
     var currentUser by remember { mutableStateOf<FirebaseUser?>(firebase.auth.currentUser) }
     val db = Firebase.firestore
-
+    val ctx = LocalContext.current
 
     //Gradient Colors
     val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
@@ -301,7 +303,13 @@ fun SignUp(
                     modifier = Modifier
                         .align(alignment = Alignment.CenterHorizontally)
                         .clickable {
-                            // TODO: we will add later
+                            val i = Intent(Intent.ACTION_SEND)
+
+                            i.putExtra(Intent.EXTRA_EMAIL, "Put Your Mail")
+                            i.putExtra(Intent.EXTRA_SUBJECT,"Health Tracker Support")
+                            i.putExtra(Intent.EXTRA_TEXT,"Please describe your issue here" )
+                            i.setType("message/rfc822")
+                            ctx.startActivity(Intent.createChooser(i,"Choose an Email client : "))
                         }
                 )
             }

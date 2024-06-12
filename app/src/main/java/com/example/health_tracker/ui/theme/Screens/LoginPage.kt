@@ -1,5 +1,6 @@
 package com.example.health_tracker.ui.theme.Screens
 
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -42,6 +44,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,7 +61,11 @@ fun LoginForm(
 
     //TODO should we pass the modifier
 ) {
-    //Temporary Values For Holding The UI
+
+
+    // on below line we are creating
+    // a variable for a context
+    val ctx = LocalContext.current
     var firebase:Firebase by remember { mutableStateOf(Firebase) }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -262,7 +269,14 @@ fun LoginForm(
             modifier = Modifier
                 .align(alignment = Alignment.CenterHorizontally)
                 .clickable {
-                    // TODO: we will add later 
+                    val i = Intent(Intent.ACTION_SEND)
+
+                    i.putExtra(Intent.EXTRA_EMAIL, "Put Your Mail")
+                    i.putExtra(Intent.EXTRA_SUBJECT,"Health Tracker Support")
+                    i.putExtra(Intent.EXTRA_TEXT,"Please describe your issue here" )
+                    i.setType("message/rfc822")
+                    ctx.startActivity(Intent.createChooser(i,"Choose an Email client : "))
+
                 }
 
         )

@@ -1,5 +1,6 @@
 package com.example.health_tracker.ui.theme.Screens
 
+import android.content.Intent
 import android.text.Layout
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -31,6 +32,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -57,6 +59,7 @@ fun ProfilePage(){
 
 @Composable
 fun InformationBox(){
+    val ctx = LocalContext.current
     val ashColor = Color(0xFF79747E)
 Column(modifier = Modifier.fillMaxSize().padding(top = 50.dp), verticalArrangement = Arrangement.spacedBy(50.dp)) {
 
@@ -343,7 +346,13 @@ Column(modifier = Modifier.fillMaxSize().padding(top = 50.dp), verticalArrangeme
                     text = "Contact Us",
                     modifier = Modifier
                         .clickable(onClickLabel = "Open contact us") {
+                            val i = Intent(Intent.ACTION_SEND)
 
+                            i.putExtra(Intent.EXTRA_EMAIL, "Put Your Mail")
+                            i.putExtra(Intent.EXTRA_SUBJECT,"Health Tracker Support")
+                            i.putExtra(Intent.EXTRA_TEXT,"Please describe your issue here" )
+                            i.setType("message/rfc822")
+                            ctx.startActivity(Intent.createChooser(i,"Choose an Email client : "))
                         }
                         .padding(start = 60.dp, bottom = 10.dp)
                         .then(Modifier.drawBehind {
