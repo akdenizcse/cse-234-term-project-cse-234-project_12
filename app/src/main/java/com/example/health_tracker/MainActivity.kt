@@ -19,11 +19,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.health_tracker.data.checkForPermission
+import com.example.health_tracker.data.isInternetAvailable
 import com.example.health_tracker.ui.theme.Health_TrackerTheme
 import com.example.health_tracker.ui.theme.Screens.ActivitiesScreen
 import com.example.health_tracker.ui.theme.Screens.ActivityHistoryScreen
 import com.example.health_tracker.ui.theme.Screens.AddActivityScreen
 import com.example.health_tracker.ui.theme.Screens.ForgotPassword
+import com.example.health_tracker.ui.theme.Screens.InternetConnectionScreen
 import com.example.health_tracker.ui.theme.Screens.LocationPermissionScreen
 import com.example.health_tracker.ui.theme.Screens.LoginForm
 import com.example.health_tracker.ui.theme.Screens.ProfilePage
@@ -51,8 +53,11 @@ class MainActivity : ComponentActivity() {
                     var hasLocationPermission by remember {
                         mutableStateOf(checkForPermission(this))
                     }
+                    var hasInternetPermission by remember {
+                        mutableStateOf(isInternetAvailable(this))
+                    }
 
-                    if (hasLocationPermission) {
+                    if (hasLocationPermission && hasInternetPermission) {
                         val navController = rememberNavController()
                         val backStackEntry by navController.currentBackStackEntryAsState()
                         val currentScreen = HealthTrackerScreen.valueOf(
@@ -88,9 +93,16 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     } else {
-                        LocationPermissionScreen {
-                            hasLocationPermission = true
+                        if (hasInternetPermission){
+                            LocationPermissionScreen {
+                                hasLocationPermission = true
+                            }
                         }
+                        InternetConnectionScreen(this){
+                            hasInternetPermission = true
+                        }
+
+
                     }
 
 

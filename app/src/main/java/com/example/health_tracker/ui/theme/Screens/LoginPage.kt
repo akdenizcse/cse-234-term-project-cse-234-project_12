@@ -175,17 +175,27 @@ fun LoginForm(
         Spacer(modifier = Modifier.height(25.dp))
         Button(
             onClick = {
-                firebase.auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            navController.navigate(HealthTrackerScreen.Main.name)
-                        } else {
-                        Toast.makeText(
-                            navController.context,
-                            "Invalid email or Password",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                      }}},
+                if (!isValidEmail(email)) {
+                    Toast.makeText(
+                        navController.context,
+                        "Invalid Email",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    firebase.auth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                navController.navigate(HealthTrackerScreen.Main.name)
+                            } else {
+                                Toast.makeText(
+                                    navController.context,
+                                    "Invalid email or Password",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                }
+            },
 
             shape = RoundedCornerShape(20.dp),
             colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),

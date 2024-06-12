@@ -39,9 +39,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.health_tracker.MainPart
 import com.example.health_tracker.R
 
-@Preview
 @Composable
 fun ProfilePage(){
     val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
@@ -260,7 +261,6 @@ Column(modifier = Modifier.fillMaxSize().padding(top = 50.dp), verticalArrangeme
                         .clickable(
                             onClickLabel = "Open change profile settings"
                         ) {
-
                         }
                         .padding(start = 60.dp, bottom = 10.dp)
                         .then(Modifier.drawBehind {
@@ -347,7 +347,6 @@ Column(modifier = Modifier.fillMaxSize().padding(top = 50.dp), verticalArrangeme
                     modifier = Modifier
                         .clickable(onClickLabel = "Open contact us") {
                             val i = Intent(Intent.ACTION_SEND)
-
                             i.putExtra(Intent.EXTRA_EMAIL, "Put Your Mail")
                             i.putExtra(Intent.EXTRA_SUBJECT,"Health Tracker Support")
                             i.putExtra(Intent.EXTRA_TEXT,"Please describe your issue here" )

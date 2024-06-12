@@ -2,7 +2,9 @@ package com.example.health_tracker
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import androidx.annotation.DrawableRes
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
@@ -59,6 +61,7 @@ data class BottomNavigationItem(
     @DrawableRes val unselectedIcon: Int
 )
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainPart(context: Context,
@@ -173,8 +176,3 @@ fun MainPart(context: Context,
     }
 }
 
-
-
-fun contactUs(){
-    //TODO will send e-mail to support
-}
