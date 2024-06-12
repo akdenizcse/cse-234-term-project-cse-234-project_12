@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
@@ -54,7 +55,7 @@ fun MyMap(
     }
 
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(latLng, 15f)
+        position = CameraPosition.fromLatLngZoom(latLng, 12f)
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -70,6 +71,12 @@ fun MyMap(
                 totalLoc,
                 color = Color.Red,
             )
+            Circle(
+                center = latLng,
+                radius = 500.0,
+                fillColor = Color(0x220000FF),
+                strokeColor = Color(0x660000FF),
+                )
         }
 
 
