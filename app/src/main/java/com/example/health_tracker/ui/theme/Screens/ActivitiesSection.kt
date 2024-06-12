@@ -1,6 +1,7 @@
 package com.example.health_tracker.ui.theme.Screens
 
 import android.widget.Space
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -51,14 +52,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHost
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.R
 
-@Preview(
-    showBackground = true,
-    showSystemUi = true
-)
+
+
+
+
 @Composable
-fun ActivitiesScreen(){
+fun ActivitiesScreen(navController: NavController){
     val gradientColors = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
     val greyscaleMatrix = ColorMatrix().apply {
         setToSaturation(1f)
@@ -69,6 +76,8 @@ fun ActivitiesScreen(){
         "Pull Day",
         "Leg Day"
     )
+
+
 
     Column(
         modifier = Modifier
@@ -279,7 +288,7 @@ fun ActivitiesScreen(){
         Spacer(modifier = Modifier.height(40.dp))
 
         Row (){
-            Button(onClick = { /*TODO*/ },
+            Button(onClick = { navController.navigate(HealthTrackerScreen.ActivityHistory.name) },
                 colors = ButtonColors(
                     containerColor = Color(0xFFC8E3ED),
                     contentColor = Color.Black,
@@ -301,10 +310,12 @@ fun ActivitiesScreen(){
             Image(painter = painterResource(id = R.drawable.add),
                 contentDescription = "Add button",
                 modifier = Modifier
-                    .clickable {  }
+                    .clickable { navController.navigate(HealthTrackerScreen.AddActivity.name)}
                     .size(50.dp))
         }
     }
+
+
 }
 
 

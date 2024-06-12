@@ -41,5 +41,7 @@
     <string name="tracker">Tracker</string>
     <string name="activities">Activities</string>
     <string name="entry">Entry</string>
+    <string name="activitiesHistory">Activity History</string>
+    <string name="addActivity">Add Activity</string>
 
 </resources>
