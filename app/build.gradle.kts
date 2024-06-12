@@ -78,4 +78,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+
+    //for datastore
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
+
 }

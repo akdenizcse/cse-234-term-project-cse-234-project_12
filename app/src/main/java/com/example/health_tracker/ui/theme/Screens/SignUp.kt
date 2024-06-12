@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -46,6 +45,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.R
@@ -231,7 +231,8 @@ fun SignUp(
                     elevation = 10.dp,
                     spotColor = Color(0x4D000000),
                     ambientColor = Color(0x4D000000),
-                    shape = RoundedCornerShape(10.dp))
+                    shape = RoundedCornerShape(10.dp)
+                )
         ) {
             Text(
                 text = stringResource(id = R.string.sign_up),

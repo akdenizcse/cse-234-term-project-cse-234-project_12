@@ -1,6 +1,8 @@
 package com.example.health_tracker.ui.theme.Screens
 
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -27,16 +29,20 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -48,7 +54,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.health_tracker.R
+import com.example.health_tracker.datastore.StoreHydration
+import com.example.health_tracker.datastore.StoreSleep
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 @Preview(
     showBackground = true,
@@ -71,8 +85,22 @@ fun HealthSection() {
     val relaxingDialog = remember { mutableStateOf(false) }
     val currentRelaxing = remember { mutableStateOf("30m 0s") } // Initial liter value
 
+    //context
+    val context = LocalContext.current
+    //scope
+    val scope = rememberCoroutineScope()
+    //dataStore
+    val hydrationStore = StoreHydration(context)
+    val sleepStore = StoreSleep(context)
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = hydrationStore.getHydration
+            currentLiters.value = initialValue.first()!!
+        }
+    }
+
     if (waterDialog.value) {
-        WaterDialog(waterDialog, currentLiters)
+        WaterDialog(waterDialog, currentLiters, scope, hydrationStore)
     }
     if (walkDialog.value) {
         WalkDialog(walkDialog, currentWalk)
@@ -685,8 +713,15 @@ fun WalkDialog(walkDialog: MutableState<Boolean>, currentWalk: MutableState<Int>
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun WaterDialog(waterDialog: MutableState<Boolean>, currentLiters: MutableState<Double>) {
+fun WaterDialog(
+    waterDialog: MutableState<Boolean>,
+    currentLiters: MutableState<Double>,
+    scope : CoroutineScope,
+    datastore : StoreHydration,
+) {
+
     if (waterDialog.value) {
         Dialog(onDismissRequest = { waterDialog.value = false }) {
             Surface(
@@ -705,6 +740,9 @@ fun WaterDialog(waterDialog: MutableState<Boolean>, currentLiters: MutableState<
                             val newValue =
                                 it.toDoubleOrNull() ?: return@TextField // Handle invalid input
                             currentLiters.value = newValue
+                            scope.launch {
+                                datastore.saveHydration(currentLiters.value)
+                            }
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         label = { Text("Liters") },
@@ -719,7 +757,9 @@ fun WaterDialog(waterDialog: MutableState<Boolean>, currentLiters: MutableState<
                         }
                         Spacer(modifier = Modifier.size(53.dp))
                         Button(
-                            onClick = { waterDialog.value = false }
+                            onClick = {
+                                waterDialog.value = false
+                            }
                         ) {
                             Text("Save")
                         }
