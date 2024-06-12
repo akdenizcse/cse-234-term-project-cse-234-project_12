@@ -1,5 +1,6 @@
 package com.example.health_tracker.ui.theme.Screens
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -46,7 +47,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.R
-
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 @Composable
@@ -56,8 +58,8 @@ fun LoginForm(
     //TODO should we pass the modifier
 ) {
     //Temporary Values For Holding The UI
-
-    var username by remember { mutableStateOf("") }
+    var firebase:Firebase by remember { mutableStateOf(Firebase) }
+    var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     //Gradient Colors
@@ -105,8 +107,8 @@ fun LoginForm(
         Spacer(modifier = Modifier.height(30.dp))
 
         OutlinedTextField(
-            value = username,
-            onValueChange = { username = it },
+            value = email,
+            onValueChange = { email = it },
             leadingIcon = { Icon(Icons.Default.Person, null) },
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier
@@ -117,7 +119,7 @@ fun LoginForm(
                 .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 16.dp))
                 .align(alignment = Alignment.CenterHorizontally),
             placeholder = {
-                Text(text = stringResource(id = R.string.username), color = Color.Black
+                Text(text = stringResource(id = R.string.email), color = Color.Black
                 )
             },
             keyboardOptions = KeyboardOptions(
@@ -163,7 +165,19 @@ fun LoginForm(
         )
         Spacer(modifier = Modifier.height(25.dp))
         Button(
-            onClick = { navController.navigate(HealthTrackerScreen.Main.name) },
+            onClick = {
+                firebase.auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            navController.navigate(HealthTrackerScreen.Main.name)
+                        } else {
+                        Toast.makeText(
+                            navController.context,
+                            "Invalid email or Password",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                      }}},
+
             shape = RoundedCornerShape(20.dp),
             colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
             modifier = Modifier

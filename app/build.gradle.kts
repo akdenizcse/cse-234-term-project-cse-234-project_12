@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    alias(libs.plugins.google.gms.google.services)
 
 }
 
@@ -53,6 +54,12 @@ android {
 
 dependencies {
     implementation ("com.google.maps.android:maps-compose:5.0.3")
+    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
+
+    // Add the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-auth")
+
 
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     // KTX for the Maps SDK for Android library
@@ -61,6 +68,8 @@ dependencies {
     implementation("com.google.maps.android:maps-utils-ktx:5.0.0")
 
     implementation ("com.google.maps.android:maps-compose-utils:5.0.3")
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore.ktx)
 
     val mapsComposeVersion = "4.4.1"
     implementation("com.google.maps.android:maps-compose:$mapsComposeVersion")

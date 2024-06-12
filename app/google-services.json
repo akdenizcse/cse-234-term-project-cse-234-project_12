@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "280367339076",
+    "project_id": "plucky-agency-426218-g5",
+    "storage_bucket": "plucky-agency-426218-g5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280367339076:android:2006b909bd319767e20e11",
+        "android_client_info": {
+          "package_name": "com.example.health_tracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe_qymD5nHNKu9T6P9TkVifxEenECPBok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

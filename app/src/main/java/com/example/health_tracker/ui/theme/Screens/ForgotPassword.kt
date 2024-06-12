@@ -1,5 +1,6 @@
 package com.example.health_tracker.ui.theme.Screens
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -45,6 +46,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.R
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 @Composable
@@ -54,6 +57,7 @@ fun ForgotPassword(
     //Temporary Values For Holding The UI
 
     var email by remember { mutableStateOf("") }
+    var firebase: Firebase by remember { mutableStateOf(Firebase) }
 
     //Gradient Colors
     val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
@@ -182,7 +186,17 @@ fun ForgotPassword(
             )
             Spacer(modifier = Modifier.height(10.dp))
             OutlinedButton(
-                onClick = {},
+                onClick = {
+                          firebase.auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+                              if (task.isSuccessful) {
+                                  Toast.makeText(
+                                      navController.context,
+                                      "Email sent successfully if it exists :)",
+                                      Toast.LENGTH_SHORT
+                                  ).show()
+                              }
+                          }
+                },
                 // TODO: we will send a mail to user
                 border = BorderStroke(1.dp, Color.Black),
                 shape = RoundedCornerShape(50),

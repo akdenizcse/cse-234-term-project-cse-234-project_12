@@ -1,6 +1,9 @@
 package com.example.health_tracker.ui.theme.Screens
 
 
+import android.content.ContentValues.TAG
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -31,6 +34,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,17 +53,26 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.R
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
+fun isValidEmail(email: String): Boolean {
+    return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+}
 
 @Composable
 fun SignUp(
-    navController: NavController
+    navController: NavController,
 ) {
     //Temporary Values For Holding The UI
-
-    var username by remember { mutableStateOf("") }
+    var firebase: Firebase by remember { mutableStateOf(Firebase) }
     var password by remember { mutableStateOf("") }
+    var passwordVisible by rememberSaveable { mutableStateOf(false) }
     var email by remember { mutableStateOf("") }
+    var currentUser by remember { mutableStateOf<FirebaseUser?>(firebase.auth.currentUser) }
+    val db = Firebase.firestore
 
 
     //Gradient Colors
@@ -70,12 +83,16 @@ fun SignUp(
             .fillMaxHeight()
             .background(
                 brush = Brush.verticalGradient(colors = colors1)
-            ), verticalArrangement = Arrangement.Center
+            )
+            .padding(bottom = 60.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Image(
                 modifier = Modifier
-                    .size(200.dp)
+                    .width(209.48944.dp)
+                    .height(200.73366.dp)
                     .align(alignment = Alignment.CenterHorizontally),
                 painter = painterResource(id = R.drawable.icons),
                 contentDescription = "App Icon"
@@ -108,8 +125,8 @@ fun SignUp(
         Spacer(modifier = Modifier.height(25.dp))
 
         OutlinedTextField(
-            value = username,
-            onValueChange = { username = it  } ,
+            value = email,
+            onValueChange = { email = it },
             leadingIcon = @Composable { Icon(Icons.Default.Person, null) },
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier
@@ -136,7 +153,7 @@ fun SignUp(
                 .align(alignment = Alignment.CenterHorizontally),
             placeholder = {
                 Text(
-                    stringResource(id = R.string.username), color = Color.Black
+                    stringResource(id = R.string.email), color = Color.Black
                 )
             },
             keyboardOptions = KeyboardOptions.Default.copy(
@@ -145,49 +162,14 @@ fun SignUp(
             )
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
 
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it  } ,
-            leadingIcon = @Composable { Icon(Icons.Default.Email, null)},
-            shape = RoundedCornerShape(15.dp),
-            modifier = Modifier
-                .padding(horizontal = 4.dp)
-                .width(300.dp)
-                .height(50.dp)
-                .shadow(
-                    elevation = 10.dp,
-                    spotColor = Color(0x4D000000),
-                    ambientColor = Color(0x4D000000),
-                    shape = RoundedCornerShape(10.dp)
-                )
-                .shadow(
-                    elevation = 10.dp,
-                    spotColor = Color(0x26000000),
-                    ambientColor = Color(0x26000000),
-                    shape = RoundedCornerShape(10.dp)
-                )
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 16.dp))
-                .align(alignment = Alignment.CenterHorizontally),
-            placeholder = {
-                Text(
-                    stringResource(id = R.string.email),
-                    color = Color.Black,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
-            },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Next
-            )
-        )
+
 
         Spacer(modifier = Modifier.height(20.dp))
 
         OutlinedTextField(
             value = password,
-            onValueChange = {password = it  },
+            onValueChange = { password = it },
             leadingIcon = { Icon(Icons.Default.Lock, null) },
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier
@@ -200,7 +182,8 @@ fun SignUp(
             placeholder = {
                 Text(
                     stringResource(id = R.string.password), color = Color.Black
-                )},
+                )
+            },
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
@@ -212,77 +195,113 @@ fun SignUp(
 
 
         Button(
-            onClick = {},
-            // TODO: it save the user to the database
-            shape = RoundedCornerShape(20.dp),
-            colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
-            modifier = Modifier
-                .padding(horizontal = 8.dp)
-                .width(220.dp)
-                .height(36.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 30.dp))
-                .align(alignment = Alignment.CenterHorizontally)
-                .border(
-                    width = 1.dp,
-                    color = Color(0xFF000000),
-                    shape = RoundedCornerShape(size = 30.dp)
-                )
-                .shadow(
-                    elevation = 10.dp,
-                    spotColor = Color(0x4D000000),
-                    ambientColor = Color(0x4D000000),
-                    shape = RoundedCornerShape(10.dp))
-        ) {
-            Text(
-                text = stringResource(id = R.string.sign_up),
-                color = Color.Black,
-                fontSize = 15.sp,
-                fontWeight = FontWeight.Bold,
-            )
-        }
-        Spacer(modifier = Modifier.height(25.dp))
-        Row(modifier = Modifier.align(alignment = Alignment.CenterHorizontally)) {
-            Text(
-                text = stringResource(id = R.string.have_account),
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    lineHeight = 20.sp,
-                    fontFamily = FontFamily.Default,
-                    color = Color(0xFF000000),
-                    letterSpacing = 0.1.sp,
-                )
-            )
+            onClick = {
+                if (isValidEmail(email)) {
 
-            Text(text = stringResource(id = R.string.login),
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    lineHeight = 20.sp,
-                    fontFamily = FontFamily.Default,
+                    if (password.length < 6) {
+
+                        Toast.makeText(
+                            navController.context,
+                            "Password must be at least 6 characters",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    } else {
+                        firebase.auth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    Log.d(TAG, "createUserWithEmail:success")
+                                    currentUser = firebase.auth.currentUser
+                                    navController.navigate(HealthTrackerScreen.Main.name)
+                                } else {
+                                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                                    Toast.makeText(
+                                        navController.context,
+                                        "You can't sign up with the same email twice!.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                    }
+                } else {
+                    Toast.makeText(
+                        navController.context,
+                        "Invalid Email",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            },
+
+                shape = RoundedCornerShape(20.dp),
+                colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
+                modifier = Modifier
+                    .padding(horizontal = 8.dp)
+                    .width(220.dp)
+                    .height(36.dp)
+                    .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 30.dp))
+                    .align(alignment = Alignment.CenterHorizontally)
+                    .border(
+                        width = 1.dp,
+                        color = Color(0xFF000000),
+                        shape = RoundedCornerShape(size = 30.dp)
+                    )
+                    .shadow(
+                        elevation = 10.dp,
+                        spotColor = Color(0x4D000000),
+                        ambientColor = Color(0x4D000000),
+                        shape = RoundedCornerShape(10.dp)
+                    )
+                ) {
+                Text(
+                    text = stringResource(id = R.string.sign_up),
+                    color = Color.Black,
+                    fontSize = 15.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF000000),
-                    letterSpacing = 0.1.sp,
-                ),
-                modifier = Modifier.clickable {
-                    navController.navigate(HealthTrackerScreen.Login.name)
-                }
-            )
-        }
-        Spacer(modifier = Modifier.height(10.dp))
+                )
+            }
+                Spacer(modifier = Modifier.height(25.dp))
+                Row(modifier = Modifier.align(alignment = Alignment.CenterHorizontally)) {
+                    Text(
+                        text = stringResource(id = R.string.have_account),
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            lineHeight = 20.sp,
+                            fontFamily = FontFamily.Default,
+                            color = Color(0xFF000000),
+                            letterSpacing = 0.1.sp,
+                        )
+                    )
 
-        Text(
-            text = stringResource(id = R.string.contact_for_support),
-            style = TextStyle(
-                fontSize = 10.sp,
-                lineHeight = 20.sp,
-                fontFamily = FontFamily.Default,
-                color = Color(0xFF000000),
-                letterSpacing = 0.1.sp,
-            ),
-            modifier = Modifier
-                .align(alignment = Alignment.CenterHorizontally)
-                .clickable {
-                    // TODO: we will add later 
+                    Text(text = stringResource(id = R.string.login),
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            lineHeight = 20.sp,
+                            fontFamily = FontFamily.Default,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF000000),
+                            letterSpacing = 0.1.sp,
+                        ),
+                        modifier = Modifier.clickable {
+                            navController.navigate(HealthTrackerScreen.Login.name)
+                        }
+                    )
                 }
-        )
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Text(
+                    text = stringResource(id = R.string.contact_for_support),
+                    style = TextStyle(
+                        fontSize = 10.sp,
+                        lineHeight = 20.sp,
+                        fontFamily = FontFamily.Default,
+                        color = Color(0xFF000000),
+                        letterSpacing = 0.1.sp,
+                    ),
+                    modifier = Modifier
+                        .align(alignment = Alignment.CenterHorizontally)
+                        .clickable {
+                            // TODO: we will add later
+                        }
+                )
+            }
     }
-}
