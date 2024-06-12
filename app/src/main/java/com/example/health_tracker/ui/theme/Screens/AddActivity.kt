@@ -60,67 +60,9 @@ fun AddActivityScreen(){
     var isTuesday by remember { mutableStateOf(false) }
     var isThursday by remember { mutableStateOf(false) }
     var isWednesday by remember { mutableStateOf(false) }
-    var savedItems by remember {mutableStateOf(emptyList<Item>())}
-    val exercises = listOf(
-        "Arnold Press",
-        "Back Extention",
-        "Barbell Bench Press",
-        "Barbell Biceps Curl",
-        "Cable Fly",
-        "Deadlift",
-        "Dumbell Fly",
-        "Barbell bent-over row",
-        "Barbell shoulder press",
-        "Barbell shrug",
-        "Cable lateral raise",
-        "Cable pull-down",
-        "Chest fly",
-        "Chin up",
-        "Close-grip pull-up",
-        "Crunch",
-        "Decline bench press",
-        "Diamond push-up",
-        "Dumbell bench press",
-        "Dumbell biceps curl",
-        "Dumbell bent-over row",
-        "Dumbell lateral raise",
-        "Dumbell shoulder press",
-        "Dumbell shrug",
-        "Good morning",
-        "Hanging leg raise",
-        "Hyperextension",
-        "Incline bench press",
-        "Lat pull-down",
-        "Leg curl",
-        "Leg extension",
-        "Leg press",
-        "Leg raise",
-        "Lunge",
-        "Narrow-grip push-up",
-        "Neck curl",
-        "Overhead triceps extension",
-        "Preacher curl",
-        "Pull-down",
-        "Pull-up",
-        "Push-up",
-        "Reverse grip pull-down",
-        "Reverse grip push-down",
-        "Roman chair leg raise",
-        "Romanian deadlift",
-        "Russian twist",
-        "Seated calf raise",
-        "Shoulder shrug",
-        "Squat",
-        "Standing calf raise",
-        "T-bar row",
-        "Triceps dip",
-        "Triceps extension",
-        "Triceps push-down",
-        "Upright row",
-        "Weighted Russian twist",
-        "Wide-grip pull-up",
-        "Wide-grip push-up"
-    )
+    var savedExercise by remember { mutableStateOf(emptyList<String>()) }
+
+
 
     Column(
         modifier = Modifier
@@ -350,7 +292,9 @@ fun AddActivityScreen(){
             modifier = Modifier.padding(start = 40.dp))
         
         //Exercise list
-        Checklist(items = exercises)
+        Checklist(items = exercises){checkedItems ->
+            savedExercise = checkedItems
+        }
 
         //Buttons
         Column(
@@ -370,6 +314,7 @@ fun AddActivityScreen(){
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp),
                 modifier = Modifier
 
+
             ) {
                 Text(
                     text = "Turn Back",
@@ -384,41 +329,41 @@ fun AddActivityScreen(){
                         .padding(start = 10.dp)
                         .size(15.dp))
             }
-            Spacer(modifier = Modifier.height(10.dp))
+//            Spacer(modifier = Modifier.height(10.dp))
             //Save Button
-            Button(onClick = {
-
-            },
-                colors = ButtonColors(
-                    containerColor = Color(0xFFC8E3ED),
-                    contentColor = Color.Black,
-                    disabledContainerColor = Color(0xFFC8E3ED),
-                    disabledContentColor = Color.Black),
-                elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp),
-                modifier = Modifier
-                    .padding(start = 35.dp)
-
-            ) {
-                Text(
-                    text = "Save",
-                    style = TextStyle(
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-                Image(painter = painterResource(id = R.drawable.diskette_1),
-                    contentDescription ="Save diskette icon",
-                    modifier = Modifier
-                        .padding(start = 10.dp)
-                        .size(15.dp))
-            }
+//            Button(onClick = {
+//
+//            },
+//                colors = ButtonColors(
+//                    containerColor = Color(0xFFC8E3ED),
+//                    contentColor = Color.Black,
+//                    disabledContainerColor = Color(0xFFC8E3ED),
+//                    disabledContentColor = Color.Black),
+//                elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp),
+//                modifier = Modifier
+//                    .padding(start = 35.dp)
+//
+//            ) {
+//                Text(
+//                    text = "Save",
+//                    style = TextStyle(
+//                        fontSize = 13.sp,
+//                        fontWeight = FontWeight.Bold
+//                    )
+//                )
+//                Image(painter = painterResource(id = R.drawable.diskette_1),
+//                    contentDescription ="Save diskette icon",
+//                    modifier = Modifier
+//                        .padding(start = 10.dp)
+//                        .size(15.dp))
+//            }
         }
 
     }
 }
 //Exercise List maker function
 @Composable
-fun Checklist(items: List<String>) {
+fun Checklist(items: List<String>, onCheckedItemsSaved: (List<String>) -> Unit) {
     val checkedStates = remember { mutableStateListOf(*items.map { false }.toTypedArray()) }
 
     LazyColumn(
@@ -454,4 +399,91 @@ fun Checklist(items: List<String>) {
             }
         }
     }
+    Spacer(modifier = Modifier.height(20.dp))
+    Button(onClick = {
+        val checkedItems = items.filterIndexed { index, _ -> checkedStates[index] }
+        onCheckedItemsSaved(checkedItems)
+    },
+        colors = ButtonColors(
+                    containerColor = Color(0xFFC8E3ED),
+                    contentColor = Color.Black,
+                    disabledContainerColor = Color(0xFFC8E3ED),
+                    disabledContentColor = Color.Black),
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp),
+                modifier = Modifier
+                    .padding(start = 260.dp)){
+        Text(
+                    text = "Save",
+                    style = TextStyle(
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+                Image(painter = painterResource(id = R.drawable.diskette_1),
+                    contentDescription ="Save diskette icon",
+                    modifier = Modifier
+                        .padding(start = 10.dp)
+                        .size(15.dp))
+    }
 }
+
+val exercises = listOf(
+    "Arnold Press",
+    "Back Extention",
+    "Barbell Bench Press",
+    "Barbell Biceps Curl",
+    "Cable Fly",
+    "Deadlift",
+    "Dumbell Fly",
+    "Barbell bent-over row",
+    "Barbell shoulder press",
+    "Barbell shrug",
+    "Cable lateral raise",
+    "Cable pull-down",
+    "Chest fly",
+    "Chin up",
+    "Close-grip pull-up",
+    "Crunch",
+    "Decline bench press",
+    "Diamond push-up",
+    "Dumbell bench press",
+    "Dumbell biceps curl",
+    "Dumbell bent-over row",
+    "Dumbell lateral raise",
+    "Dumbell shoulder press",
+    "Dumbell shrug",
+    "Good morning",
+    "Hanging leg raise",
+    "Hyperextension",
+    "Incline bench press",
+    "Lat pull-down",
+    "Leg curl",
+    "Leg extension",
+    "Leg press",
+    "Leg raise",
+    "Lunge",
+    "Narrow-grip push-up",
+    "Neck curl",
+    "Overhead triceps extension",
+    "Preacher curl",
+    "Pull-down",
+    "Pull-up",
+    "Push-up",
+    "Reverse grip pull-down",
+    "Reverse grip push-down",
+    "Roman chair leg raise",
+    "Romanian deadlift",
+    "Russian twist",
+    "Seated calf raise",
+    "Shoulder shrug",
+    "Squat",
+    "Standing calf raise",
+    "T-bar row",
+    "Triceps dip",
+    "Triceps extension",
+    "Triceps push-down",
+    "Upright row",
+    "Weighted Russian twist",
+    "Wide-grip pull-up",
+    "Wide-grip push-up"
+)
