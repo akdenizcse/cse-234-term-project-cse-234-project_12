@@ -1,11 +1,13 @@
 package com.example.health_tracker.ui.theme.Screens
 
+import android.annotation.SuppressLint
 import android.widget.Space
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -52,6 +54,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHost
 import androidx.navigation.compose.NavHost
@@ -59,23 +62,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.R
+import com.example.health_tracker.data.ActivityViewModel
 
 
-
-
-
+@SuppressLint("MutableCollectionMutableState")
 @Composable
-fun ActivitiesScreen(navController: NavController){
+fun ActivitiesScreen(navController: NavController, viewModel: ActivityViewModel) {
     val gradientColors = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
     val greyscaleMatrix = ColorMatrix().apply {
         setToSaturation(1f)
     }
-    var searchText by remember { mutableStateOf("") }
-    val yourCardDataList = listOf(
-        "Push Day",
-        "Pull Day",
-        "Leg Day"
-    )
+
+
 
 
 
@@ -88,36 +86,6 @@ fun ActivitiesScreen(navController: NavController){
             )
     ) {
         // Search bar
-        TextField(value = searchText,
-            onValueChange ={searchText = it},
-            modifier = Modifier
-                .padding(start = 55.dp, top = 40.dp)
-                .background(
-                    color = Color.White,
-                    shape = RoundedCornerShape(20.dp)
-                )
-                .border(
-                    width = 1.dp,
-                    color = Color.Black,
-                    shape = RoundedCornerShape(5.dp)
-                )
-                .width(294.dp)
-                .height(51.dp),
-            placeholder = {Text("Search")},
-            leadingIcon = {
-                Icon(painter = painterResource(id = R.drawable.search_interface_symbol),
-                    contentDescription = "Search icon" ,
-                    modifier = Modifier.size(24.dp))
-            },
-            singleLine = true,//keep the input in single line
-            colors = TextFieldDefaults.colors(
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.White
-            )
-        )
-        Spacer(modifier = Modifier.height(50.dp))
 
         Text(
             text = "Active Activities",
@@ -126,18 +94,20 @@ fun ActivitiesScreen(navController: NavController){
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             ),
-            modifier = Modifier.padding(start = 100.dp)
+            modifier = Modifier.padding(start = 100.dp,top = 60.dp)
         )
         Spacer(modifier = Modifier.height(5.dp))
 
-        Box(modifier = Modifier
-            .height(450.dp)
-            .fillMaxSize()
-            .border(
-                width = 2.dp,
-                color = Color.Black,
-                shape = RectangleShape
-            )){
+        Box(
+            modifier = Modifier
+                .height(450.dp)
+                .fillMaxSize()
+                .border(
+                    width = 2.dp,
+                    color = Color.Black,
+                    shape = RectangleShape
+                )
+        ) {
 
             LazyColumn(
                 modifier = Modifier
@@ -145,155 +115,46 @@ fun ActivitiesScreen(navController: NavController){
                     .fillMaxWidth()
             ) {
 
-                items(yourCardDataList){
-                    cardData ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ){
-                        Card(
-                            modifier = Modifier
-                                .padding(start = 16.dp, top = 20.dp)
-                                .shadow(
-                                    elevation = 20.dp,
-                                    shape = RoundedCornerShape(12.dp),
-                                    spotColor = Color.Black
-                                )
-                                .width(297.dp)
-                                .height(72.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color(0xFFC8E3ED))
-                        ) {
-                            Text(text = "Push Day",
-                                style = TextStyle(
-                                    color = Color.Black,
-                                    fontSize = 16.sp,
-                                ),
-                                modifier = Modifier
-                                    .padding(start = 20.dp, top = 10.dp))
-                            Spacer(modifier = Modifier.height(3.dp))
+                items(viewModel.activities.size) { i ->
 
-                            Text(text = "Incline Bench Press",
-                                style = TextStyle(
-                                    color = Color.Black,
-                                    fontSize = 10.sp,
-                                ),
-                                modifier = Modifier
-                                    .padding(start = 20.dp, top = 5.dp)
-                            )
-                        }
-
+                    val activity = viewModel.activities[i]
+                    val titleAndDayMap = activity.keys.first()
+                    val title = titleAndDayMap.keys.first()
+                    val day = titleAndDayMap[title]
+                    val exercises = activity[titleAndDayMap]
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
                         Image(painter = painterResource(id = R.drawable.remove_4),
                             contentDescription = "Remove button",
                             colorFilter = ColorFilter.colorMatrix(greyscaleMatrix),
                             modifier = Modifier
                                 .clickable {
-
+                                    viewModel.activities.removeAt(i)
+                                    viewModel.logActivites.add(activity)
                                 }
                                 .padding(start = 30.dp, top = 20.dp)
                                 .size(30.dp)
+
+
                         )
-                    }
+                        ActivityCard(title = "$title - $day", exercise = exercises ?: listOf())
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ){
-
-
-                        Card(
-                            modifier = Modifier
-                                .padding(start = 16.dp, top = 20.dp)
-                                .shadow(
-                                    elevation = 20.dp,
-                                    shape = RoundedCornerShape(12.dp),
-                                    spotColor = Color.Black
-                                )
-                                .width(297.dp)
-                                .height(72.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color(0xFFC8E3ED))
-                        ) {
-                            Text(text = "Pull Day",
-                                style = TextStyle(
-                                    color = Color.Black,
-                                    fontSize = 16.sp,
-                                ),
-                                modifier = Modifier
-                                    .padding(start = 20.dp, top = 10.dp))
-                            Spacer(modifier = Modifier.height(3.dp))
-
-                            Text(text = "Lat Pulldown",
-                                style = TextStyle(
-                                    color = Color.Black,
-                                    fontSize = 10.sp,
-                                ),
-                                modifier = Modifier
-                                    .padding(start = 20.dp, top = 5.dp)
-                            )
-                        }
-
-                        Image(painter = painterResource(id = R.drawable.remove_4),
-                            contentDescription = "Remove button",
-                            colorFilter = ColorFilter.colorMatrix(greyscaleMatrix),
-                            modifier = Modifier
-                                .padding(start = 30.dp, top = 20.dp)
-                                .size(30.dp)
-                        )
-                    }
-                    Row(modifier = Modifier
-                        .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically){
-                        Card(
-                            modifier = Modifier
-                                .padding(start = 16.dp, top = 20.dp)
-                                .shadow(
-                                    elevation = 20.dp,
-                                    shape = RoundedCornerShape(12.dp),
-                                    spotColor = Color.Black
-                                )
-                                .width(297.dp)
-                                .height(72.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color(0xFFC8E3ED))
-                        ) {
-                            Text(text = "Leg Day",
-                                style = TextStyle(
-                                    color = Color.Black,
-                                    fontSize = 16.sp,
-                                ),
-                                modifier = Modifier
-                                    .padding(start = 20.dp, top = 10.dp))
-                            Spacer(modifier = Modifier.height(3.dp))
-
-                            Text(text = "Leg Press",
-                                style = TextStyle(
-                                    color = Color.Black,
-                                    fontSize = 10.sp,
-                                ),
-                                modifier = Modifier
-                                    .padding(start = 20.dp, top = 5.dp)
-                            )
-                        }
-                        Image(painter = painterResource(id = R.drawable.remove_4),
-                            contentDescription = "Remove button",
-                            colorFilter = ColorFilter.colorMatrix(greyscaleMatrix),
-                            modifier = Modifier
-                                .padding(start = 30.dp, top = 20.dp)
-                                .size(30.dp)
-                        )
                     }
                 }
             }
-        }
-        Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
-        Row (){
-            Button(onClick = { navController.navigate(HealthTrackerScreen.ActivityHistory.name) },
+
+        }
+
+        Row(modifier = Modifier.padding(top = 20.dp)) {
+            Button(
+                onClick = { navController.navigate(HealthTrackerScreen.ActivityHistory.name) },
                 colors = ButtonColors(
                     containerColor = Color(0xFFC8E3ED),
                     contentColor = Color.Black,
                     disabledContainerColor = Color(0xFFC8E3ED),
-                    disabledContentColor = Color.Black),
+                    disabledContentColor = Color.Black
+                ),
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp),
                 modifier = Modifier
                     .padding(start = 15.dp)
@@ -310,12 +171,12 @@ fun ActivitiesScreen(navController: NavController){
             Image(painter = painterResource(id = R.drawable.add),
                 contentDescription = "Add button",
                 modifier = Modifier
-                    .clickable { navController.navigate(HealthTrackerScreen.AddActivity.name)}
+                    .clickable { navController.navigate(HealthTrackerScreen.AddActivity.name) }
                     .size(50.dp))
+
         }
+
     }
-
-
 }
 
 

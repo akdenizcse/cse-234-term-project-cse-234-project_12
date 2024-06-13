@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.health_tracker.data.ActivityViewModel
 import com.example.health_tracker.ui.theme.Screens.ActivitiesScreen
 import com.example.health_tracker.ui.theme.Screens.HealthSection
 import com.example.health_tracker.ui.theme.Screens.ProfilePage
@@ -66,7 +67,8 @@ data class BottomNavigationItem(
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainPart(context: Context,
-    navController: NavController
+    navController: NavController,
+    activityViewModel: ActivityViewModel
 ){
 //    val items = listOf(
 //        BottomNavigationItem(
@@ -167,10 +169,10 @@ fun MainPart(context: Context,
 
             when (selectedUserSelection) {
                 MainPart.Tracker -> TrackerSection(context)
-                MainPart.Activities -> ActivitiesScreen(navController)
+                MainPart.Activities -> ActivitiesScreen(navController,activityViewModel)
                 MainPart.Health -> HealthSection()
                 MainPart.Profile -> ProfilePage(navController)
-                else -> ActivitiesScreen(navController)
+                else -> ActivitiesScreen(navController,activityViewModel)
             }
             
         }

@@ -1,6 +1,8 @@
 package com.example.health_tracker.ui.theme.Screens
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -44,18 +46,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.MainPart
 import com.example.health_tracker.R
+import com.example.health_tracker.data.ActivityViewModel
 
 
+@SuppressLint("MutableCollectionMutableState")
 @Composable
 fun AddActivityScreen(
-    navController: NavController
+    navController: NavController,
+    activityViewModel: ActivityViewModel
 ){
     val gradientColors = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
-
     var searchText by remember { mutableStateOf("") }
     var titleText by remember { mutableStateOf("") }
     var isMonday by remember { mutableStateOf(false) }
@@ -66,6 +71,7 @@ fun AddActivityScreen(
     var isThursday by remember { mutableStateOf(false) }
     var isWednesday by remember { mutableStateOf(false) }
     var savedExercise by remember { mutableStateOf(emptyList<String>()) }
+    var savedDays by remember { mutableStateOf(mutableListOf<String>()) }
 
 
 
@@ -78,42 +84,12 @@ fun AddActivityScreen(
             )
     ) {
 
-        // Search bar
-        TextField(value = searchText,
-            onValueChange ={searchText = it},
-            modifier = Modifier
-                .padding(start = 55.dp, top = 40.dp)
-                .background(
-                    color = Color.White,
-                    shape = RoundedCornerShape(20.dp)
-                )
-                .border(
-                    width = 1.dp,
-                    color = Color.Black,
-                    shape = RoundedCornerShape(5.dp)
-                )
-                .width(294.dp)
-                .height(51.dp),
-            placeholder = { Text("Search") },
-            leadingIcon = {
-                Icon(painter = painterResource(id = R.drawable.search_interface_symbol),
-                    contentDescription = "Search icon" ,
-                    modifier = Modifier.size(24.dp))
-            },
-            singleLine = true,//keep the input in single line
-            colors = TextFieldDefaults.colors(
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.White
-            )
-        )
         Spacer(modifier = Modifier.height(20.dp))
         //Title textfield
         TextField(value = titleText,
             onValueChange = {titleText = it},
             modifier = Modifier
-                .padding(start = 55.dp)
+                .padding(start = 55.dp, top = 60.dp)
                 .background(
                     color = Color.Transparent
                 )
@@ -150,7 +126,10 @@ fun AddActivityScreen(
             )
             Spacer(modifier = Modifier.width(5.dp))
             Checkbox(checked = isMonday,
-                onCheckedChange ={isMonday = it},
+                onCheckedChange ={
+                    isMonday = it
+                    savedDays.add("Monday")
+                                 },
                 modifier = Modifier
                     .size(30.dp),
                 enabled = true,
@@ -167,7 +146,11 @@ fun AddActivityScreen(
             )
             Spacer(modifier = Modifier.width(5.dp))
             Checkbox(checked = isFriday,
-                onCheckedChange ={isFriday = it},
+                onCheckedChange ={
+                    isFriday = it
+                    savedDays.add("Friday")
+
+                },
                 modifier = Modifier
                     .size(30.dp),
                 enabled = true,
@@ -193,7 +176,10 @@ fun AddActivityScreen(
             )
             Spacer(modifier = Modifier.width(5.dp))
             Checkbox(checked = isTuesday,
-                onCheckedChange ={isTuesday = it},
+                onCheckedChange ={
+                    isTuesday = it
+                    savedDays.add("Tuesday")
+                                 },
                 modifier = Modifier
                     .size(30.dp),
                 enabled = true,
@@ -210,7 +196,10 @@ fun AddActivityScreen(
             )
             Spacer(modifier = Modifier.width(5.dp))
             Checkbox(checked = isSaturday,
-                onCheckedChange ={isSaturday = it},
+                onCheckedChange ={
+                    isSaturday = it
+                    savedDays.add("Saturday")
+                                 },
                 modifier = Modifier
                     .size(30.dp),
                 enabled = true,
@@ -236,7 +225,10 @@ fun AddActivityScreen(
             )
             Spacer(modifier = Modifier.width(5.dp))
             Checkbox(checked = isWednesday,
-                onCheckedChange ={isWednesday = it},
+                onCheckedChange ={
+                    isWednesday = it
+                    savedDays.add("Wednesday")
+                                 },
                 modifier = Modifier
                     .size(30.dp),
                 enabled = true,
@@ -253,7 +245,10 @@ fun AddActivityScreen(
             )
             Spacer(modifier = Modifier.width(5.dp))
             Checkbox(checked = isSunday,
-                onCheckedChange ={isSunday = it},
+                onCheckedChange ={
+                    isSunday = it
+                    savedDays.add("Sunday")
+                                 },
                 modifier = Modifier
                     .size(30.dp),
                 enabled = true,
@@ -279,7 +274,10 @@ fun AddActivityScreen(
             )
             Spacer(modifier = Modifier.width(5.dp))
             Checkbox(checked = isThursday,
-                onCheckedChange ={isThursday = it},
+                onCheckedChange ={
+                    isThursday = it
+                    savedDays.add("Thursday")
+                                 },
                 modifier = Modifier
                     .size(30.dp),
                 enabled = true,
@@ -295,11 +293,9 @@ fun AddActivityScreen(
                 fontSize = 30.sp
             ),
             modifier = Modifier.padding(start = 40.dp))
-        
+
         //Exercise list
-        Checklist(items = exercises){checkedItems ->
-            savedExercise = checkedItems
-        }
+        Checklist(items = exercises,{checkedItems -> savedExercise = checkedItems},title = titleText,activityViewModel = activityViewModel,savedDays = savedDays)
 
         //Buttons
         Column(
@@ -334,47 +330,25 @@ fun AddActivityScreen(
                         .padding(start = 10.dp)
                         .size(15.dp))
             }
-//            Spacer(modifier = Modifier.height(10.dp))
-            //Save Button
-//            Button(onClick = {
-//
-//            },
-//                colors = ButtonColors(
-//                    containerColor = Color(0xFFC8E3ED),
-//                    contentColor = Color.Black,
-//                    disabledContainerColor = Color(0xFFC8E3ED),
-//                    disabledContentColor = Color.Black),
-//                elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp),
-//                modifier = Modifier
-//                    .padding(start = 35.dp)
-//
-//            ) {
-//                Text(
-//                    text = "Save",
-//                    style = TextStyle(
-//                        fontSize = 13.sp,
-//                        fontWeight = FontWeight.Bold
-//                    )
-//                )
-//                Image(painter = painterResource(id = R.drawable.diskette_1),
-//                    contentDescription ="Save diskette icon",
-//                    modifier = Modifier
-//                        .padding(start = 10.dp)
-//                        .size(15.dp))
-//            }
+
         }
 
     }
 }
 
 //Exercise List maker function
+@SuppressLint("MutableCollectionMutableState")
 @Composable
 fun Checklist(
     items: List<String>,
     onCheckedItemsSaved: (List<String>) -> Unit,
-) {
-    val checkedStates = remember { mutableStateListOf(*items.map { false }.toTypedArray()) }
+    title: String = "Exercise",
+    activityViewModel: ActivityViewModel,
+    savedDays: MutableList<String>
 
+) {
+    var checkedList by remember { mutableStateOf(mutableListOf<String>()) }
+    val checkedStates = remember { mutableStateListOf(*items.map { false }.toTypedArray()) }
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -403,6 +377,7 @@ fun Checklist(
                     ),
                     onCheckedChange = { checked ->
                         checkedStates[index] = checked
+                        checkedList.add(items[index])
                     }
                 )
             }
@@ -416,10 +391,16 @@ fun Checklist(
     }
     val context = LocalContext.current
 
-    Button(onClick = {
-        val checkedItems = items.filterIndexed { index, _ -> checkedStates[index] }
-        if(checkedItems.isNotEmpty()){
-            onCheckedItemsSaved(checkedItems)
+    Button(
+        onClick = {
+            val checkedItems = items.filterIndexed { index, _ -> checkedStates[index] }
+            if (checkedItems.isNotEmpty()) {
+                onCheckedItemsSaved(checkedItems)
+                val titleAndDaysMap = mapOf(title to savedDays.toList())
+                val activityMap = mapOf(titleAndDaysMap to checkedList.toList())
+                activityViewModel.activities.add(activityMap)
+                Toast.makeText(context, "Saved", Toast.LENGTH_LONG).show()
+            Log.d("Saved", activityViewModel.activities[0].keys.toString() + " " + activityViewModel.activities[0].values.toString())
         }else{
             ToastMessage(context = context)
         }

@@ -2,7 +2,6 @@ package com.example.health_tracker
 
 import android.os.Build
 import android.os.Bundle
-import android.provider.ContactsContract.Profile
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -10,7 +9,6 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,30 +18,29 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
+import com.example.health_tracker.data.ActivityViewModel
 import com.example.health_tracker.data.checkForPermission
 import com.example.health_tracker.data.isInternetAvailable
 import com.example.health_tracker.ui.theme.Health_TrackerTheme
-import com.example.health_tracker.ui.theme.Screens.ActivitiesScreen
 import com.example.health_tracker.ui.theme.Screens.ActivityHistoryScreen
 import com.example.health_tracker.ui.theme.Screens.AddActivityScreen
 import com.example.health_tracker.ui.theme.Screens.ForgotPassword
-import com.example.health_tracker.ui.theme.Screens.HealthSection
 import com.example.health_tracker.ui.theme.Screens.InternetConnectionScreen
 import com.example.health_tracker.ui.theme.Screens.LocationPermissionScreen
 import com.example.health_tracker.ui.theme.Screens.LoginForm
-import com.example.health_tracker.ui.theme.Screens.ProfilePage
 import com.example.health_tracker.ui.theme.Screens.ProfileSettings
 
 import com.example.health_tracker.ui.theme.Screens.SignUp
-import com.example.health_tracker.ui.theme.Screens.TrackerSection
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.rememberCameraPositionState
-
 
 class MainActivity : ComponentActivity() {
 
+
+
+
+    private val activityViewModel by lazy {
+        ActivityViewModel()
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +52,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HealthSection()
+
+
                     var hasLocationPermission by remember {
                         mutableStateOf(checkForPermission(this))
                     }
@@ -89,16 +87,17 @@ class MainActivity : ComponentActivity() {
                             composable(HealthTrackerScreen.Main.name) {
                                 MainPart(
                                     context = this@MainActivity,
-                                    navController = navController
+                                    navController = navController,
+                                    activityViewModel = activityViewModel
                                 )
                             }
 
                             composable(HealthTrackerScreen.ActivityHistory.name) {
-                                ActivityHistoryScreen(navController = navController)
+                                ActivityHistoryScreen(navController = navController,activityViewModel)
                             }
 
                             composable(HealthTrackerScreen.AddActivity.name) {
-                                AddActivityScreen(navController = navController)
+                                AddActivityScreen(navController = navController,activityViewModel)
                             }
                             composable(HealthTrackerScreen.ProfileSetting.name) {
                                 ProfileSettings(navController = navController)

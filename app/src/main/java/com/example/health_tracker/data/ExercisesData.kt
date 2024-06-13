@@ -1,7 +1,7 @@
 package com.example.health_tracker.data
 
 data class ExercisesData(
-    val name: String,
+    val title: String
 ) {
     companion object {
         val exercises = listOf(
