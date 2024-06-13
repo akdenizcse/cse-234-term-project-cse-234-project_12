@@ -47,6 +47,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavController
 import com.example.health_tracker.R
 import com.example.health_tracker.datastore.StoreAge
 import com.example.health_tracker.datastore.StoreGoal
@@ -59,9 +60,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
-@Preview
+
 @Composable
-fun ProfileSettings(/*navController: NavController*/){ // TODO: Remove comment
+fun ProfileSettings(navController: NavController){ // TODO: Remove comment
     //Popups
     val passwordPopup = remember { mutableStateOf(false) }
     val currentPassword = remember { mutableStateOf("") }
@@ -384,7 +385,7 @@ fun ProfileSettings(/*navController: NavController*/){ // TODO: Remove comment
                     }
                 }
             }
-            Button(onClick = {/*navController.popBackStack()*/},// TODO: Remove comment
+            Button(onClick = {navController.popBackStack()},// TODO: Remove comment
                 colors = ButtonColors(
                     containerColor = Color(0xFFC8E3ED),
                     contentColor = Color.Black,

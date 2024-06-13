@@ -116,6 +116,7 @@ fun HealthSection() {
         }
     }
 
+    // TODO: here
     if (waterDialog.value) {
         WaterDialog(waterDialog, currentLiters, scope, hydrationStore)
     }
@@ -745,6 +746,8 @@ fun WalkDialog(
     scope : CoroutineScope,
     datastore : StoreWalking
 ) {
+    val newWalk = remember { mutableStateOf(0) }
+    newWalk.value = currentWalk.value
     if (walkDialog.value) {
         Dialog(onDismissRequest = { walkDialog.value = false }) {
             Surface(
@@ -762,10 +765,7 @@ fun WalkDialog(
                         onValueChange = {
                             val newValue =
                                 it.toIntOrNull() ?: return@TextField // Handle invalid input
-                            currentWalk.value = newValue
-                            scope.launch {
-                                datastore.saveSteps(currentWalk.value)
-                            }
+                            newWalk.value = newValue
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         label = { Text("Steps") },
@@ -780,7 +780,13 @@ fun WalkDialog(
                         }
                         Spacer(modifier = Modifier.size(53.dp))
                         Button(
-                            onClick = { walkDialog.value = false }
+                            onClick = {
+                                currentWalk.value = newWalk.value
+                                scope.launch {
+                                    datastore.saveSteps(currentWalk.value)
+                                }
+                                walkDialog.value = false
+                            }
                         ) {
                             Text("Save")
                         }
@@ -799,7 +805,8 @@ fun WaterDialog(
     scope : CoroutineScope,
     datastore : StoreHydration,
 ) {
-
+    val newLiters = remember { mutableStateOf(0.0) }
+    newLiters.value = currentLiters.value
     if (waterDialog.value) {
         Dialog(onDismissRequest = { waterDialog.value = false }) {
             Surface(
@@ -817,10 +824,7 @@ fun WaterDialog(
                         onValueChange = {
                             val newValue =
                                 it.toDoubleOrNull() ?: return@TextField // Handle invalid input
-                            currentLiters.value = newValue
-                            scope.launch {
-                                datastore.saveHydration(currentLiters.value)
-                            }
+                            newLiters.value = newValue
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         label = { Text("Liters") },
@@ -836,6 +840,10 @@ fun WaterDialog(
                         Spacer(modifier = Modifier.size(53.dp))
                         Button(
                             onClick = {
+                                currentLiters.value = newLiters.value
+                                scope.launch {
+                                    datastore.saveHydration(currentLiters.value)
+                                }
                                 waterDialog.value = false
                             }
                         ) {
