@@ -478,17 +478,17 @@ fun InformationBox(navController: NavController) {
                         text = "Contact Us",
                         modifier = Modifier
                             .clickable(onClickLabel = "Open contact us") {
-                                val i = Intent(Intent.ACTION_SEND)
-                                i.putExtra(Intent.EXTRA_EMAIL, "Put Your Mail")
-                                i.putExtra(Intent.EXTRA_SUBJECT, "Health Tracker Support")
-                                i.putExtra(Intent.EXTRA_TEXT, "Please describe your issue here")
-                                i.setType("message/rfc822")
-                                ctx.startActivity(
-                                    Intent.createChooser(
-                                        i,
-                                        "Choose an Email client : "
-                                    )
-                                )
+                                val i = Intent(Intent.ACTION_SENDTO).apply {
+                                    data = Uri.parse("mailto:") // only email apps should handle this
+                                    putExtra(Intent.EXTRA_EMAIL, arrayOf("info.etopcu@gmail.com"))
+                                    putExtra(Intent.EXTRA_SUBJECT, "Health Tracker Support")
+                                    putExtra(Intent.EXTRA_TEXT, "Please describe your issue here")
+                                }
+                                try {
+                                    ctx.startActivity(Intent.createChooser(i, "Send email..."))
+                                } catch (ex: ActivityNotFoundException) {
+                                    // Display error message to user
+                                }
                             }
                             .padding(start = 60.dp, bottom = 10.dp)
                             .then(Modifier.drawBehind {
@@ -550,8 +550,8 @@ fun InformationBox(navController: NavController) {
 
 
 fun calculateBMR(weight: Double, height: Int, age: Int): String {
-
-    val bmr = (655.1 + (9.563 * weight) + (1.850 * height) - (4.676 * age)).toString()
+    //BMR Calculation Formula add 500 for the calories burned by the body at rest
+    val bmr = (500 + 661.0 + (9.6 * weight) + (1.8 * height) - (4.7 * age)).toString()
     for (i in bmr.indices) {
         if (bmr[i] == '.') {
             return bmr.substring(0, i + 2)

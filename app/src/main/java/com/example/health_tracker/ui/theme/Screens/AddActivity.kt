@@ -41,17 +41,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.MainPart
 import com.example.health_tracker.R
 import com.example.health_tracker.data.ActivityViewModel
+import com.example.health_tracker.database.ActivityEntity
+import kotlinx.coroutines.launch
 
 
 @SuppressLint("MutableCollectionMutableState")
@@ -60,6 +64,7 @@ fun AddActivityScreen(
     navController: NavController,
     activityViewModel: ActivityViewModel
 ){
+
     val gradientColors = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
     var searchText by remember { mutableStateOf("") }
     var titleText by remember { mutableStateOf("") }
@@ -396,16 +401,20 @@ fun Checklist(
             val checkedItems = items.filterIndexed { index, _ -> checkedStates[index] }
             if (checkedItems.isNotEmpty()) {
                 onCheckedItemsSaved(checkedItems)
-                val titleAndDaysMap = mapOf(title to savedDays.toList())
-                val activityMap = mapOf(titleAndDaysMap to checkedList.toList())
-                activityViewModel.activities.add(activityMap)
+                val activityEntity = ActivityEntity(
+                    id = 0, // Room will auto-generate the id
+                    title = title,
+                    savedDays = savedDays.toList(),
+                    checkedItems = checkedItems
+                )
+                activityViewModel.viewModelScope.launch {
+                    activityViewModel.addActivity(activityEntity)
+                }
                 Toast.makeText(context, "Saved", Toast.LENGTH_LONG).show()
-            Log.d("Saved", activityViewModel.activities[0].keys.toString() + " " + activityViewModel.activities[0].values.toString())
-        }else{
-            ToastMessage(context = context)
-        }
-
-    },
+            } else {
+                ToastMessage(context = context)
+            }
+        },
         colors = ButtonColors(
                     containerColor = Color(0xFFC8E3ED),
                     contentColor = Color.Black,
@@ -487,5 +496,63 @@ val exercises = listOf(
     "Upright row",
     "Weighted Russian twist",
     "Wide-grip pull-up",
-    "Wide-grip push-up"
+    "Wide-grip push-up",
+    "Wrist curl",
+    "Wrist extension",
+    "Zottman curl",
+    "Zottman preacher curl",
+    "Jumping jacks",
+    "Burpees",
+    "Mountain climbers",
+    "High knees",
+    "Jumping rope",
+    "Box jumps",
+    "Sprinting",
+    "Stair climbing",
+    "Swimming",
+    "Cycling",
+    "Running",
+    "Dancing",
+    "Hiking",
+    "Tennis",
+    "Basketball",
+    "Yoga",
+    "Pilates",
+    "Plank variations",
+    "Dips" ,
+    "Lunges",
+    "Squats",
+    "Push-ups",
+    "Wall sits",
+    "Glute bridges",
+    "Lunges with overhead press",
+    "Squats with overhead press",
+    "Foam rolling",
+    "Static stretches",
+    "Yoga poses",
+    "Seated cable row",
+    "Face pull",
+    "L-sit pull-up",
+    "Archer pull-up",
+    "Inverted row",
+    "Glute-ham raise",
+    "Calf raise machine",
+    "Seated Arnold press",
+    "Hammer curl",
+    "Seated calf raise",
+    "Lateral raise to front raise",
+    "Russian twist with medicine ball",
+    "Ab wheel rollout",
+    "Pallof press",
+    "Glute bridge with single leg raise",
+    "Side plank with hip dip",
+    "Spiderman push-up",
+    "Bulgarian split squat with dumbbells",
+    "Donkey kick",
+    "Jump rope",
+    "Battle ropes",
+    "Kettlebell swings",
+    "Elliptical trainer",
+    "Turkish get-up",
+    "Farmer's walk",
 )

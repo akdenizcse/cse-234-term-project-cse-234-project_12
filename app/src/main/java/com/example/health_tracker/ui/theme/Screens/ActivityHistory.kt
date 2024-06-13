@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -34,6 +35,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -63,6 +65,8 @@ fun ActivityHistoryScreen(
     navController: NavController,
     activityViewModel: ActivityViewModel
 ){
+    val activities by activityViewModel.activitiesList.observeAsState(initial = emptyList())
+    val deletedActivities = activities.filter { it.deleted }
     val gradientColors = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
     val greyscaleMatrix = ColorMatrix().apply {
         setToSaturation(1f)
@@ -108,14 +112,10 @@ fun ActivityHistoryScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
-                items(activityViewModel.logActivites.size) { i ->
+                    itemsIndexed(deletedActivities) { index, activity ->
+                        val titleWithDates = "Title: ${activity.title} -> Days: ${activity.savedDays.joinToString(", ")}"
 
-                    val activity = activityViewModel.logActivites[i]
-                    val titleAndDayMap = activity.keys.first()
-                    val title = titleAndDayMap.keys.first()
-                    val day = titleAndDayMap[title]
-                    val exercises = activity[titleAndDayMap]
-                    ActivityCard(title = "$title - $day", exercise = exercises ?: listOf())
+                        ActivityCard(titleWithDates,activity.checkedItems)
 
                 }
             }

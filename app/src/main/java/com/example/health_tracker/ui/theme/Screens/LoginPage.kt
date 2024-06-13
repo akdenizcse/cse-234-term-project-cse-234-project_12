@@ -1,6 +1,8 @@
 package com.example.health_tracker.ui.theme.Screens
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -278,15 +280,18 @@ fun LoginForm(
             ),
             modifier = Modifier
                 .align(alignment = Alignment.CenterHorizontally)
-                .clickable {
-                    val i = Intent(Intent.ACTION_SEND)
-
-                    i.putExtra(Intent.EXTRA_EMAIL, "Put Your Mail")
-                    i.putExtra(Intent.EXTRA_SUBJECT,"Health Tracker Support")
-                    i.putExtra(Intent.EXTRA_TEXT,"Please describe your issue here" )
-                    i.setType("message/rfc822")
-                    ctx.startActivity(Intent.createChooser(i,"Choose an Email client : "))
-
+                .clickable(onClickLabel = "Open contact us") {
+                    val i = Intent(Intent.ACTION_SENDTO).apply {
+                        data = Uri.parse("mailto:") // only email apps should handle this
+                        putExtra(Intent.EXTRA_EMAIL, arrayOf("info.etopcu@gmail.com"))
+                        putExtra(Intent.EXTRA_SUBJECT, "Health Tracker Support")
+                        putExtra(Intent.EXTRA_TEXT, "Please describe your issue here")
+                    }
+                    try {
+                        ctx.startActivity(Intent.createChooser(i, "Send email..."))
+                    } catch (ex: ActivityNotFoundException) {
+                        // Display error message to user
+                    }
                 }
 
         )

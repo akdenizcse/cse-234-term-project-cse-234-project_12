@@ -14,11 +14,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.health_tracker.data.ActivityViewModel
+import androidx.room.Room
 import com.example.health_tracker.data.checkForPermission
 import com.example.health_tracker.data.isInternetAvailable
 import com.example.health_tracker.ui.theme.Health_TrackerTheme
@@ -32,7 +33,9 @@ import com.example.health_tracker.ui.theme.Screens.ProfileSettings
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.example.health_tracker.data.ActivityViewModel
 import com.example.health_tracker.data.ResetDataWorker
+import com.example.health_tracker.database.ActivityDatabase
 import java.util.concurrent.TimeUnit
 
 import com.example.health_tracker.ui.theme.Screens.SignUp
@@ -41,14 +44,18 @@ import java.util.Calendar
 class MainActivity : ComponentActivity() {
 
 
-
-
-    private val activityViewModel by lazy {
-        ActivityViewModel()
+    companion object {
+        lateinit var ActivityDatabase: ActivityDatabase
     }
+    private lateinit var activityViewModel: ActivityViewModel
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        activityViewModel = ViewModelProvider(this).get(ActivityViewModel::class.java)
+
+
         enableEdgeToEdge()
         val midnight = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, 0)
@@ -117,11 +124,14 @@ class MainActivity : ComponentActivity() {
                             }
 
                             composable(HealthTrackerScreen.ActivityHistory.name) {
-                                ActivityHistoryScreen(navController = navController,activityViewModel)
+                                ActivityHistoryScreen(
+                                    navController = navController,
+                                    activityViewModel
+                                )
                             }
 
                             composable(HealthTrackerScreen.AddActivity.name) {
-                                AddActivityScreen(navController = navController,activityViewModel)
+                                AddActivityScreen(navController = navController, activityViewModel)
                             }
                             composable(HealthTrackerScreen.ProfileSetting.name) {
                                 ProfileSettings(navController = navController) // TODO: remove comment

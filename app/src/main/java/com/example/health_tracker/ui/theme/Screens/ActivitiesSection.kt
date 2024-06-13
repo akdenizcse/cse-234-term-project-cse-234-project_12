@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -36,6 +37,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -54,6 +56,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHost
@@ -63,11 +66,14 @@ import androidx.navigation.compose.rememberNavController
 import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.R
 import com.example.health_tracker.data.ActivityViewModel
+import kotlinx.coroutines.launch
 
 
 @SuppressLint("MutableCollectionMutableState")
 @Composable
 fun ActivitiesScreen(navController: NavController, viewModel: ActivityViewModel) {
+    val activities by viewModel.activitiesList.observeAsState(initial = emptyList())
+    val nonDeletedActivities = activities.filter { !it.deleted }
     val gradientColors = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
     val greyscaleMatrix = ColorMatrix().apply {
         setToSaturation(1f)
@@ -116,28 +122,25 @@ fun ActivitiesScreen(navController: NavController, viewModel: ActivityViewModel)
                     .fillMaxWidth()
             ) {
 
-                items(viewModel.activities.size) { i ->
+                itemsIndexed(nonDeletedActivities) { index,activity ->
 
-                    val activity = viewModel.activities[i]
-                    val titleAndDayMap = activity.keys.first()
-                    val title = titleAndDayMap.keys.first()
-                    val day = titleAndDayMap[title]
-                    val exercises = activity[titleAndDayMap]
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
                         Image(painter = painterResource(id = R.drawable.remove_4),
                             contentDescription = "Remove button",
                             colorFilter = ColorFilter.colorMatrix(greyscaleMatrix),
                             modifier = Modifier
                                 .clickable {
-                                    viewModel.activities.removeAt(i)
-                                    viewModel.logActivites.add(activity)
+                                    viewModel.viewModelScope.launch {
+                                        viewModel.markActivityAsDeleted(activity)
+                                    }
                                 }
                                 .padding(start = 30.dp, top = 20.dp)
                                 .size(30.dp)
 
 
                         )
-                        ActivityCard(title = "$title - $day", exercise = exercises ?: listOf())
+                        val titleWithDates = "Title: ${activity.title} -> Days: ${activity.savedDays.joinToString(", ")}"
+                        ActivityCard(titleWithDates, activity.checkedItems)
 
                     }
                 }
