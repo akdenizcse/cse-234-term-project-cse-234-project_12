@@ -1,7 +1,10 @@
 package com.example.health_tracker.ui.theme.Screens
 
 
+import android.content.Context
 import android.os.Build
+import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -50,6 +53,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.health_tracker.R
@@ -562,30 +566,82 @@ fun RecordMedication(
     currentMedications: MutableList<String>
 ) {
     val writtenMedication = remember { mutableStateOf("") }
+    val hour = remember { mutableStateOf(0) }
+    val min = remember { mutableStateOf(0) }
     if (medicationDialog.value) {
         Dialog(onDismissRequest = { medicationDialog.value = false }) {
             Surface(
                 modifier = Modifier
-                    .fillMaxWidth(0.8f) // Adjust width as needed
+                    .fillMaxWidth() // Adjust width as needed
                     .background(color = Color.Transparent)
                     .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
                     .shadow(16.dp, RoundedCornerShape(10.dp))
+
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text("Update Medication", style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.height(16.dp))
-                    TextField(value = writtenMedication.value, onValueChange = {
-                        writtenMedication.value = it
-                        currentMedications.add(it)
-                    })
+                    Row (
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+
+
+                        TextField(
+                            label = { Text("Name") },
+                            value = writtenMedication.value,
+                            onValueChange = {
+                                writtenMedication.value = it
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                            modifier = Modifier
+                                .width(120.dp)
+                                .height(50.dp),
+                        )
+                        Row(
+                            modifier = Modifier,
+                            horizontalArrangement = Arrangement.spacedBy(5.dp),
+                            verticalAlignment = Alignment.CenterVertically
+
+                        ) {
+                            TextField(
+                                label = { Text("H") },
+                                value = hour.value.toString(), // Convert double to String
+                                onValueChange = {
+                                    val newVal = it.toIntOrNull() ?: return@TextField
+                                    hour.value = newVal
+                                },
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                modifier = Modifier
+                                    .width(60.dp)
+                                    .height(50.dp)
+                            )
+                            TextField(
+                                label = { Text("M") },
+                                value = min.value.toString(), // Convert double to String
+                                onValueChange = {
+                                    val newVal = it.toIntOrNull() ?: return@TextField
+                                    min.value = newVal
+                                },
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                modifier = Modifier
+                                    .width(60.dp)
+                                    .height(50.dp)
+                            )
+
+                        }
+
+                    }
                     Spacer(modifier = Modifier.height(16.dp))
-                    Row(modifier = Modifier) {
+                    Row(modifier = Modifier, horizontalArrangement = Arrangement.spacedBy(110.dp)) {
                         Button(
                             onClick = { medicationDialog.value = false }
                         ) {
                             Text("Cancel")
                         }
-                        Spacer(modifier = Modifier.size(53.dp))
+
                         Button(
                             onClick = { medicationDialog.value = false }
                         ) {
@@ -596,6 +652,8 @@ fun RecordMedication(
             }
         }
     }
+    currentMedications.add(writtenMedication.value+" "+hour.value+":"+min)
+    Log.d("Medication", currentMedications.toString())
 
 }
 
@@ -622,24 +680,48 @@ fun RelaxingDialog(
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text("Edit Relax Time", style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.height(8.dp))
-                    TextField(
-                        value = "${minute.value}",
-                        onValueChange = {
-                            val newVal = it.toIntOrNull() ?: return@TextField
-                            minute.value = newVal
-                        },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    Row (
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
 
-                        )
-                    TextField(
-                        value = "${second.value}", // Convert double to String
-                        onValueChange = {
-                            val newVal = it.toIntOrNull() ?: return@TextField
-                            second.value = newVal
-                        },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
 
+                        TextField(
+                            label = { Text("Minute") },
+                            value = "${minute.value}",
+                            onValueChange = {
+                                if (it.length > 2) {
+                                    Toast.makeText(null, "Invalid input", Toast.LENGTH_SHORT).show()
+                                    return@TextField
+                                }
+                                val newVal = it.toIntOrNull() ?: return@TextField
+                                minute.value = newVal
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            modifier = Modifier
+                                .width(80.dp)
+                                .height(50.dp),
+
+                            )
+                        TextField(
+                            label = { Text("Second") },
+                            value = "${second.value}", // Convert double to String
+                            onValueChange = {
+                                if (it.length > 2) {
+                                    Toast.makeText(null, "Invalid input", Toast.LENGTH_SHORT).show()
+                                    return@TextField
+                                }
+                                val newVal = it.toIntOrNull() ?: return@TextField
+                                second.value = newVal
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            modifier = Modifier
+                                .width(80.dp)
+                                .height(50.dp)
                         )
+                    }
                     Spacer(modifier = Modifier.height(16.dp))
                     Row(modifier = Modifier) {
                         Button(
@@ -692,24 +774,48 @@ fun SleepDialog(
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text("Edit Sleep Hour", style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.height(8.dp))
-                    TextField(
-                        value = "${hour.value}",
-                        onValueChange = {
-                            val newVal = it.toIntOrNull() ?: return@TextField
-                            hour.value = newVal
-                        },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    Row (
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+
+
+                        TextField(
+                            label = { Text("Hour") },
+                            value = "${hour.value}",
+                            onValueChange = {
+                                if (it.length > 2) {
+                                    Toast.makeText(null, "Invalid input", Toast.LENGTH_SHORT).show()
+                                    return@TextField
+                                }
+                                val newVal = it.toIntOrNull() ?: return@TextField
+                                hour.value = newVal
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            modifier = Modifier
+                                .width(80.dp)
+                                .height(50.dp),
 
                         )
-                    TextField(
-                        value = "${minute.value}", // Convert double to String
-                        onValueChange = {
-                            val newVal = it.toIntOrNull() ?: return@TextField
-                            minute.value = newVal
-                        },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-
+                        TextField(
+                            label = { Text("Minute") },
+                            value = "${minute.value}", // Convert double to String
+                            onValueChange = {
+                                if (it.length > 2) {
+                                    Toast.makeText(null, "Invalid input", Toast.LENGTH_SHORT).show()
+                                    return@TextField
+                                }
+                                val newVal = it.toIntOrNull() ?: return@TextField
+                                minute.value = newVal
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            modifier = Modifier
+                                .width(80.dp)
+                                .height(50.dp)
                         )
+                    }
                     Spacer(modifier = Modifier.height(16.dp))
                     Row(modifier = Modifier) {
                         Button(
