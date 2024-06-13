@@ -73,9 +73,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
-@Preview
 @Composable
-fun ProfileSettings(/*navController: NavController*/){
+fun ProfileSettings(navController: NavController){
     //Popups
     val usernamePopup = remember { mutableStateOf(false) }
     val currentUsername = remember { mutableStateOf("") }
@@ -427,7 +426,7 @@ fun ProfileSettings(/*navController: NavController*/){
                     }
                 }
             }
-            Button(onClick = {/* navController.popBackStack()*/},
+            Button(onClick = {navController.popBackStack()},
                 colors = ButtonColors(
                     containerColor = Color(0xFFC8E3ED),
                     contentColor = Color.Black,

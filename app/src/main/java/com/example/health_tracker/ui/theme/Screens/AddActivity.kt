@@ -77,43 +77,11 @@ fun AddActivityScreen(
                 brush = Brush.verticalGradient(gradientColors)
             )
     ) {
-
-        // Search bar
-        TextField(value = searchText,
-            onValueChange ={searchText = it},
-            modifier = Modifier
-                .padding(start = 55.dp, top = 40.dp)
-                .background(
-                    color = Color.White,
-                    shape = RoundedCornerShape(20.dp)
-                )
-                .border(
-                    width = 1.dp,
-                    color = Color.Black,
-                    shape = RoundedCornerShape(5.dp)
-                )
-                .width(294.dp)
-                .height(51.dp),
-            placeholder = { Text("Search") },
-            leadingIcon = {
-                Icon(painter = painterResource(id = R.drawable.search_interface_symbol),
-                    contentDescription = "Search icon" ,
-                    modifier = Modifier.size(24.dp))
-            },
-            singleLine = true,//keep the input in single line
-            colors = TextFieldDefaults.colors(
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.White
-            )
-        )
-        Spacer(modifier = Modifier.height(20.dp))
         //Title textfield
         TextField(value = titleText,
             onValueChange = {titleText = it},
             modifier = Modifier
-                .padding(start = 55.dp)
+                .padding(start = 55.dp, top = 50.dp)
                 .background(
                     color = Color.Transparent
                 )
@@ -334,34 +302,6 @@ fun AddActivityScreen(
                         .padding(start = 10.dp)
                         .size(15.dp))
             }
-//            Spacer(modifier = Modifier.height(10.dp))
-            //Save Button
-//            Button(onClick = {
-//
-//            },
-//                colors = ButtonColors(
-//                    containerColor = Color(0xFFC8E3ED),
-//                    contentColor = Color.Black,
-//                    disabledContainerColor = Color(0xFFC8E3ED),
-//                    disabledContentColor = Color.Black),
-//                elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp),
-//                modifier = Modifier
-//                    .padding(start = 35.dp)
-//
-//            ) {
-//                Text(
-//                    text = "Save",
-//                    style = TextStyle(
-//                        fontSize = 13.sp,
-//                        fontWeight = FontWeight.Bold
-//                    )
-//                )
-//                Image(painter = painterResource(id = R.drawable.diskette_1),
-//                    contentDescription ="Save diskette icon",
-//                    modifier = Modifier
-//                        .padding(start = 10.dp)
-//                        .size(15.dp))
-//            }
         }
 
     }

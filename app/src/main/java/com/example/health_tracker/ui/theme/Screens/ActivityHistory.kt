@@ -73,44 +73,13 @@ fun ActivityHistoryScreen(
 
     Column(
         modifier = Modifier
+
             .fillMaxWidth()
             .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(gradientColors)
             )
     ) {
-        // Search bar
-        TextField(value = searchText,
-            onValueChange ={searchText = it},
-            modifier = Modifier
-                .padding(start = 55.dp, top = 40.dp)
-                .background(
-                    color = Color.White,
-                    shape = RoundedCornerShape(20.dp)
-                )
-                .border(
-                    width = 1.dp,
-                    color = Color.Black,
-                    shape = RoundedCornerShape(5.dp)
-                )
-                .width(294.dp)
-                .height(51.dp),
-            placeholder = {Text("Search")},
-            leadingIcon = {
-                Icon(painter = painterResource(id = R.drawable.search_interface_symbol),
-                    contentDescription = "Search icon" ,
-                    modifier = Modifier.size(24.dp))
-            },
-            singleLine = true,//keep the input in single line
-            colors = TextFieldDefaults.colors(
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.White
-            )
-        )
-        Spacer(modifier = Modifier.height(50.dp))
-
         Text(
             text = "Previous Activities",
             style = TextStyle(
@@ -118,7 +87,7 @@ fun ActivityHistoryScreen(
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             ),
-            modifier = Modifier.padding(start = 100.dp)
+            modifier = Modifier.padding(start = 100.dp, top = 50.dp)
         )
         Spacer(modifier = Modifier.height(5.dp))
 
