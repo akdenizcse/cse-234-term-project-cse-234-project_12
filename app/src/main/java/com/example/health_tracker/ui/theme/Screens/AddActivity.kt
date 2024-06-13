@@ -66,7 +66,6 @@ fun AddActivityScreen(
 ){
 
     val gradientColors = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
-    var searchText by remember { mutableStateOf("") }
     var titleText by remember { mutableStateOf("") }
     var isMonday by remember { mutableStateOf(false) }
     var isFriday by remember { mutableStateOf(false) }
@@ -132,8 +131,13 @@ fun AddActivityScreen(
             Spacer(modifier = Modifier.width(5.dp))
             Checkbox(checked = isMonday,
                 onCheckedChange ={
-                    isMonday = it
-                    savedDays.add("Monday")
+                    if(isMonday){
+                        savedDays.remove("Monday")
+                        isMonday = it
+                    }else {
+                        isMonday = it
+                        savedDays.add("Monday")
+                    }
                                  },
                 modifier = Modifier
                     .size(30.dp),
@@ -152,9 +156,13 @@ fun AddActivityScreen(
             Spacer(modifier = Modifier.width(5.dp))
             Checkbox(checked = isFriday,
                 onCheckedChange ={
-                    isFriday = it
-                    savedDays.add("Friday")
-
+                    if(isFriday){
+                        savedDays.remove("Friday")
+                        isFriday = it
+                    }else {
+                        isFriday = it
+                        savedDays.add("Friday")
+                    }
                 },
                 modifier = Modifier
                     .size(30.dp),
@@ -182,8 +190,13 @@ fun AddActivityScreen(
             Spacer(modifier = Modifier.width(5.dp))
             Checkbox(checked = isTuesday,
                 onCheckedChange ={
-                    isTuesday = it
-                    savedDays.add("Tuesday")
+                    if(isTuesday){
+                        savedDays.remove("Tuesday")
+                        isTuesday = it
+                    }else {
+                        isTuesday = it
+                        savedDays.add("Tuesday")
+                    }
                                  },
                 modifier = Modifier
                     .size(30.dp),
@@ -202,8 +215,13 @@ fun AddActivityScreen(
             Spacer(modifier = Modifier.width(5.dp))
             Checkbox(checked = isSaturday,
                 onCheckedChange ={
-                    isSaturday = it
-                    savedDays.add("Saturday")
+                    if(isSaturday){
+                        savedDays.remove("Saturday")
+                        isSaturday = it
+                    }else {
+                        isSaturday = it
+                        savedDays.add("Saturday")
+                    }
                                  },
                 modifier = Modifier
                     .size(30.dp),
@@ -231,8 +249,13 @@ fun AddActivityScreen(
             Spacer(modifier = Modifier.width(5.dp))
             Checkbox(checked = isWednesday,
                 onCheckedChange ={
-                    isWednesday = it
-                    savedDays.add("Wednesday")
+                    if(isWednesday){
+                        savedDays.remove("Wednesday")
+                        isWednesday = it
+                    }else {
+                        isWednesday = it
+                        savedDays.add("Wednesday")
+                    }
                                  },
                 modifier = Modifier
                     .size(30.dp),
@@ -251,8 +274,13 @@ fun AddActivityScreen(
             Spacer(modifier = Modifier.width(5.dp))
             Checkbox(checked = isSunday,
                 onCheckedChange ={
-                    isSunday = it
-                    savedDays.add("Sunday")
+                    if(isSunday){
+                        savedDays.remove("Sunday")
+                        isSunday = it
+                    }else {
+                        isSunday = it
+                        savedDays.add("Sunday")
+                    }
                                  },
                 modifier = Modifier
                     .size(30.dp),
@@ -280,8 +308,13 @@ fun AddActivityScreen(
             Spacer(modifier = Modifier.width(5.dp))
             Checkbox(checked = isThursday,
                 onCheckedChange ={
-                    isThursday = it
-                    savedDays.add("Thursday")
+                    if(isThursday){
+                        savedDays.remove("Thursday")
+                        isThursday = it
+                    }else {
+                        isThursday = it
+                        savedDays.add("Thursday")
+                    }
                                  },
                 modifier = Modifier
                     .size(30.dp),

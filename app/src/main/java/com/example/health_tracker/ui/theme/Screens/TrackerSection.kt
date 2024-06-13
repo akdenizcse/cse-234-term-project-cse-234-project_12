@@ -226,16 +226,29 @@ fun TrackerSection(context: Context) {
                         modifier = Modifier.size(41.dp)
                     )
                     Row(modifier = Modifier.align(Alignment.CenterVertically)) {
-                        Text(
-                            text = "${currentMedication.value}",
-                            style = TextStyle(
-                                fontSize = 26.sp,
-                                lineHeight = 20.sp,
-                                fontWeight = FontWeight(500),
-                                color = Color(0xFF000000),
-                                letterSpacing = 0.36.sp,
+                        if (currentMedication.value == " 0:0") {
+                            Text(
+                                text = "No Medication Set",
+                                style = TextStyle(
+                                    fontSize = 26.sp,
+                                    lineHeight = 20.sp,
+                                    fontWeight = FontWeight(500),
+                                    color = Color(0xFF000000),
+                                    letterSpacing = 0.36.sp,
+                                )
                             )
-                        )
+                        } else {
+                            Text(
+                                text = "${currentMedication.value}",
+                                style = TextStyle(
+                                    fontSize = 26.sp,
+                                    lineHeight = 20.sp,
+                                    fontWeight = FontWeight(500),
+                                    color = Color(0xFF000000),
+                                    letterSpacing = 0.36.sp,
+                                )
+                            )
+                        }
                     }
                 }
             }

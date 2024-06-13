@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,7 +53,6 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         activityViewModel = ViewModelProvider(this).get(ActivityViewModel::class.java)
 
 
@@ -89,8 +89,10 @@ class MainActivity : ComponentActivity() {
                         mutableStateOf(checkForPermission(this))
                     }
                     var hasInternetPermission by remember {
-                        mutableStateOf(isInternetAvailable(this))
+                        mutableStateOf(checkForPermission(this))
                     }
+                    val networkStatusTracker = NetworkStatusTracker(this)
+                    hasInternetPermission = networkStatusTracker.networkStatus.collectAsState().value
 
                     if (hasLocationPermission && hasInternetPermission) {
                         val navController = rememberNavController()
@@ -137,17 +139,17 @@ class MainActivity : ComponentActivity() {
                                 ProfileSettings(navController = navController) // TODO: remove comment
                             }
                         }
-                    } else {
-                        if (hasInternetPermission) {
+                    }else {
+                        if (!hasInternetPermission) {
+                            InternetConnectionScreen(this) {
+                                hasInternetPermission = true
+                            }
+                        }
+                        if (!hasLocationPermission && hasInternetPermission) {
                             LocationPermissionScreen {
                                 hasLocationPermission = true
                             }
                         }
-                        InternetConnectionScreen(this) {
-                            hasInternetPermission = true
-                        }
-
-
                     }
 
 

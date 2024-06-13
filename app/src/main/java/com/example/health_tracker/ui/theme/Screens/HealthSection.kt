@@ -674,6 +674,7 @@ fun RelaxingDialog(
     scope : CoroutineScope,
     datastore : StoreRelaxing
 ) {
+    val context = LocalContext.current
     val minute = remember { mutableStateOf(0) }
     minute.value = currentRelaxing.value / 60
     val second = remember { mutableStateOf(0) }
@@ -703,7 +704,7 @@ fun RelaxingDialog(
                             value = "${minute.value}",
                             onValueChange = {
                                 if (it.length > 2) {
-                                    Toast.makeText(null, "Invalid input", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Invalid input", Toast.LENGTH_SHORT).show()
                                     return@TextField
                                 }
                                 val newVal = it.toIntOrNull() ?: return@TextField
@@ -720,7 +721,7 @@ fun RelaxingDialog(
                             value = "${second.value}", // Convert double to String
                             onValueChange = {
                                 if (it.length > 2) {
-                                    Toast.makeText(null, "Invalid input", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Invalid input", Toast.LENGTH_SHORT).show()
                                     return@TextField
                                 }
                                 val newVal = it.toIntOrNull() ?: return@TextField
@@ -767,6 +768,7 @@ fun SleepDialog(
     scope : CoroutineScope,
     datastore : StoreSleep,
 ) {
+    val context = LocalContext.current
     val hour = remember { mutableStateOf(0) }
     hour.value = currentSleep.value / 60
     val minute = remember { mutableStateOf(0) }
@@ -797,7 +799,7 @@ fun SleepDialog(
                             value = "${hour.value}",
                             onValueChange = {
                                 if (it.length > 2) {
-                                    Toast.makeText(null, "Invalid input", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Invalid input", Toast.LENGTH_SHORT).show()
                                     return@TextField
                                 }
                                 val newVal = it.toIntOrNull() ?: return@TextField
@@ -814,7 +816,7 @@ fun SleepDialog(
                             value = "${minute.value}", // Convert double to String
                             onValueChange = {
                                 if (it.length > 2) {
-                                    Toast.makeText(null, "Invalid input", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Invalid input", Toast.LENGTH_SHORT).show()
                                     return@TextField
                                 }
                                 val newVal = it.toIntOrNull() ?: return@TextField
@@ -877,7 +879,7 @@ fun WalkDialog(
                     Text("Edit Walking Amount", style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.height(8.dp))
                     TextField(
-                        value = currentWalk.value.toString(), // Convert double to String
+                        value = newWalk.value.toString(), // Convert double to String
                         onValueChange = {
                             val newValue =
                                 it.toIntOrNull() ?: return@TextField // Handle invalid input
@@ -936,7 +938,7 @@ fun WaterDialog(
                     Text("Edit Liters", style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.height(8.dp))
                     TextField(
-                        value = currentLiters.value.toString(), // Convert double to String
+                        value = newLiters.value.toString(), // Convert double to String
                         onValueChange = {
                             val newValue =
                                 it.toDoubleOrNull() ?: return@TextField // Handle invalid input
