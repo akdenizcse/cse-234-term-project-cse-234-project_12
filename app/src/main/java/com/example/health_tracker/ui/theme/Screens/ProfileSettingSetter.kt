@@ -60,8 +60,10 @@ import androidx.navigation.NavController
 import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.R
 
+
+@Preview
 @Composable
-fun ProfileSettings(navController: NavController){
+fun ProfileSettings(/*navController: NavController*/){
     //Popups
     val usernamePopup = remember { mutableStateOf(false) }
     val currentUsername = remember { mutableStateOf("") }
@@ -168,7 +170,14 @@ fun ProfileSettings(navController: NavController){
                                 fontSize = 20.sp
                             )
                         )
-
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "aski",
+                            style = TextStyle(
+                                color = colorResource(id = R.color.black),
+                                fontSize = 20.sp
+                            )
+                            )
                     }
                     //Password row
                     Row(
@@ -181,6 +190,14 @@ fun ProfileSettings(navController: NavController){
                     ) {
                         Text(
                             text = stringResource(id = R.string.password_column),
+                            style = TextStyle(
+                                color = colorResource(id = R.color.black),
+                                fontSize = 20.sp
+                            )
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "aski",
                             style = TextStyle(
                                 color = colorResource(id = R.color.black),
                                 fontSize = 20.sp
@@ -203,6 +220,14 @@ fun ProfileSettings(navController: NavController){
                                 fontSize = 20.sp
                             )
                         )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "aski",
+                            style = TextStyle(
+                                color = colorResource(id = R.color.black),
+                                fontSize = 20.sp
+                            )
+                        )
                     }
                     //Surname row
                     Row(
@@ -215,6 +240,14 @@ fun ProfileSettings(navController: NavController){
                     ) {
                         Text(
                             text = stringResource(id = R.string.surname_column),
+                            style = TextStyle(
+                                color = colorResource(id = R.color.black),
+                                fontSize = 20.sp
+                            )
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "aski",
                             style = TextStyle(
                                 color = colorResource(id = R.color.black),
                                 fontSize = 20.sp
@@ -237,6 +270,14 @@ fun ProfileSettings(navController: NavController){
                                 fontSize = 20.sp
                             )
                         )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "aski",
+                            style = TextStyle(
+                                color = colorResource(id = R.color.black),
+                                fontSize = 20.sp
+                            )
+                        )
                     }
                     //Weight row
                     Row(
@@ -249,6 +290,14 @@ fun ProfileSettings(navController: NavController){
                     ) {
                         Text(
                             text = stringResource(id = R.string.weight_column),
+                            style = TextStyle(
+                                color = colorResource(id = R.color.black),
+                                fontSize = 20.sp
+                            )
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "aski",
                             style = TextStyle(
                                 color = colorResource(id = R.color.black),
                                 fontSize = 20.sp
@@ -271,6 +320,14 @@ fun ProfileSettings(navController: NavController){
                                 fontSize = 20.sp
                             )
                         )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "aski",
+                            style = TextStyle(
+                                color = colorResource(id = R.color.black),
+                                fontSize = 20.sp
+                            )
+                        )
                     }
                     //Goal row
                     Row(
@@ -288,10 +345,18 @@ fun ProfileSettings(navController: NavController){
                                 fontSize = 20.sp
                             )
                         )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "aski",
+                            style = TextStyle(
+                                color = colorResource(id = R.color.black),
+                                fontSize = 20.sp
+                            )
+                        )
                     }
                 }
             }
-            Button(onClick = { navController.popBackStack()},
+            Button(onClick = {/* navController.popBackStack()*/},
                 colors = ButtonColors(
                     containerColor = Color(0xFFC8E3ED),
                     contentColor = Color.Black,
