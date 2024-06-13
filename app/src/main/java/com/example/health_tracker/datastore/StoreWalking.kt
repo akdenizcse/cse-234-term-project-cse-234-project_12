@@ -3,29 +3,28 @@ package com.example.health_tracker.datastore
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class StoreSleep(private val context: Context) {
+class StoreWalking(private val context: Context) {
 
     companion object{
-        private val Context.dataStore : DataStore<Preferences> by preferencesDataStore("Sleep")
-        val SLEEP   = intPreferencesKey("Sleep")
+        private val Context.dataStore : DataStore<Preferences> by preferencesDataStore("Steps")
+        val WALKING   = intPreferencesKey("Steps")
     }
 
 
-    val getSleep : Flow<Int?> = context.dataStore.data
+    val getSteps : Flow<Int?> = context.dataStore.data
         .map { preferences ->
-            preferences[SLEEP] ?: 0
+            preferences[WALKING] ?: 0
         }
 
-    suspend fun saveSleep(value : Int) {
+    suspend fun saveSteps(value : Int) {
         context.dataStore.edit { preferences ->
-            preferences[SLEEP] = value
+            preferences[WALKING] = value
         }
     }
 }

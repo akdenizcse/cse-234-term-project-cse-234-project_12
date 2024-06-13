@@ -31,7 +31,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,12 +54,14 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.health_tracker.R
 import com.example.health_tracker.datastore.StoreHydration
+import com.example.health_tracker.datastore.StoreRelaxing
 import com.example.health_tracker.datastore.StoreSleep
+import com.example.health_tracker.datastore.StoreWalking
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -71,19 +72,15 @@ import kotlinx.coroutines.withContext
 fun HealthSection() {
     val medications = remember { mutableStateListOf<String>() }
     val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
-    val waterColor = listOf(Color(0xFFD3D3D3), Color(0xFF48DBFB))
-    val bedColor = listOf(Color(0xFF6D6027), Color(0xFFD3CBB8))
-    val walkingColor = listOf(Color(0xFF7BED9F), Color(0xFFD3D3D3))
-    val meditationColor = listOf(Color(0xFF7F8C8D), Color(0xFF000000))
     val medicationDialog = remember { mutableStateOf(false) }
     val waterDialog = remember { mutableStateOf(false) }
     val currentLiters = remember { mutableStateOf(0.0) } // Initial liter value
     val walkDialog = remember { mutableStateOf(false) }
     val currentWalk = remember { mutableStateOf(0) } // Initial liter value
     val sleepDialog = remember { mutableStateOf(false) }
-    val currentSleep = remember { mutableStateOf("0h 0m") } // Initial liter value
+    val sleepTime = remember { mutableStateOf(0) }
     val relaxingDialog = remember { mutableStateOf(false) }
-    val currentRelaxing = remember { mutableStateOf("30m 0s") } // Initial liter value
+    val currentRelaxing = remember { mutableStateOf(0) } // Initial liter value
 
     //context
     val context = LocalContext.current
@@ -92,10 +89,30 @@ fun HealthSection() {
     //dataStore
     val hydrationStore = StoreHydration(context)
     val sleepStore = StoreSleep(context)
+    val walkingStore = StoreWalking(context)
+    val relaxingStore = StoreRelaxing(context)
     LaunchedEffect(Unit) {
         launch {
             val initialValue = hydrationStore.getHydration
             currentLiters.value = initialValue.first()!!
+        }
+    }
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = sleepStore.getSleep
+            sleepTime.value = initialValue.first()!!
+        }
+    }
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = walkingStore.getSteps
+            currentWalk.value= initialValue.first()!!
+        }
+    }
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = relaxingStore.getRelaxing
+            currentRelaxing.value = initialValue.first()!!
         }
     }
 
@@ -103,13 +120,13 @@ fun HealthSection() {
         WaterDialog(waterDialog, currentLiters, scope, hydrationStore)
     }
     if (walkDialog.value) {
-        WalkDialog(walkDialog, currentWalk)
+        WalkDialog(walkDialog, currentWalk, scope, walkingStore)
     }
     if (sleepDialog.value) {
-        SleepDialog(sleepDialog, currentSleep)
+        SleepDialog(sleepDialog, sleepTime, scope, sleepStore)
     }
     if (relaxingDialog.value) {
-        RelaxingDialog(relaxingDialog, currentRelaxing)
+        RelaxingDialog(relaxingDialog, currentRelaxing, scope, relaxingStore)
     }
     if (medicationDialog.value) {
         RecordMedication(medicationDialog, medications)
@@ -366,7 +383,7 @@ fun HealthSection() {
                                 )
                         ) {
                             Text(
-                                text = currentSleep.value,
+                                text = "${sleepTime.value/60}h ${sleepTime.value%60}m ",
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 25.sp,
                                 fontStyle = FontStyle.Normal,
@@ -521,7 +538,7 @@ fun HealthSection() {
                                 )
                         ) {
                             Text(
-                                text = currentRelaxing.value,
+                                text = "${currentRelaxing.value/60}m ",
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 25.sp,
                                 fontStyle = FontStyle.Normal,
@@ -582,7 +599,16 @@ fun RecordMedication(
 }
 
 @Composable
-fun RelaxingDialog(relaxingDialog: MutableState<Boolean>, currentRelaxing: MutableState<String>) {
+fun RelaxingDialog(
+    relaxingDialog: MutableState<Boolean>,
+    currentRelaxing: MutableState<Int>,
+    scope : CoroutineScope,
+    datastore : StoreRelaxing
+) {
+    val minute = remember { mutableStateOf(0) }
+    minute.value = currentRelaxing.value / 60
+    val second = remember { mutableStateOf(0) }
+    second.value = currentRelaxing.value % 60
     if (relaxingDialog.value) {
         Dialog(onDismissRequest = { relaxingDialog.value = false }) {
             Surface(
@@ -596,13 +622,23 @@ fun RelaxingDialog(relaxingDialog: MutableState<Boolean>, currentRelaxing: Mutab
                     Text("Edit Relax Time", style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.height(8.dp))
                     TextField(
-                        value = currentRelaxing.value, // Convert double to String
+                        value = "${minute.value}",
                         onValueChange = {
-                            val newValue = it
-                            currentRelaxing.value = newValue
+                            val newVal = it.toIntOrNull() ?: return@TextField
+                            minute.value = newVal
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    )
+
+                        )
+                    TextField(
+                        value = "${second.value}", // Convert double to String
+                        onValueChange = {
+                            val newVal = it.toIntOrNull() ?: return@TextField
+                            second.value = newVal
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+
+                        )
                     Spacer(modifier = Modifier.height(16.dp))
                     Row(modifier = Modifier) {
                         Button(
@@ -612,7 +648,14 @@ fun RelaxingDialog(relaxingDialog: MutableState<Boolean>, currentRelaxing: Mutab
                         }
                         Spacer(modifier = Modifier.size(53.dp))
                         Button(
-                            onClick = { relaxingDialog.value = false }
+                            onClick = {
+                                val newRelaxingDuration = (minute.value * 60) + minute.value
+                                currentRelaxing.value = newRelaxingDuration
+                                scope.launch {
+                                    datastore.saveRelaxing(newRelaxingDuration)
+                                }
+                                relaxingDialog.value = false
+                            }
                         ) {
                             Text("Save")
                         }
@@ -625,7 +668,17 @@ fun RelaxingDialog(relaxingDialog: MutableState<Boolean>, currentRelaxing: Mutab
 }
 
 @Composable
-fun SleepDialog(sleepDialog: MutableState<Boolean>, currentSleep: MutableState<String>) {
+fun SleepDialog(
+    sleepDialog: MutableState<Boolean>,
+    currentSleep: MutableState<Int>,
+    scope : CoroutineScope,
+    datastore : StoreSleep,
+) {
+    val hour = remember { mutableStateOf(0) }
+    hour.value = currentSleep.value / 60
+    val minute = remember { mutableStateOf(0) }
+    minute.value = currentSleep.value % 60
+
     if (sleepDialog.value) {
         Dialog(onDismissRequest = { sleepDialog.value = false }) {
             Surface(
@@ -639,10 +692,19 @@ fun SleepDialog(sleepDialog: MutableState<Boolean>, currentSleep: MutableState<S
                     Text("Edit Sleep Hour", style = MaterialTheme.typography.bodyMedium)
                     Spacer(modifier = Modifier.height(8.dp))
                     TextField(
-                        value = currentSleep.value.toString(), // Convert double to String
+                        value = "${hour.value}",
                         onValueChange = {
-                            val newValue = it
-                            currentSleep.value = newValue
+                            val newVal = it.toIntOrNull() ?: return@TextField
+                            hour.value = newVal
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+
+                        )
+                    TextField(
+                        value = "${minute.value}", // Convert double to String
+                        onValueChange = {
+                            val newVal = it.toIntOrNull() ?: return@TextField
+                            minute.value = newVal
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
 
@@ -656,8 +718,16 @@ fun SleepDialog(sleepDialog: MutableState<Boolean>, currentSleep: MutableState<S
                         }
                         Spacer(modifier = Modifier.size(53.dp))
                         Button(
-                            onClick = { sleepDialog.value = false }
+                            onClick = {
+                                val newSleepDuration = (hour.value * 60) + minute.value
+                                currentSleep.value = newSleepDuration
+                                scope.launch {
+                                    datastore.saveSleep(newSleepDuration)
+                                }
+                                sleepDialog.value = false
+                            }
                         ) {
+
                             Text("Save")
                         }
                     }
@@ -669,7 +739,12 @@ fun SleepDialog(sleepDialog: MutableState<Boolean>, currentSleep: MutableState<S
 }
 
 @Composable
-fun WalkDialog(walkDialog: MutableState<Boolean>, currentWalk: MutableState<Int>) {
+fun WalkDialog(
+    walkDialog: MutableState<Boolean>,
+    currentWalk: MutableState<Int>,
+    scope : CoroutineScope,
+    datastore : StoreWalking
+) {
     if (walkDialog.value) {
         Dialog(onDismissRequest = { walkDialog.value = false }) {
             Surface(
@@ -688,6 +763,9 @@ fun WalkDialog(walkDialog: MutableState<Boolean>, currentWalk: MutableState<Int>
                             val newValue =
                                 it.toIntOrNull() ?: return@TextField // Handle invalid input
                             currentWalk.value = newValue
+                            scope.launch {
+                                datastore.saveSteps(currentWalk.value)
+                            }
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         label = { Text("Steps") },

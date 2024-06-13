@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.health_tracker" />
+                  <option name="mobileSdkAppId" value="1:280367339076:android:2006b909bd319767e20e11" />
+                  <option name="projectId" value="plucky-agency-426218-g5" />
+                  <option name="projectNumber" value="280367339076" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
