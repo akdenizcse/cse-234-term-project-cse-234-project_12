@@ -51,30 +51,28 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.Popup
-import androidx.compose.ui.window.PopupProperties
-import androidx.core.graphics.toColor
 import androidx.navigation.NavController
-import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.R
 import com.example.health_tracker.datastore.StoreAge
 import com.example.health_tracker.datastore.StoreGoal
 import com.example.health_tracker.datastore.StoreHeight
+import com.example.health_tracker.datastore.StoreHydration
 import com.example.health_tracker.datastore.StoreName
 import com.example.health_tracker.datastore.StoreSurname
 import com.example.health_tracker.datastore.StoreUsername
 import com.example.health_tracker.datastore.StoreWeight
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
+//@Preview
 @Composable
-fun ProfileSettings(navController: NavController){
+fun ProfileSettings(navController: NavController){ // TODO: Remove comment
     //Popups
     val usernamePopup = remember { mutableStateOf(false) }
     val currentUsername = remember { mutableStateOf("") }
@@ -95,7 +93,7 @@ fun ProfileSettings(navController: NavController){
 
     //Context
     val context = LocalContext.current
-    //scope
+    //Scope
     val scope = rememberCoroutineScope()
 
     val usernameStore = StoreUsername(context)
@@ -107,12 +105,7 @@ fun ProfileSettings(navController: NavController){
     val goalStore = StoreGoal(context)
 
 
-    LaunchedEffect(Unit) {
-        launch {
-            val initialValue = usernameStore.getUsername
-            currentUsername.value = initialValue.first()!!
-        }
-    }
+
     LaunchedEffect(Unit) {
         launch {
             val initialValue = nameStore.getName
@@ -153,28 +146,34 @@ fun ProfileSettings(navController: NavController){
 
     //Conditions
     if(usernamePopup.value){
-        UsernamePopUp(usernamePopup = usernamePopup, currentUsername = currentUsername)
+        UsernamePopUp(usernamePopup = usernamePopup, currentUsername = currentUsername,
+            scope = scope, datastore = usernameStore)
     }
     if (passwordPopup.value){
-        PasswordPopUp(passwordPopup = passwordPopup, currentPassword = currentPassword)
+        PasswordPopUp(passwordPopup = passwordPopup, currentPassword = currentPassword, scope = scope)
     }
     if (namePopup.value){
-        NamePopUp(namePopup = namePopup, currentName = currentName)
+        NamePopUp(namePopup = namePopup, currentName = currentName,
+            scope = scope, datastore = nameStore)
     }
     if (surnamePopup.value){
-        SurnamePopUp(surnamePopup = surnamePopup, currentSurname = currentSurname)
+        SurnamePopUp(surnamePopup = surnamePopup, currentSurname = currentSurname,
+            scope = scope, datastore = surnameStore)
     }
     if (agePopup.value) {
-        AgePopUp(agePopup = agePopup, currentAge = currentAge)
+        AgePopUp(agePopup = agePopup, currentAge = currentAge, scope = scope, datastore = ageStore)
     }
     if (weightPopup.value) {
-        WeightPopUp(weightPopup = weightPopup, currentWeight = currentWeight)
+        WeightPopUp(weightPopup = weightPopup, currentWeight = currentWeight,
+            scope = scope, datastore = weightStore)
     }
     if (heightPopup.value) {
-        HeightPopUp(heightPopup = heightPopup, currentHeight = currentHeight)
+        HeightPopUp(heightPopup = heightPopup, currentHeight = currentHeight,
+            scope = scope, datastore = heightStore)
     }
     if (goalPopup.value) {
-        GoalPopUp(goalPopup = goalPopup, currentGoal = currentGoal)
+        GoalPopUp(goalPopup = goalPopup, currentGoal = currentGoal,
+            scope = scope, datastore = goalStore)
     }
     //Colors
     val gradientColors = listOf(
@@ -242,7 +241,7 @@ fun ProfileSettings(navController: NavController){
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            text = "aski",
+                            text = currentUsername.value,
                             style = TextStyle(
                                 color = colorResource(id = R.color.black),
                                 fontSize = 20.sp
@@ -267,7 +266,7 @@ fun ProfileSettings(navController: NavController){
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            text = "aski",
+                            text = currentPassword.value,
                             style = TextStyle(
                                 color = colorResource(id = R.color.black),
                                 fontSize = 20.sp
@@ -292,7 +291,7 @@ fun ProfileSettings(navController: NavController){
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            text = "aski",
+                            text = currentName.value,
                             style = TextStyle(
                                 color = colorResource(id = R.color.black),
                                 fontSize = 20.sp
@@ -317,7 +316,7 @@ fun ProfileSettings(navController: NavController){
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            text = "aski",
+                            text = currentSurname.value,
                             style = TextStyle(
                                 color = colorResource(id = R.color.black),
                                 fontSize = 20.sp
@@ -342,7 +341,7 @@ fun ProfileSettings(navController: NavController){
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            text = "aski",
+                            text = currentAge.value.toString(),
                             style = TextStyle(
                                 color = colorResource(id = R.color.black),
                                 fontSize = 20.sp
@@ -367,7 +366,7 @@ fun ProfileSettings(navController: NavController){
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            text = "aski",
+                            text = currentWeight.value.toString(),
                             style = TextStyle(
                                 color = colorResource(id = R.color.black),
                                 fontSize = 20.sp
@@ -392,7 +391,7 @@ fun ProfileSettings(navController: NavController){
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            text = "aski",
+                            text = currentHeight.value.toString(),
                             style = TextStyle(
                                 color = colorResource(id = R.color.black),
                                 fontSize = 20.sp
@@ -417,7 +416,7 @@ fun ProfileSettings(navController: NavController){
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            text = "aski",
+                            text = currentGoal.value.toString(),
                             style = TextStyle(
                                 color = colorResource(id = R.color.black),
                                 fontSize = 20.sp
@@ -426,7 +425,7 @@ fun ProfileSettings(navController: NavController){
                     }
                 }
             }
-            Button(onClick = {navController.popBackStack()},
+            Button(onClick = {navController.popBackStack()},// TODO: Remove comment
                 colors = ButtonColors(
                     containerColor = Color(0xFFC8E3ED),
                     contentColor = Color.Black,
@@ -460,7 +459,12 @@ fun ProfileSettings(navController: NavController){
 
 
 @Composable
-fun UsernamePopUp(usernamePopup: MutableState<Boolean>, currentUsername: MutableState<String>){
+fun UsernamePopUp(
+    usernamePopup: MutableState<Boolean>,
+    currentUsername: MutableState<String>,
+    scope : CoroutineScope,
+    datastore : StoreUsername,
+    ){
     if(usernamePopup.value){
         Dialog(onDismissRequest = { usernamePopup.value = false}) {
             Surface(
@@ -483,6 +487,10 @@ fun UsernamePopUp(usernamePopup: MutableState<Boolean>, currentUsername: Mutable
                         onValueChange = {
                             val newValue = it
                             currentUsername.value = newValue
+                            scope.launch {
+                                datastore.saveUsername(newValue)
+                            }
+
                         })
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -505,7 +513,11 @@ fun UsernamePopUp(usernamePopup: MutableState<Boolean>, currentUsername: Mutable
 }
 
 @Composable
-fun PasswordPopUp(passwordPopup: MutableState<Boolean>, currentPassword: MutableState<String>){
+fun PasswordPopUp(passwordPopup: MutableState<Boolean>,
+                  currentPassword: MutableState<String>,
+                  scope: CoroutineScope,
+
+){
     if(passwordPopup.value){
         Dialog(onDismissRequest = { passwordPopup.value = false}) {
             Surface(
@@ -550,7 +562,11 @@ fun PasswordPopUp(passwordPopup: MutableState<Boolean>, currentPassword: Mutable
 }
 
 @Composable
-fun NamePopUp(namePopup: MutableState<Boolean>, currentName: MutableState<String>){
+fun NamePopUp(namePopup: MutableState<Boolean>,
+              currentName: MutableState<String>,
+              scope: CoroutineScope,
+              datastore: StoreName
+ ){
     if(namePopup.value){
         Dialog(onDismissRequest = { namePopup.value = false}) {
             Surface(
@@ -573,6 +589,9 @@ fun NamePopUp(namePopup: MutableState<Boolean>, currentName: MutableState<String
                         onValueChange = {
                             val newValue = it
                             currentName.value = newValue
+                            scope.launch {
+                                datastore.saveName(newValue)
+                            }
                         })
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -595,7 +614,11 @@ fun NamePopUp(namePopup: MutableState<Boolean>, currentName: MutableState<String
 }
 
 @Composable
-fun SurnamePopUp(surnamePopup: MutableState<Boolean>, currentSurname: MutableState<String>){
+fun SurnamePopUp(surnamePopup: MutableState<Boolean>,
+                 currentSurname: MutableState<String>,
+                 scope: CoroutineScope,
+                 datastore: StoreSurname
+){
     if(surnamePopup.value){
         Dialog(onDismissRequest = { surnamePopup.value = false}) {
             Surface(
@@ -618,6 +641,9 @@ fun SurnamePopUp(surnamePopup: MutableState<Boolean>, currentSurname: MutableSta
                         onValueChange = {
                             val newValue = it
                             currentSurname.value = newValue
+                            scope.launch {
+                                datastore.saveSurname(newValue)
+                            }
                         })
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -642,7 +668,9 @@ fun SurnamePopUp(surnamePopup: MutableState<Boolean>, currentSurname: MutableSta
 @Composable
 fun AgePopUp(
     agePopup: MutableState<Boolean>,
-    currentAge: MutableState<Int>
+    currentAge: MutableState<Int>,
+    scope: CoroutineScope,
+    datastore: StoreAge
 ){
     if(agePopup.value){
         Dialog(onDismissRequest = { agePopup.value = false}) {
@@ -666,6 +694,9 @@ fun AgePopUp(
                             onValueChange = {
                                 val newValue = it.toIntOrNull() ?: 0
                                 currentAge.value = newValue
+                                scope.launch {
+                                    datastore.saveAge(newValue)
+                                }
                             },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
 
@@ -691,7 +722,9 @@ fun AgePopUp(
 @Composable
 fun WeightPopUp(
     weightPopup: MutableState<Boolean>,
-    currentWeight: MutableState<Double>
+    currentWeight: MutableState<Double>,
+    scope: CoroutineScope,
+    datastore: StoreWeight
 ){
     if(weightPopup.value){
         Dialog(onDismissRequest = { weightPopup.value = false}) {
@@ -715,6 +748,9 @@ fun WeightPopUp(
                         onValueChange = {
                             val newValue = it.toDoubleOrNull() ?: 0.0
                             currentWeight.value = newValue
+                            scope.launch {
+                                datastore.saveWeight(newValue)
+                            }
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
 
@@ -740,7 +776,9 @@ fun WeightPopUp(
 @Composable
 fun HeightPopUp(
     heightPopup: MutableState<Boolean>,
-    currentHeight: MutableState<Int>
+    currentHeight: MutableState<Int>,
+    scope: CoroutineScope,
+    datastore: StoreHeight
 ){
     if(heightPopup.value){
         Dialog(onDismissRequest = { heightPopup.value = false}) {
@@ -764,6 +802,9 @@ fun HeightPopUp(
                         onValueChange = {
                             val newValue = it.toIntOrNull() ?: 0
                             currentHeight.value = newValue
+                            scope.launch {
+                                datastore.saveHeight(newValue)
+                            }
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
 
@@ -789,7 +830,9 @@ fun HeightPopUp(
 @Composable
 fun GoalPopUp(
     goalPopup: MutableState<Boolean>,
-    currentGoal: MutableState<Double>
+    currentGoal: MutableState<Double>,
+    scope: CoroutineScope,
+    datastore: StoreGoal
 ){
     if(goalPopup.value){
         Dialog(onDismissRequest = { goalPopup.value = false}) {
@@ -813,6 +856,9 @@ fun GoalPopUp(
                         onValueChange = {
                             val newValue = it.toDoubleOrNull() ?: 0.0
                             currentGoal.value = newValue
+                            scope.launch {
+                                datastore.saveGoal(newValue)
+                            }
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
 

@@ -50,6 +50,7 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             Health_TrackerTheme {
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -96,7 +97,7 @@ class MainActivity : ComponentActivity() {
                                 AddActivityScreen(navController = navController)
                             }
                             composable(HealthTrackerScreen.ProfileSetting.name) {
-                                ProfileSettings(navController = navController)
+                                ProfileSettings(navController = navController) // TODO: remove comment
                             }
                         }
                     } else {

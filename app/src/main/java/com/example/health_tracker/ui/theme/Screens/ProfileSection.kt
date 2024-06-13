@@ -24,6 +24,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,18 +40,28 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.R
+import com.example.health_tracker.datastore.StoreAge
+import com.example.health_tracker.datastore.StoreGoal
+import com.example.health_tracker.datastore.StoreHeight
+import com.example.health_tracker.datastore.StoreName
+import com.example.health_tracker.datastore.StoreSurname
+import com.example.health_tracker.datastore.StoreWalking
+import com.example.health_tracker.datastore.StoreWeight
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
-
+//@Preview
 @Composable
-fun ProfilePage(navController: NavController){
+fun ProfilePage(navController: NavController){// TODO: remove comment
     val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
 //Background
     Column(
@@ -60,18 +71,85 @@ fun ProfilePage(navController: NavController){
             brush = Brush.verticalGradient(colors = colors1)
         )
 ) {
+        // TODO: remove comment
         InformationBox(navController)
 }
 }
 
 @Composable
+// TODO: remove comment
 fun InformationBox(navController: NavController){
     var firebase: Firebase by remember { mutableStateOf(Firebase) }
     val ctx = LocalContext.current
     val ashColor = Color(0xFF79747E)
-Column(modifier = Modifier
-    .fillMaxSize()
-    .padding(top = 50.dp), verticalArrangement = Arrangement.spacedBy(50.dp)) {
+
+    val context = LocalContext.current
+
+    val nameStore = StoreName(context)
+    val ageStore = StoreAge(context)
+    val surnameStore = StoreSurname(context)
+    val heightStore = StoreHeight(context)
+    val weightStore = StoreWeight(context)
+    val goalStore = StoreGoal(context)
+    val stepsStore = StoreWalking(context)
+
+    val name = remember { mutableStateOf("")    }
+    val surname = remember { mutableStateOf("") }
+    val age = remember { mutableStateOf(0) }
+    val height = remember { mutableStateOf(0) }
+    val weight = remember { mutableStateOf(0.0) }
+    val goal = remember { mutableStateOf(0.0) }
+    val steps = remember { mutableStateOf(0) }
+
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = nameStore.getName
+            name.value = initialValue.first()!!
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = surnameStore.getSurname
+            surname.value = initialValue.first()!!
+        }
+    }
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = ageStore.getAge
+            age.value = initialValue.first()!!
+        }
+    }
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = heightStore.getHeight
+            height.value = initialValue.first()!!
+        }
+    }
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = weightStore.getWeight
+            weight.value = initialValue.first()!!
+        }
+    }
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = goalStore.getGoal
+            goal.value = initialValue.first()!!
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = stepsStore.getSteps
+            steps.value = initialValue.first()!!
+        }
+    }
+
+
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(top = 50.dp), verticalArrangement = Arrangement.spacedBy(50.dp)) {
 
     //InformationBox
     Card(
@@ -98,7 +176,7 @@ Column(modifier = Modifier
             Row(
                 modifier = Modifier
                     .align(Alignment.Center)
-                    .padding(bottom = 150.dp, start = 5.dp)
+                    .padding(bottom = 150.dp, end = 10.dp)
             ) {
 
                 Image(
@@ -109,20 +187,20 @@ Column(modifier = Modifier
                 )
 
                 Spacer(modifier = Modifier.width(20.dp))
+//
+//                Text(
+//                    color = Color.Black,
+//                    text = "cn.dundar", style = TextStyle(
+//                        color = Color.White,
+//                        fontSize = 15.sp
+//                    )
+//                )
+
+                Spacer(modifier = Modifier.width(80.dp))
 
                 Text(
                     color = Color.Black,
-                    text = "cn.dundar", style = TextStyle(
-                        color = Color.White,
-                        fontSize = 15.sp
-                    )
-                )
-
-                Spacer(modifier = Modifier.width(20.dp))
-
-                Text(
-                    color = Color.Black,
-                    text = "Age:26",
+                    text = "Age:${age.value}",
                     style = TextStyle(
                         color = Color.White,
                         fontSize = 15.sp
@@ -133,7 +211,7 @@ Column(modifier = Modifier
 
                 Text(
                     color = Color.Black,
-                    text = "Height:182",
+                    text = "Height:${height.value}",
                     style = TextStyle(
                         color = Color.White,
                         fontSize = 15.sp
@@ -149,7 +227,7 @@ Column(modifier = Modifier
 
                 Text(
                     color = Color.Black,
-                    text = "Can Dündar",
+                    text = "${name.value} ${surname.value}",
                     style = TextStyle(
                         color = Color.White,
                         fontSize = 15.sp
@@ -160,7 +238,7 @@ Column(modifier = Modifier
 
                 Text(
                     color = Color.Black,
-                    text = "Weight:90",
+                    text = "Weight:${weight.value}",
                     style = TextStyle(
                         color = Color.White,
                         fontSize = 15.sp
@@ -172,7 +250,7 @@ Column(modifier = Modifier
 
                 Text(
                     color = Color.Black,
-                    text = "Goal:80",
+                    text = "Goal:${goal.value}",
                     style = TextStyle(
                         color = Color.White,
                         fontSize = 15.sp
@@ -231,7 +309,7 @@ Column(modifier = Modifier
                 //Shows the number of steps taken
                 Text(
                     color = Color.Black,
-                    text = "0",
+                    text = "${steps.value}",
                     style = TextStyle(
                         color = Color.White,
                         fontSize = 25.sp
@@ -271,7 +349,7 @@ Column(modifier = Modifier
                     modifier = Modifier
                         .clickable(
                             onClickLabel = "Open change profile settings"
-                        ) {
+                        ) {// TODO: remove comment
                             navController.navigate(HealthTrackerScreen.ProfileSetting.name)
                         }
                         .padding(start = 60.dp, bottom = 10.dp)
@@ -301,17 +379,22 @@ Column(modifier = Modifier
                     modifier = Modifier
                         .clickable(onClickLabel = "Open rate and comment") {
                             try {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" ))
+                                val intent =
+                                    Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="))
                                 intent.setPackage("com.android.vending")
                                 /*
                                  This will automatically not work because
                                  we are not on Google Play Store, If we were,
                                  we could implement it like this.
                                 */
-                                Toast.makeText(ctx, "Unable to find play store", Toast.LENGTH_LONG).show()
+                                Toast
+                                    .makeText(ctx, "Unable to find play store", Toast.LENGTH_LONG)
+                                    .show()
                                 //This one is temporary because it won't create an exception for now!
                             } catch (e: ActivityNotFoundException) {
-                                Toast.makeText(ctx, "Unable to find play store", Toast.LENGTH_LONG).show()
+                                Toast
+                                    .makeText(ctx, "Unable to find play store", Toast.LENGTH_LONG)
+                                    .show()
                             }
                         }
                         .padding(start = 60.dp, bottom = 10.dp)
@@ -343,7 +426,10 @@ Column(modifier = Modifier
                         .clickable(onClickLabel = "Open share with friends") {
                             val shareIntent = Intent().apply {
                                 action = Intent.ACTION_SEND
-                                putExtra(Intent.EXTRA_TEXT, "I am using Health Tracker, you should try it too! It's called Solstice!")
+                                putExtra(
+                                    Intent.EXTRA_TEXT,
+                                    "I am using Health Tracker, you should try it too! It's called Solstice!"
+                                )
                                 type = "text/plain"
                             }
                             val chooser = Intent.createChooser(shareIntent, "Share with")
@@ -409,6 +495,7 @@ Column(modifier = Modifier
                     modifier = Modifier
                         .clickable(onClickLabel = "Log Out") {
                             firebase.auth.signOut()
+                            // TODO: remove comment
                             navController.navigate(HealthTrackerScreen.Login.name)
 
                         }
