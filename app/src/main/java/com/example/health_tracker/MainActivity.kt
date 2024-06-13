@@ -29,8 +29,14 @@ import com.example.health_tracker.ui.theme.Screens.InternetConnectionScreen
 import com.example.health_tracker.ui.theme.Screens.LocationPermissionScreen
 import com.example.health_tracker.ui.theme.Screens.LoginForm
 import com.example.health_tracker.ui.theme.Screens.ProfileSettings
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import com.example.health_tracker.data.ResetDataWorker
+import java.util.concurrent.TimeUnit
 
 import com.example.health_tracker.ui.theme.Screens.SignUp
+import java.util.Calendar
 
 class MainActivity : ComponentActivity() {
 
@@ -44,6 +50,24 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val midnight = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+        }.timeInMillis
+
+        val currentTime = System.currentTimeMillis()
+        val delay = if (midnight > currentTime) midnight - currentTime else 24 * 60 * 60 * 1000
+
+        val resetDataWorkRequest = PeriodicWorkRequestBuilder<ResetDataWorker>(24, TimeUnit.HOURS)
+            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            .build()
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "ResetData",
+            ExistingPeriodicWorkPolicy.KEEP,
+            resetDataWorkRequest
+        )
         setContent {
 
             Health_TrackerTheme {

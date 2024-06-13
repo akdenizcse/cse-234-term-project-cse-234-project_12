@@ -71,6 +71,8 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.androidx.datastore.core.android)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.appcompat)
 
     val mapsComposeVersion = "4.4.1"
     implementation("com.google.maps.android:maps-compose:$mapsComposeVersion")

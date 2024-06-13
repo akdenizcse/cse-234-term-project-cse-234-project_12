@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -38,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.health_tracker.R
 import com.example.health_tracker.datastore.StoreHydration
+import com.example.health_tracker.datastore.StoreMedication
 import com.example.health_tracker.datastore.StoreRelaxing
 import com.example.health_tracker.datastore.StoreSleep
 import com.example.health_tracker.datastore.StoreWalking
@@ -51,12 +53,14 @@ import kotlinx.coroutines.launch
 fun TrackerSection(context: Context) {
 
     val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
-
+    val medicationStore = StoreMedication(context)
     val currentLiters = remember { mutableStateOf(0.0) } // Initial liter value
     val currentWalk = remember { mutableStateOf(0) } // Initial liter value
     val sleepTime = remember { mutableStateOf(0) }
     val currentRelaxing = remember { mutableStateOf(0) } // Initial liter value
+    var currentMedication = remember { mutableStateOf("") }
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     val hydrationStore = StoreHydration(context)
     val sleepStore = StoreSleep(context)
@@ -67,6 +71,16 @@ fun TrackerSection(context: Context) {
         launch {
             val initialValue = hydrationStore.getHydration
             currentLiters.value = initialValue.first()!!
+        }
+    }
+    LaunchedEffect(Unit) {
+        scope.launch {
+            val medicationName = medicationStore.getMedicationName.first()!!
+            val medicationHour = medicationStore.getMedicationHour.first()!!
+            val medicationMinute = medicationStore.getMedicationMinute.first()!!
+
+            // Combine the values into a single string
+            currentMedication.value = "$medicationName $medicationHour:$medicationMinute"
         }
     }
     LaunchedEffect(Unit) {
@@ -213,7 +227,7 @@ fun TrackerSection(context: Context) {
                     )
                     Row(modifier = Modifier.align(Alignment.CenterVertically)) {
                         Text(
-                            text = "Accutane: 2h 16m",
+                            text = "${currentMedication.value}",
                             style = TextStyle(
                                 fontSize = 26.sp,
                                 lineHeight = 20.sp,

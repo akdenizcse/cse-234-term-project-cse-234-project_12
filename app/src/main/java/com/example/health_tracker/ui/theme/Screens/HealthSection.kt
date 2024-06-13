@@ -58,6 +58,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.health_tracker.R
 import com.example.health_tracker.datastore.StoreHydration
+import com.example.health_tracker.datastore.StoreMedication
 import com.example.health_tracker.datastore.StoreRelaxing
 import com.example.health_tracker.datastore.StoreSleep
 import com.example.health_tracker.datastore.StoreWalking
@@ -75,6 +76,7 @@ import kotlinx.coroutines.launch
 )
 fun HealthSection() {
     val medications = remember { mutableStateListOf<String>() }
+    var currentMedication = remember { "" }
     val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
     val medicationDialog = remember { mutableStateOf(false) }
     val waterDialog = remember { mutableStateOf(false) }
@@ -95,6 +97,7 @@ fun HealthSection() {
     val sleepStore = StoreSleep(context)
     val walkingStore = StoreWalking(context)
     val relaxingStore = StoreRelaxing(context)
+    val medicationStore = StoreMedication(context)
     LaunchedEffect(Unit) {
         launch {
             val initialValue = hydrationStore.getHydration
@@ -119,6 +122,16 @@ fun HealthSection() {
             currentRelaxing.value = initialValue.first()!!
         }
     }
+    LaunchedEffect(Unit) {
+        launch {
+            val medicationName = medicationStore.getMedicationName.first()!!
+            val medicationHour = medicationStore.getMedicationHour.first()!!
+            val medicationMinute = medicationStore.getMedicationMinute.first()!!
+
+            // Combine the values into a single string
+            currentMedication = "$medicationName $medicationHour:$medicationMinute"
+        }
+    }
 
     // TODO: here
     if (waterDialog.value) {
@@ -134,7 +147,7 @@ fun HealthSection() {
         RelaxingDialog(relaxingDialog, currentRelaxing, scope, relaxingStore)
     }
     if (medicationDialog.value) {
-        RecordMedication(medicationDialog, medications)
+        RecordMedication(medicationDialog,scope, medicationStore)
     }
 
 
@@ -563,7 +576,8 @@ fun HealthSection() {
 @Composable
 fun RecordMedication(
     medicationDialog: MutableState<Boolean>,
-    currentMedications: MutableList<String>
+    scope : CoroutineScope,
+    datastore : StoreMedication
 ) {
     val writtenMedication = remember { mutableStateOf("") }
     val hour = remember { mutableStateOf(0) }
@@ -637,13 +651,12 @@ fun RecordMedication(
                     Spacer(modifier = Modifier.height(16.dp))
                     Row(modifier = Modifier, horizontalArrangement = Arrangement.spacedBy(110.dp)) {
                         Button(
-                            onClick = { medicationDialog.value = false }
-                        ) {
-                            Text("Cancel")
-                        }
-
-                        Button(
-                            onClick = { medicationDialog.value = false }
+                            onClick = {
+                                scope.launch {
+                                    datastore.saveMedication(writtenMedication.value, hour.value, min.value)
+                                }
+                                medicationDialog.value = false
+                            }
                         ) {
                             Text("Save")
                         }
@@ -652,9 +665,6 @@ fun RecordMedication(
             }
         }
     }
-    currentMedications.add(writtenMedication.value+" "+hour.value+":"+min)
-    Log.d("Medication", currentMedications.toString())
-
 }
 
 @Composable

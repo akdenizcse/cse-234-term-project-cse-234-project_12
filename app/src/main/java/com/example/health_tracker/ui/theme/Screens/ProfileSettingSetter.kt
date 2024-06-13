@@ -64,8 +64,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun ProfileSettings(navController: NavController){ // TODO: Remove comment
     //Popups
-    val passwordPopup = remember { mutableStateOf(false) }
-    val currentPassword = remember { mutableStateOf("") }
     val namePopup = remember { mutableStateOf(false) }
     val currentName = remember { mutableStateOf("") }
     val surnamePopup = remember { mutableStateOf(false) }
@@ -132,9 +130,7 @@ fun ProfileSettings(navController: NavController){ // TODO: Remove comment
 
 
     //Conditions
-    if (passwordPopup.value){
-        PasswordPopUp(passwordPopup = passwordPopup, currentPassword = currentPassword)
-    }
+
     if (namePopup.value){
         NamePopUp(namePopup = namePopup, currentName = currentName,
             scope = scope, datastore = nameStore)
@@ -207,32 +203,7 @@ fun ProfileSettings(navController: NavController){ // TODO: Remove comment
 //                        .align(Alignment.TopEnd)) {
 //
 //                    }
-                    //Username row
-                    //Password row
-                    Row(
-                        modifier = Modifier
 
-                            .padding(top = 100.dp, start = 20.dp)
-                            .clickable {
-                                passwordPopup.value = true
-                            }
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.password_column),
-                            style = TextStyle(
-                                color = colorResource(id = R.color.black),
-                                fontSize = 20.sp
-                            )
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Text(
-                            text = currentPassword.value,
-                            style = TextStyle(
-                                color = colorResource(id = R.color.black),
-                                fontSize = 20.sp
-                            )
-                        )
-                    }
                     //Name row
                     Row(
                         modifier = Modifier
@@ -472,52 +443,6 @@ fun ProfileSettings(navController: NavController){ // TODO: Remove comment
 //    }
 //}
 
-@Composable
-fun PasswordPopUp(passwordPopup: MutableState<Boolean>,
-                  currentPassword: MutableState<String>
-){
-    if(passwordPopup.value){
-        Dialog(onDismissRequest = { passwordPopup.value = false}) {
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth(0.8f)
-                    .background(color = Color.Transparent)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = "Edit Username",
-                        style = MaterialTheme.typography.bodyMedium)
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    TextField(
-                        value = currentPassword.value.toString(),
-                        onValueChange = {
-                            val newValue = it
-                            currentPassword.value = newValue
-                        })
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Row(modifier = Modifier){
-                        Button(onClick = { passwordPopup.value = false}) {
-                            Text(text = "Cancel")
-                        }
-
-                        Spacer(modifier = Modifier.size(53.dp))
-
-                        Button(onClick = {passwordPopup.value = false}) {
-                            Text(text = "Save")
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
 
 @Composable
 fun NamePopUp(namePopup: MutableState<Boolean>,
@@ -539,7 +464,7 @@ fun NamePopUp(namePopup: MutableState<Boolean>,
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = "Edit Username",
+                        text = "Edit Name",
                         style = MaterialTheme.typography.bodyMedium)
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -596,7 +521,7 @@ fun SurnamePopUp(surnamePopup: MutableState<Boolean>,
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = "Edit Username",
+                        text = "Edit Surname",
                         style = MaterialTheme.typography.bodyMedium)
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -656,7 +581,7 @@ fun AgePopUp(
                                 .padding(16.dp)
                 ) {
                     Text(
-                            text = "Edit Username",
+                            text = "Edit Age",
                             style = MaterialTheme.typography.bodyMedium)
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -717,7 +642,7 @@ fun WeightPopUp(
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = "Edit Username",
+                        text = "Edit Weight",
                         style = MaterialTheme.typography.bodyMedium)
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -777,13 +702,13 @@ fun HeightPopUp(
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = "Edit Username",
+                        text = "Edit Height",
                         style = MaterialTheme.typography.bodyMedium)
 
                     Spacer(modifier = Modifier.height(8.dp))
 
                     TextField(
-                        value = currentHeight.value.toString(),
+                        value = newHeight.value.toString(),
                         onValueChange = {
                             val newValue = it.toIntOrNull() ?: 0
                             newHeight.value = newValue
@@ -837,7 +762,7 @@ fun GoalPopUp(
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = "Edit Username",
+                        text = "Edit Goal",
                         style = MaterialTheme.typography.bodyMedium)
 
                     Spacer(modifier = Modifier.height(8.dp))

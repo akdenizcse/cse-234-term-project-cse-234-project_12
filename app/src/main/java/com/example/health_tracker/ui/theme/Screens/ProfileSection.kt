@@ -1,5 +1,6 @@
 package com.example.health_tracker.ui.theme.Screens
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -61,24 +62,24 @@ import kotlinx.coroutines.launch
 
 //@Preview
 @Composable
-fun ProfilePage(navController: NavController){// TODO: remove comment
+fun ProfilePage(navController: NavController) {// TODO: remove comment
     val colors1 = listOf(Color(0xFFFFEBD4), Color(0xFFFCE0D7), Color(0xFFFFFDC5))
 //Background
     Column(
-    modifier = Modifier
-        .fillMaxSize()
-        .background(
-            brush = Brush.verticalGradient(colors = colors1)
-        )
-) {
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                brush = Brush.verticalGradient(colors = colors1)
+            )
+    ) {
         // TODO: remove comment
         InformationBox(navController)
-}
+    }
 }
 
 @Composable
 // TODO: remove comment
-fun InformationBox(navController: NavController){
+fun InformationBox(navController: NavController) {
     var firebase: Firebase by remember { mutableStateOf(Firebase) }
     val ctx = LocalContext.current
     val ashColor = Color(0xFF79747E)
@@ -93,7 +94,7 @@ fun InformationBox(navController: NavController){
     val goalStore = StoreGoal(context)
     val stepsStore = StoreWalking(context)
 
-    val name = remember { mutableStateOf("")    }
+    val name = remember { mutableStateOf("") }
     val surname = remember { mutableStateOf("") }
     val age = remember { mutableStateOf(0) }
     val height = remember { mutableStateOf(0) }
@@ -147,46 +148,48 @@ fun InformationBox(navController: NavController){
     }
 
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(top = 50.dp), verticalArrangement = Arrangement.spacedBy(50.dp)) {
-
-    //InformationBox
-    Card(
-        Modifier
-            .padding(top = 40.dp, start = (27.5).dp, end = 20.dp)
-            .width(400.dp)
-            .height(250.dp)
-            .background(
-                color = Color(0xFF79747E),
-                shape = RoundedCornerShape(size = 10.dp)
-            ),
-        colors = CardDefaults.cardColors(
-            containerColor = ashColor
-        ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 8.dp
-        )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 50.dp), verticalArrangement = Arrangement.spacedBy(50.dp)
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(0xFFC8E3ED))
+
+        //InformationBox
+        Card(
+            Modifier
+                .padding(top = 40.dp, start = (27.5).dp, end = 20.dp)
+                .width(400.dp)
+                .height(250.dp)
+                .background(
+                    color = Color(0xFF79747E),
+                    shape = RoundedCornerShape(size = 10.dp)
+                ),
+            colors = CardDefaults.cardColors(
+                containerColor = ashColor
+            ),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 8.dp
+            )
         ) {
-            Row(
+            Box(
                 modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(bottom = 150.dp, end = 10.dp)
+                    .fillMaxSize()
+                    .background(Color(0xFFC8E3ED))
             ) {
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(bottom = 150.dp, end = 10.dp)
+                ) {
 
-                Image(
-                    painter = painterResource(id = R.drawable.user_filled),
-                    contentDescription = "User profile photo",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.size(50.dp)
-                )
+                    Image(
+                        painter = painterResource(id = R.drawable.user_filled),
+                        contentDescription = "User profile photo",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.size(50.dp)
+                    )
 
-                Spacer(modifier = Modifier.width(20.dp))
+                    Spacer(modifier = Modifier.width(20.dp))
 //
 //                Text(
 //                    color = Color.Black,
@@ -196,333 +199,363 @@ fun InformationBox(navController: NavController){
 //                    )
 //                )
 
-                Spacer(modifier = Modifier.width(80.dp))
+                    Spacer(modifier = Modifier.width(80.dp))
 
-                Text(
-                    color = Color.Black,
-                    text = "Age:${age.value}",
-                    style = TextStyle(
-                        color = Color.White,
-                        fontSize = 15.sp
+                    Text(
+                        color = Color.Black,
+                        text = "Age:${age.value}",
+                        style = TextStyle(
+                            color = Color.White,
+                            fontSize = 15.sp
+                        )
                     )
-                )
 
-                Spacer(modifier = Modifier.width(20.dp))
+                    Spacer(modifier = Modifier.width(20.dp))
 
-                Text(
-                    color = Color.Black,
-                    text = "Height:${height.value}",
-                    style = TextStyle(
-                        color = Color.White,
-                        fontSize = 15.sp
+                    Text(
+                        color = Color.Black,
+                        text = "Height:${height.value}",
+                        style = TextStyle(
+                            color = Color.White,
+                            fontSize = 15.sp
+                        )
                     )
-                )
-            }
+                }
 
-            Row(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(bottom = 60.dp, start = 5.dp)
-            ) {
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(bottom = 60.dp, start = 5.dp)
+                ) {
 
-                Text(
-                    color = Color.Black,
-                    text = "${name.value} ${surname.value}",
-                    style = TextStyle(
-                        color = Color.White,
-                        fontSize = 15.sp
+                    Text(
+                        color = Color.Black,
+                        text = "${name.value} ${surname.value}",
+                        style = TextStyle(
+                            color = Color.White,
+                            fontSize = 15.sp
+                        )
                     )
-                )
 
-                Spacer(modifier = Modifier.width(100.dp))
+                    Spacer(modifier = Modifier.width(100.dp))
 
-                Text(
-                    color = Color.Black,
-                    text = "Weight:${weight.value}",
-                    style = TextStyle(
-                        color = Color.White,
-                        fontSize = 15.sp
-                    ),
-                    modifier = Modifier.offset(x = (-15).dp)
-                )
-
-                Spacer(modifier = Modifier.width(20.dp))
-
-                Text(
-                    color = Color.Black,
-                    text = "Goal:${goal.value}",
-                    style = TextStyle(
-                        color = Color.White,
-                        fontSize = 15.sp
-                    ),
-                    modifier = Modifier.offset(x = (-15).dp)
-                )
-            }
-
-            Row(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 70.dp)
-                    .offset(x = (-20).dp)
-            ) {
-
-                Text(
-                    color = Color.Black,
-                    text = "Remaining Calories:",
-                    style = TextStyle(
-                        color = Color.White,
-                        fontSize = 15.sp
+                    Text(
+                        color = Color.Black,
+                        text = "Weight:${weight.value}",
+                        style = TextStyle(
+                            color = Color.White,
+                            fontSize = 15.sp
+                        ),
+                        modifier = Modifier.offset(x = (-15).dp)
                     )
-                )
 
-                Spacer(modifier = Modifier.width(60.dp))
-                Text(
-                    color = Color.Black,
-                    text = "Steps:",
-                    style = TextStyle(
-                        color = Color.White,
-                        fontSize = 15.sp
+                    Spacer(modifier = Modifier.width(20.dp))
+
+                    Text(
+                        color = Color.Black,
+                        text = "Goal:${goal.value}",
+                        style = TextStyle(
+                            color = Color.White,
+                            fontSize = 15.sp
+                        ),
+                        modifier = Modifier.offset(x = (-15).dp)
                     )
-                )
-            }
+                }
 
-            Row(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 30.dp)
-                    .offset(x = (-20).dp)
-            ) {
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 70.dp)
+                        .offset(x = (-20).dp)
+                ) {
 
-                //Shows the remaining calories
-                Text(
-                    color = Color.Black,
-                    text = "1991",
-                    style = TextStyle(
-                        color = Color.White,
-                        fontSize = 25.sp
-                    ),
-                    modifier = Modifier.offset(x = (-20).dp)
-                )
+                    Text(
+                        color = Color.Black,
+                        text = "Remaining Calories:",
+                        style = TextStyle(
+                            color = Color.White,
+                            fontSize = 15.sp
+                        )
+                    )
 
-                Spacer(modifier = Modifier.width(60.dp))
+                    Spacer(modifier = Modifier.width(60.dp))
+                    Text(
+                        color = Color.Black,
+                        text = "Steps:",
+                        style = TextStyle(
+                            color = Color.White,
+                            fontSize = 15.sp
+                        )
+                    )
+                }
 
-                //Shows the number of steps taken
-                Text(
-                    color = Color.Black,
-                    text = "${steps.value}",
-                    style = TextStyle(
-                        color = Color.White,
-                        fontSize = 25.sp
-                    ),
-                    modifier = Modifier.offset(x = 40.dp)
-                )
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 30.dp)
+                        .offset(x = (-20).dp)
+                ) {
+
+                    //Shows the remaining calories
+                    Text(
+                        color = Color.Black,
+                        text = calculateBMR(weight.value, height.value, age.value),
+                        style = TextStyle(
+                            color = Color.White,
+                            fontSize = 25.sp
+                        ),
+                        modifier = Modifier.offset(x = (-20).dp)
+                    )
+
+                    Spacer(modifier = Modifier.width(60.dp))
+
+                    //Shows the number of steps taken
+                    Text(
+                        color = Color.Black,
+                        text = "${steps.value}",
+                        style = TextStyle(
+                            color = Color.White,
+                            fontSize = 25.sp
+                        ),
+                        modifier = Modifier.offset(x = 40.dp)
+                    )
+                }
             }
         }
-    }
-    Spacer(modifier = Modifier.height(75.dp))
+        Spacer(modifier = Modifier.height(75.dp))
 //OptionBox
-    Card(
-        modifier = Modifier
-            .padding(bottom = 5.dp, start = 40.dp, end = 20.dp)
-            .width(314.dp)
-            .height(200.dp)
-            .background(
-                color = Color(0xFFC8E3ED),
-                shape = RoundedCornerShape(size = 10.dp)
-            ),
-        colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFC8E3ED)
-        ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 8.dp
-        )
-    ) {
-        Box(
+        Card(
             modifier = Modifier
-                .fillMaxSize()
+                .padding(bottom = 5.dp, start = 40.dp, end = 20.dp)
+                .width(314.dp)
+                .height(200.dp)
+                .background(
+                    color = Color(0xFFC8E3ED),
+                    shape = RoundedCornerShape(size = 10.dp)
+                ),
+            colors = CardDefaults.cardColors(
+                containerColor = Color(0xFFC8E3ED)
+            ),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 8.dp
+            )
         ) {
-            Column(modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(top = 20.dp)) {
-                Text(
-                    text = "Change Profile Settings",
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                Column(
                     modifier = Modifier
-                        .clickable(
-                            onClickLabel = "Open change profile settings"
-                        ) {// TODO: remove comment
-                            navController.navigate(HealthTrackerScreen.ProfileSetting.name)
-                        }
-                        .padding(start = 60.dp, bottom = 10.dp)
-                        .then(Modifier.drawBehind {
-                            val strokeWidth = 1.dp.toPx()
-                            val color = Color.Black
-                            val y = size.height
-                            val lineEndX = size.width + 100.dp.toPx()
-                            drawLine(
-                                color = color,
-                                start = Offset(0f, y),
-                                end = Offset(lineEndX, y),
-                                strokeWidth = strokeWidth
-                            )
-                        }),
-                    style = TextStyle(
-                        color = Color.Black,
-                        fontSize = 15.sp
-                    ),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Text(
-                    text = "Rate And Comment",
-                    modifier = Modifier
-                        .clickable(onClickLabel = "Open rate and comment") {
-                            try {
-                                val intent =
-                                    Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="))
-                                intent.setPackage("com.android.vending")
-                                /*
-                                 This will automatically not work because
-                                 we are not on Google Play Store, If we were,
-                                 we could implement it like this.
-                                */
-                                Toast
-                                    .makeText(ctx, "Unable to find play store", Toast.LENGTH_LONG)
-                                    .show()
-                                //This one is temporary because it won't create an exception for now!
-                            } catch (e: ActivityNotFoundException) {
-                                Toast
-                                    .makeText(ctx, "Unable to find play store", Toast.LENGTH_LONG)
-                                    .show()
+                        .align(Alignment.TopStart)
+                        .padding(top = 20.dp)
+                ) {
+                    Text(
+                        text = "Change Profile Settings",
+                        modifier = Modifier
+                            .clickable(
+                                onClickLabel = "Open change profile settings"
+                            ) {// TODO: remove comment
+                                navController.navigate(HealthTrackerScreen.ProfileSetting.name)
                             }
-                        }
-                        .padding(start = 60.dp, bottom = 10.dp)
-                        .then(Modifier.drawBehind {
-                            val strokeWidth = 1.dp.toPx()
-                            val color = Color.Black
-                            val y = size.height
-                            val lineEndX = size.width + 130.dp.toPx()
-                            drawLine(
-                                color = color,
-                                start = Offset(0f, y),
-                                end = Offset(lineEndX, y),
-                                strokeWidth = strokeWidth
-                            )
-                        }),
-                    style = TextStyle(
-                        color = Color.Black,
-                        fontSize = 15.sp
-                    ),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Text(
-                    text = "Share With Friends",
-                    color = Color.Black,
-                    modifier = Modifier
-                        .clickable(onClickLabel = "Open share with friends") {
-                            val shareIntent = Intent().apply {
-                                action = Intent.ACTION_SEND
-                                putExtra(
-                                    Intent.EXTRA_TEXT,
-                                    "I am using Health Tracker, you should try it too! It's called Solstice!"
+                            .padding(start = 60.dp, bottom = 10.dp)
+                            .then(Modifier.drawBehind {
+                                val strokeWidth = 1.dp.toPx()
+                                val color = Color.Black
+                                val y = size.height
+                                val lineEndX = size.width + 100.dp.toPx()
+                                drawLine(
+                                    color = color,
+                                    start = Offset(0f, y),
+                                    end = Offset(lineEndX, y),
+                                    strokeWidth = strokeWidth
                                 )
-                                type = "text/plain"
+                            }),
+                        style = TextStyle(
+                            color = Color.Black,
+                            fontSize = 15.sp
+                        ),
+                        textAlign = TextAlign.Center
+                    )
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Text(
+                        text = "Rate And Comment",
+                        modifier = Modifier
+                            .clickable(onClickLabel = "Open rate and comment") {
+                                try {
+                                    val intent =
+                                        Intent(
+                                            Intent.ACTION_VIEW,
+                                            Uri.parse("market://details?id=")
+                                        )
+                                    intent.setPackage("com.android.vending")
+                                    /*
+                                     This will automatically not work because
+                                     we are not on Google Play Store, If we were,
+                                     we could implement it like this.
+                                    */
+                                    Toast
+                                        .makeText(
+                                            ctx,
+                                            "Unable to find play store",
+                                            Toast.LENGTH_LONG
+                                        )
+                                        .show()
+                                    //This one is temporary because it won't create an exception for now!
+                                } catch (e: ActivityNotFoundException) {
+                                    Toast
+                                        .makeText(
+                                            ctx,
+                                            "Unable to find play store",
+                                            Toast.LENGTH_LONG
+                                        )
+                                        .show()
+                                }
                             }
-                            val chooser = Intent.createChooser(shareIntent, "Share with")
-                            ctx.startActivity(chooser)
-                        }
+                            .padding(start = 60.dp, bottom = 10.dp)
+                            .then(Modifier.drawBehind {
+                                val strokeWidth = 1.dp.toPx()
+                                val color = Color.Black
+                                val y = size.height
+                                val lineEndX = size.width + 130.dp.toPx()
+                                drawLine(
+                                    color = color,
+                                    start = Offset(0f, y),
+                                    end = Offset(lineEndX, y),
+                                    strokeWidth = strokeWidth
+                                )
+                            }),
+                        style = TextStyle(
+                            color = Color.Black,
+                            fontSize = 15.sp
+                        ),
+                        textAlign = TextAlign.Center
+                    )
 
-                        .padding(start = 60.dp, bottom = 10.dp)
-                        .then(Modifier.drawBehind {
-                            val strokeWidth = 1.dp.toPx()
-                            val color = Color.Black
-                            val y = size.height
-                            val lineEndX = size.width + 130.dp.toPx()
-                            drawLine(
-                                color = color,
-                                start = Offset(0f, y),
-                                end = Offset(lineEndX, y),
-                                strokeWidth = strokeWidth
-                            )
-                        }),
-                    style = TextStyle(
-                        color = Color.White,
-                        fontSize = 15.sp
-                    ),
-                    textAlign = TextAlign.Center
-                )
+                    Spacer(modifier = Modifier.height(10.dp))
 
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Text(
-                    text = "Contact Us",
-                    modifier = Modifier
-                        .clickable(onClickLabel = "Open contact us") {
-                            val i = Intent(Intent.ACTION_SEND)
-                            i.putExtra(Intent.EXTRA_EMAIL, "Put Your Mail")
-                            i.putExtra(Intent.EXTRA_SUBJECT, "Health Tracker Support")
-                            i.putExtra(Intent.EXTRA_TEXT, "Please describe your issue here")
-                            i.setType("message/rfc822")
-                            ctx.startActivity(Intent.createChooser(i, "Choose an Email client : "))
-                        }
-                        .padding(start = 60.dp, bottom = 10.dp)
-                        .then(Modifier.drawBehind {
-                            val strokeWidth = 1.dp.toPx()
-                            val color = Color.Black
-                            val y = size.height
-                            val lineEndX = size.width + 180.dp.toPx()
-                            drawLine(
-                                color = color,
-                                start = Offset(0f, y),
-                                end = Offset(lineEndX, y),
-                                strokeWidth = strokeWidth
-                            )
-                        }),
-                    style = TextStyle(
+                    Text(
+                        text = "Share With Friends",
                         color = Color.Black,
-                        fontSize = 15.sp
-                    ),
-                    textAlign = TextAlign.Center
-                )
-                Spacer(modifier = Modifier.height(10.dp))
+                        modifier = Modifier
+                            .clickable(onClickLabel = "Open share with friends") {
+                                val shareIntent = Intent().apply {
+                                    action = Intent.ACTION_SEND
+                                    putExtra(
+                                        Intent.EXTRA_TEXT,
+                                        "I am using Health Tracker, you should try it too! It's called Solstice!"
+                                    )
+                                    type = "text/plain"
+                                }
+                                val chooser = Intent.createChooser(shareIntent, "Share with")
+                                ctx.startActivity(chooser)
+                            }
 
-                Text(
-                    text = "Log Out",
-                    modifier = Modifier
-                        .clickable(onClickLabel = "Log Out") {
-                            firebase.auth.signOut()
-                            // TODO: remove comment
-                            navController.navigate(HealthTrackerScreen.Login.name)
+                            .padding(start = 60.dp, bottom = 10.dp)
+                            .then(Modifier.drawBehind {
+                                val strokeWidth = 1.dp.toPx()
+                                val color = Color.Black
+                                val y = size.height
+                                val lineEndX = size.width + 130.dp.toPx()
+                                drawLine(
+                                    color = color,
+                                    start = Offset(0f, y),
+                                    end = Offset(lineEndX, y),
+                                    strokeWidth = strokeWidth
+                                )
+                            }),
+                        style = TextStyle(
+                            color = Color.White,
+                            fontSize = 15.sp
+                        ),
+                        textAlign = TextAlign.Center
+                    )
 
-                        }
-                        .padding(start = 60.dp, bottom = 10.dp)
-                        .then(Modifier.drawBehind {
-                            val strokeWidth = 1.dp.toPx()
-                            val color = Color.Black
-                            val y = size.height
-                            val lineEndX = size.width + 200.dp.toPx()
-                            drawLine(
-                                color = color,
-                                start = Offset(0f, y),
-                                end = Offset(lineEndX, y),
-                                strokeWidth = strokeWidth
-                            )
-                        }),
-                    style = TextStyle(
-                        color = Color.Black,
-                        fontSize = 15.sp
-                    ),
-                    textAlign = TextAlign.Center
-                )
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Text(
+                        text = "Contact Us",
+                        modifier = Modifier
+                            .clickable(onClickLabel = "Open contact us") {
+                                val i = Intent(Intent.ACTION_SEND)
+                                i.putExtra(Intent.EXTRA_EMAIL, "Put Your Mail")
+                                i.putExtra(Intent.EXTRA_SUBJECT, "Health Tracker Support")
+                                i.putExtra(Intent.EXTRA_TEXT, "Please describe your issue here")
+                                i.setType("message/rfc822")
+                                ctx.startActivity(
+                                    Intent.createChooser(
+                                        i,
+                                        "Choose an Email client : "
+                                    )
+                                )
+                            }
+                            .padding(start = 60.dp, bottom = 10.dp)
+                            .then(Modifier.drawBehind {
+                                val strokeWidth = 1.dp.toPx()
+                                val color = Color.Black
+                                val y = size.height
+                                val lineEndX = size.width + 180.dp.toPx()
+                                drawLine(
+                                    color = color,
+                                    start = Offset(0f, y),
+                                    end = Offset(lineEndX, y),
+                                    strokeWidth = strokeWidth
+                                )
+                            }),
+                        style = TextStyle(
+                            color = Color.Black,
+                            fontSize = 15.sp
+                        ),
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Text(
+                        text = "Log Out",
+                        modifier = Modifier
+                            .clickable(onClickLabel = "Log Out") {
+                                firebase.auth.signOut()
+                                // TODO: remove comment
+                                navController.navigate(HealthTrackerScreen.Login.name)
+
+                            }
+                            .padding(start = 60.dp, bottom = 10.dp)
+                            .then(Modifier.drawBehind {
+                                val strokeWidth = 1.dp.toPx()
+                                val color = Color.Black
+                                val y = size.height
+                                val lineEndX = size.width + 200.dp.toPx()
+                                drawLine(
+                                    color = color,
+                                    start = Offset(0f, y),
+                                    end = Offset(lineEndX, y),
+                                    strokeWidth = strokeWidth
+                                )
+                            }),
+                        style = TextStyle(
+                            color = Color.Black,
+                            fontSize = 15.sp
+                        ),
+                        textAlign = TextAlign.Center
+                    )
+                }
+
             }
+        }
 
+        //Navigation
+    }
+}
+
+
+fun calculateBMR(weight: Double, height: Int, age: Int): String {
+
+    val bmr = (655.1 + (9.563 * weight) + (1.850 * height) - (4.676 * age)).toString()
+    for (i in bmr.indices) {
+        if (bmr[i] == '.') {
+            return bmr.substring(0, i + 2)
         }
     }
-
-    //Navigation
-}
+    return bmr
 }
