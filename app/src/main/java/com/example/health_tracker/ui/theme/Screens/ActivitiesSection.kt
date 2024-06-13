@@ -87,36 +87,7 @@ fun ActivitiesScreen(navController: NavController){
                 brush = Brush.verticalGradient(gradientColors)
             )
     ) {
-        // Search bar
-        TextField(value = searchText,
-            onValueChange ={searchText = it},
-            modifier = Modifier
-                .padding(start = 55.dp, top = 40.dp)
-                .background(
-                    color = Color.White,
-                    shape = RoundedCornerShape(20.dp)
-                )
-                .border(
-                    width = 1.dp,
-                    color = Color.Black,
-                    shape = RoundedCornerShape(5.dp)
-                )
-                .width(294.dp)
-                .height(51.dp),
-            placeholder = {Text("Search")},
-            leadingIcon = {
-                Icon(painter = painterResource(id = R.drawable.search_interface_symbol),
-                    contentDescription = "Search icon" ,
-                    modifier = Modifier.size(24.dp))
-            },
-            singleLine = true,//keep the input in single line
-            colors = TextFieldDefaults.colors(
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.White
-            )
-        )
+
         Spacer(modifier = Modifier.height(50.dp))
 
         Text(
