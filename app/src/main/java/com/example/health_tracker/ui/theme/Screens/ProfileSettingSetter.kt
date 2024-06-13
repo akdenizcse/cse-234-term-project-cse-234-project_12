@@ -1,12 +1,9 @@
 package com.example.health_tracker.ui.theme.Screens
 
 
-import android.graphics.Paint.Align
-import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,26 +16,21 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -55,27 +47,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import androidx.navigation.NavController
 import com.example.health_tracker.R
 import com.example.health_tracker.datastore.StoreAge
 import com.example.health_tracker.datastore.StoreGoal
 import com.example.health_tracker.datastore.StoreHeight
-import com.example.health_tracker.datastore.StoreHydration
 import com.example.health_tracker.datastore.StoreName
 import com.example.health_tracker.datastore.StoreSurname
-import com.example.health_tracker.datastore.StoreUsername
 import com.example.health_tracker.datastore.StoreWeight
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
-//@Preview
+@Preview
 @Composable
-fun ProfileSettings(navController: NavController){ // TODO: Remove comment
+fun ProfileSettings(/*navController: NavController*/){ // TODO: Remove comment
     //Popups
-    val usernamePopup = remember { mutableStateOf(false) }
-    val currentUsername = remember { mutableStateOf("") }
     val passwordPopup = remember { mutableStateOf(false) }
     val currentPassword = remember { mutableStateOf("") }
     val namePopup = remember { mutableStateOf(false) }
@@ -96,7 +83,6 @@ fun ProfileSettings(navController: NavController){ // TODO: Remove comment
     //Scope
     val scope = rememberCoroutineScope()
 
-    val usernameStore = StoreUsername(context)
     val nameStore = StoreName(context)
     val surnameStore = StoreSurname(context)
     val ageStore = StoreAge(context)
@@ -145,17 +131,14 @@ fun ProfileSettings(navController: NavController){ // TODO: Remove comment
 
 
     //Conditions
-    if(usernamePopup.value){
-        UsernamePopUp(usernamePopup = usernamePopup, currentUsername = currentUsername,
-            scope = scope, datastore = usernameStore)
-    }
     if (passwordPopup.value){
-        PasswordPopUp(passwordPopup = passwordPopup, currentPassword = currentPassword, scope = scope)
+        PasswordPopUp(passwordPopup = passwordPopup, currentPassword = currentPassword)
     }
     if (namePopup.value){
         NamePopUp(namePopup = namePopup, currentName = currentName,
             scope = scope, datastore = nameStore)
     }
+
     if (surnamePopup.value){
         SurnamePopUp(surnamePopup = surnamePopup, currentSurname = currentSurname,
             scope = scope, datastore = surnameStore)
@@ -214,7 +197,7 @@ fun ProfileSettings(navController: NavController){ // TODO: Remove comment
                     defaultElevation = 8.dp
                 )
             ) {
-                Box(modifier = Modifier
+                Column(modifier = Modifier
                     .fillMaxSize()
                     .background(color = Color(0xFFC8E3ED))
                     ){
@@ -224,35 +207,11 @@ fun ProfileSettings(navController: NavController){ // TODO: Remove comment
 //
 //                    }
                     //Username row
-                    Row(
-                        modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .padding(top = 55.dp, start = 20.dp)
-                            .clickable {
-                                usernamePopup.value = true
-                            }
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.username_column),
-                            style = TextStyle(
-                                color = colorResource(id = R.color.black),
-                                fontSize = 20.sp
-                            )
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Text(
-                            text = currentUsername.value,
-                            style = TextStyle(
-                                color = colorResource(id = R.color.black),
-                                fontSize = 20.sp
-                            )
-                            )
-                    }
                     //Password row
                     Row(
                         modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .padding(top = 130.dp, start = 20.dp)
+
+                            .padding(top = 100.dp, start = 20.dp)
                             .clickable {
                                 passwordPopup.value = true
                             }
@@ -276,8 +235,8 @@ fun ProfileSettings(navController: NavController){ // TODO: Remove comment
                     //Name row
                     Row(
                         modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .padding(top = 205.dp, start = 20.dp)
+
+                            .padding(top = 50.dp, start = 20.dp)
                             .clickable {
                                 namePopup.value = true
                             }
@@ -301,8 +260,8 @@ fun ProfileSettings(navController: NavController){ // TODO: Remove comment
                     //Surname row
                     Row(
                         modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .padding(top = 280.dp, start = 20.dp)
+
+                            .padding(top = 50.dp, start = 20.dp)
                             .clickable {
                                 surnamePopup.value = true
                             }
@@ -326,8 +285,8 @@ fun ProfileSettings(navController: NavController){ // TODO: Remove comment
                     //Age row
                     Row(
                         modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .padding(top = 355.dp, start = 20.dp)
+
+                            .padding(top = 50.dp, start = 20.dp)
                             .clickable {
                                 agePopup.value = true
                             }
@@ -351,8 +310,8 @@ fun ProfileSettings(navController: NavController){ // TODO: Remove comment
                     //Weight row
                     Row(
                         modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .padding(top = 430.dp, start = 20.dp)
+
+                            .padding(top = 50.dp, start = 20.dp)
                             .clickable {
                                 weightPopup.value = true
                             }
@@ -376,8 +335,8 @@ fun ProfileSettings(navController: NavController){ // TODO: Remove comment
                     //Height row
                     Row(
                         modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .padding(top = 505.dp, start = 20.dp)
+
+                            .padding(top = 50.dp, start = 20.dp)
                             .clickable {
                                 heightPopup.value = true
                             }
@@ -401,8 +360,8 @@ fun ProfileSettings(navController: NavController){ // TODO: Remove comment
                     //Goal row
                     Row(
                         modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .padding(top = 580.dp, start = 20.dp)
+
+                            .padding(top = 50.dp, start = 20.dp)
                             .clickable {
                                 goalPopup.value = true
                             }
@@ -425,7 +384,7 @@ fun ProfileSettings(navController: NavController){ // TODO: Remove comment
                     }
                 }
             }
-            Button(onClick = {navController.popBackStack()},// TODO: Remove comment
+            Button(onClick = {/*navController.popBackStack()*/},// TODO: Remove comment
                 colors = ButtonColors(
                     containerColor = Color(0xFFC8E3ED),
                     contentColor = Color.Black,
@@ -458,65 +417,63 @@ fun ProfileSettings(navController: NavController){ // TODO: Remove comment
 }
 
 
-@Composable
-fun UsernamePopUp(
-    usernamePopup: MutableState<Boolean>,
-    currentUsername: MutableState<String>,
-    scope : CoroutineScope,
-    datastore : StoreUsername,
-    ){
-    if(usernamePopup.value){
-        Dialog(onDismissRequest = { usernamePopup.value = false}) {
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth(0.8f)
-                    .background(color = Color.Transparent)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = "Edit Username",
-                        style = MaterialTheme.typography.bodyMedium)
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    TextField(
-                        value = currentUsername.value.toString(),
-                        onValueChange = {
-                            val newValue = it
-                            currentUsername.value = newValue
-                            scope.launch {
-                                datastore.saveUsername(newValue)
-                            }
-
-                        })
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Row(modifier = Modifier){
-                        Button(onClick = { usernamePopup.value = false}) {
-                            Text(text = "Cancel")
-                        }
-
-                        Spacer(modifier = Modifier.size(53.dp))
-
-                        Button(onClick = {usernamePopup.value = false}) {
-                            Text(text = "Save")
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+//@Composable
+//fun UsernamePopUp(
+//    usernamePopup: MutableState<Boolean>,
+//    currentUsername: MutableState<String>,
+//    scope : CoroutineScope,
+//    datastore : StoreUsername,
+//    ){
+//    if(usernamePopup.value){
+//        Dialog(onDismissRequest = { usernamePopup.value = false}) {
+//            Surface(
+//                modifier = Modifier
+//                    .fillMaxWidth(0.8f)
+//                    .background(color = Color.Transparent)
+//            ) {
+//                Column(
+//                    modifier = Modifier
+//                        .padding(16.dp)
+//                ) {
+//                    Text(
+//                        text = "Edit Username",
+//                        style = MaterialTheme.typography.bodyMedium)
+//
+//                    Spacer(modifier = Modifier.height(8.dp))
+//
+//                    TextField(
+//                        value = currentUsername.value.toString(),
+//                        onValueChange = {
+//                            val newValue = it
+//                            currentUsername.value = newValue
+//                            scope.launch {
+//                                datastore.saveUsername(newValue)
+//                            }
+//
+//                        })
+//
+//                    Spacer(modifier = Modifier.height(16.dp))
+//
+//                    Row(modifier = Modifier){
+//                        Button(onClick = { usernamePopup.value = false}) {
+//                            Text(text = "Cancel")
+//                        }
+//
+//                        Spacer(modifier = Modifier.size(53.dp))
+//
+//                        Button(onClick = {usernamePopup.value = false}) {
+//                            Text(text = "Save")
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
 
 @Composable
 fun PasswordPopUp(passwordPopup: MutableState<Boolean>,
-                  currentPassword: MutableState<String>,
-                  scope: CoroutineScope,
-
+                  currentPassword: MutableState<String>
 ){
     if(passwordPopup.value){
         Dialog(onDismissRequest = { passwordPopup.value = false}) {
@@ -568,6 +525,8 @@ fun NamePopUp(namePopup: MutableState<Boolean>,
               datastore: StoreName
  ){
     if(namePopup.value){
+        val newName = remember { mutableStateOf("") }
+        newName.value = currentName.value
         Dialog(onDismissRequest = { namePopup.value = false}) {
             Surface(
                 modifier = Modifier
@@ -585,13 +544,10 @@ fun NamePopUp(namePopup: MutableState<Boolean>,
                     Spacer(modifier = Modifier.height(8.dp))
 
                     TextField(
-                        value = currentName.value.toString(),
+                        value = newName.value,
                         onValueChange = {
                             val newValue = it
-                            currentName.value = newValue
-                            scope.launch {
-                                datastore.saveName(newValue)
-                            }
+                            newName.value = newValue
                         })
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -603,7 +559,13 @@ fun NamePopUp(namePopup: MutableState<Boolean>,
 
                         Spacer(modifier = Modifier.size(53.dp))
 
-                        Button(onClick = {namePopup.value = false}) {
+                        Button(onClick = {
+                            currentName.value = newName.value
+                            scope.launch{
+                                datastore.saveName(newName.value)
+                            }
+                            namePopup.value = false}
+                        ) {
                             Text(text = "Save")
                         }
                     }
@@ -619,6 +581,8 @@ fun SurnamePopUp(surnamePopup: MutableState<Boolean>,
                  scope: CoroutineScope,
                  datastore: StoreSurname
 ){
+    val newSurname = remember { mutableStateOf("") }
+    newSurname.value = currentSurname.value
     if(surnamePopup.value){
         Dialog(onDismissRequest = { surnamePopup.value = false}) {
             Surface(
@@ -637,13 +601,10 @@ fun SurnamePopUp(surnamePopup: MutableState<Boolean>,
                     Spacer(modifier = Modifier.height(8.dp))
 
                     TextField(
-                        value = currentSurname.value.toString(),
+                        value = newSurname.value.toString(),
                         onValueChange = {
                             val newValue = it
-                            currentSurname.value = newValue
-                            scope.launch {
-                                datastore.saveSurname(newValue)
-                            }
+                            newSurname.value = newValue
                         })
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -655,7 +616,13 @@ fun SurnamePopUp(surnamePopup: MutableState<Boolean>,
 
                         Spacer(modifier = Modifier.size(53.dp))
 
-                        Button(onClick = {surnamePopup.value = false}) {
+                        Button(onClick = {
+                            currentSurname.value = newSurname.value
+                            scope.launch {
+                                datastore.saveSurname(newSurname.value)
+                            }
+                            surnamePopup.value = false}
+                        ) {
                             Text(text = "Save")
                         }
                     }
@@ -672,6 +639,10 @@ fun AgePopUp(
     scope: CoroutineScope,
     datastore: StoreAge
 ){
+    val newAge = remember {
+        mutableStateOf(0)
+    }
+    newAge.value = currentAge.value
     if(agePopup.value){
         Dialog(onDismissRequest = { agePopup.value = false}) {
             Surface(
@@ -690,13 +661,10 @@ fun AgePopUp(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     TextField(
-                            value = currentAge.value.toString(),
+                            value = newAge.value.toString(),
                             onValueChange = {
                                 val newValue = it.toIntOrNull() ?: 0
-                                currentAge.value = newValue
-                                scope.launch {
-                                    datastore.saveAge(newValue)
-                                }
+                                newAge.value = newValue
                             },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
 
@@ -709,7 +677,13 @@ fun AgePopUp(
 
                         Spacer(modifier = Modifier.size(53.dp))
 
-                        Button(onClick = {agePopup.value = false}) {
+                        Button(onClick = {
+                            currentAge.value = newAge.value
+                            scope.launch {
+                                datastore.saveAge(newAge.value)
+                            }
+                            agePopup.value = false
+                        }) {
                             Text(text = "Save")
                         }
                     }
@@ -726,6 +700,10 @@ fun WeightPopUp(
     scope: CoroutineScope,
     datastore: StoreWeight
 ){
+
+    val newWeight = remember {
+        mutableStateOf(0.0)}
+    newWeight.value = currentWeight.value
     if(weightPopup.value){
         Dialog(onDismissRequest = { weightPopup.value = false}) {
             Surface(
@@ -744,13 +722,10 @@ fun WeightPopUp(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     TextField(
-                        value = currentWeight.value.toString(),
+                        value = newWeight.value.toString(),
                         onValueChange = {
                             val newValue = it.toDoubleOrNull() ?: 0.0
-                            currentWeight.value = newValue
-                            scope.launch {
-                                datastore.saveWeight(newValue)
-                            }
+                            newWeight.value = newValue
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
 
@@ -763,7 +738,13 @@ fun WeightPopUp(
 
                         Spacer(modifier = Modifier.size(53.dp))
 
-                        Button(onClick = {weightPopup.value = false}) {
+                        Button(onClick = {
+                            currentWeight.value = newWeight.value
+                            scope.launch {
+                                datastore.saveWeight(newWeight.value)
+                            }
+                            weightPopup.value = false
+                        }) {
                             Text(text = "Save")
                         }
                     }
@@ -780,6 +761,9 @@ fun HeightPopUp(
     scope: CoroutineScope,
     datastore: StoreHeight
 ){
+    val newHeight = remember {
+        mutableStateOf(0)}
+    newHeight.value = currentHeight.value
     if(heightPopup.value){
         Dialog(onDismissRequest = { heightPopup.value = false}) {
             Surface(
@@ -801,10 +785,7 @@ fun HeightPopUp(
                         value = currentHeight.value.toString(),
                         onValueChange = {
                             val newValue = it.toIntOrNull() ?: 0
-                            currentHeight.value = newValue
-                            scope.launch {
-                                datastore.saveHeight(newValue)
-                            }
+                            newHeight.value = newValue
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
 
@@ -817,7 +798,13 @@ fun HeightPopUp(
 
                         Spacer(modifier = Modifier.size(53.dp))
 
-                        Button(onClick = {heightPopup.value = false}) {
+                        Button(onClick = {
+                            currentHeight.value = newHeight.value
+                            scope.launch {
+                                datastore.saveHeight(newHeight.value)
+                            }
+                            heightPopup.value = false
+                        }) {
                             Text(text = "Save")
                         }
                     }
@@ -834,6 +821,9 @@ fun GoalPopUp(
     scope: CoroutineScope,
     datastore: StoreGoal
 ){
+    val newGoal = remember {
+        mutableStateOf(0.0)}
+    newGoal.value = currentGoal.value
     if(goalPopup.value){
         Dialog(onDismissRequest = { goalPopup.value = false}) {
             Surface(
@@ -852,13 +842,10 @@ fun GoalPopUp(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     TextField(
-                        value = currentGoal.value.toString(),
+                        value = newGoal.value.toString(),
                         onValueChange = {
                             val newValue = it.toDoubleOrNull() ?: 0.0
-                            currentGoal.value = newValue
-                            scope.launch {
-                                datastore.saveGoal(newValue)
-                            }
+                            newGoal.value = newValue
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
 
@@ -871,7 +858,13 @@ fun GoalPopUp(
 
                         Spacer(modifier = Modifier.size(53.dp))
 
-                        Button(onClick = {goalPopup.value = false}) {
+                        Button(onClick = {
+                            currentGoal.value = newGoal.value
+                            scope.launch {
+                                datastore.saveGoal(newGoal.value)
+                            }
+                            goalPopup.value = false
+                        }) {
                             Text(text = "Save")
                         }
                     }

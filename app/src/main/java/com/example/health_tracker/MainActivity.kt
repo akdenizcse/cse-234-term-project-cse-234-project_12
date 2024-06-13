@@ -50,71 +50,71 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             Health_TrackerTheme {
-
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    var hasLocationPermission by remember {
-                        mutableStateOf(checkForPermission(this))
-                    }
-                    var hasInternetPermission by remember {
-                        mutableStateOf(isInternetAvailable(this))
-                    }
-
-                    if (hasLocationPermission && hasInternetPermission) {
-                        val navController = rememberNavController()
-                        val backStackEntry by navController.currentBackStackEntryAsState()
-                        val currentScreen = HealthTrackerScreen.valueOf(
-                            backStackEntry?.destination?.route ?: HealthTrackerScreen.Login.name
-                        )
-
-                        NavHost(
-                            navController = navController,
-                            startDestination = HealthTrackerScreen.Login.name
-                        ) {
-                            composable(HealthTrackerScreen.Login.name) {
-                                LoginForm(navController = navController)
-                            }
-
-                            composable(HealthTrackerScreen.SignUp.name) {
-                                SignUp(navController = navController)
-                            }
-
-                            composable(HealthTrackerScreen.ForgetPassword.name) {
-                                ForgotPassword(navController = navController)
-                            }
-
-                            composable(HealthTrackerScreen.Main.name) {
-                                MainPart(context = this@MainActivity, navController = navController)
-                            }
-
-                            composable(HealthTrackerScreen.ActivityHistory.name) {
-                                ActivityHistoryScreen(navController = navController)
-                            }
-
-                            composable(HealthTrackerScreen.AddActivity.name) {
-                                AddActivityScreen(navController = navController)
-                            }
-                            composable(HealthTrackerScreen.ProfileSetting.name) {
-                                ProfileSettings(navController = navController) // TODO: remove comment
-                            }
-                        }
-                    } else {
-                        if (hasInternetPermission){
-                            LocationPermissionScreen {
-                                hasLocationPermission = true
-                            }
-                        }
-                        InternetConnectionScreen(this){
-                            hasInternetPermission = true
-                        }
-
-
-                    }
-
-
-                }
+                ProfileSettings()
+//                Surface(
+//                    modifier = Modifier.fillMaxSize(),
+//                    color = MaterialTheme.colorScheme.background
+//                ) {
+//                    var hasLocationPermission by remember {
+//                        mutableStateOf(checkForPermission(this))
+//                    }
+//                    var hasInternetPermission by remember {
+//                        mutableStateOf(isInternetAvailable(this))
+//                    }
+//
+//                    if (hasLocationPermission && hasInternetPermission) {
+//                        val navController = rememberNavController()
+//                        val backStackEntry by navController.currentBackStackEntryAsState()
+//                        val currentScreen = HealthTrackerScreen.valueOf(
+//                            backStackEntry?.destination?.route ?: HealthTrackerScreen.Login.name
+//                        )
+//
+//                        NavHost(
+//                            navController = navController,
+//                            startDestination = HealthTrackerScreen.Login.name
+//                        ) {
+//                            composable(HealthTrackerScreen.Login.name) {
+//                                LoginForm(navController = navController)
+//                            }
+//
+//                            composable(HealthTrackerScreen.SignUp.name) {
+//                                SignUp(navController = navController)
+//                            }
+//
+//                            composable(HealthTrackerScreen.ForgetPassword.name) {
+//                                ForgotPassword(navController = navController)
+//                            }
+//
+//                            composable(HealthTrackerScreen.Main.name) {
+//                                MainPart(context = this@MainActivity, navController = navController)
+//                            }
+//
+//                            composable(HealthTrackerScreen.ActivityHistory.name) {
+//                                ActivityHistoryScreen(navController = navController)
+//                            }
+//
+//                            composable(HealthTrackerScreen.AddActivity.name) {
+//                                AddActivityScreen(navController = navController)
+//                            }
+//                            composable(HealthTrackerScreen.ProfileSetting.name) {
+//                                ProfileSettings(navController = navController) // TODO: remove comment
+//                            }
+//                        }
+//                    } else {
+//                        if (hasInternetPermission){
+//                            LocationPermissionScreen {
+//                                hasLocationPermission = true
+//                            }
+//                        }
+//                        InternetConnectionScreen(this){
+//                            hasInternetPermission = true
+//                        }
+//
+//
+//                    }
+//
+//
+//                }
             }
         }
     }
