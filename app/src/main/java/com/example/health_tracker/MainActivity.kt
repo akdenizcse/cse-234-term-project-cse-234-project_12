@@ -27,6 +27,7 @@ import com.example.health_tracker.ui.theme.Screens.ActivitiesScreen
 import com.example.health_tracker.ui.theme.Screens.ActivityHistoryScreen
 import com.example.health_tracker.ui.theme.Screens.AddActivityScreen
 import com.example.health_tracker.ui.theme.Screens.ForgotPassword
+import com.example.health_tracker.ui.theme.Screens.HealthSection
 import com.example.health_tracker.ui.theme.Screens.InternetConnectionScreen
 import com.example.health_tracker.ui.theme.Screens.LocationPermissionScreen
 import com.example.health_tracker.ui.theme.Screens.LoginForm
@@ -54,6 +55,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    HealthSection()
                     var hasLocationPermission by remember {
                         mutableStateOf(checkForPermission(this))
                     }
@@ -85,7 +87,10 @@ class MainActivity : ComponentActivity() {
                             }
 
                             composable(HealthTrackerScreen.Main.name) {
-                                MainPart(context = this@MainActivity, navController = navController)
+                                MainPart(
+                                    context = this@MainActivity,
+                                    navController = navController
+                                )
                             }
 
                             composable(HealthTrackerScreen.ActivityHistory.name) {
@@ -100,12 +105,12 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     } else {
-                        if (hasInternetPermission){
+                        if (hasInternetPermission) {
                             LocationPermissionScreen {
                                 hasLocationPermission = true
                             }
                         }
-                        InternetConnectionScreen(this){
+                        InternetConnectionScreen(this) {
                             hasInternetPermission = true
                         }
 
@@ -117,7 +122,9 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
 }
+
+
+
 
 

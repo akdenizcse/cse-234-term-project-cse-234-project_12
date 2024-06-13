@@ -488,7 +488,7 @@ fun TrackerSection(context: Context) {
                             modifier = Modifier.size(41.dp)
                         )
                         Text(
-                            text = "${currentRelaxing.value/60}h ${currentRelaxing.value%60}m ",
+                            text = "${currentRelaxing.value/60}m",
                             style = TextStyle(
                                 fontSize = 25.sp,
                                 lineHeight = 20.sp,
