@@ -32,16 +32,19 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -59,6 +62,15 @@ import androidx.core.graphics.toColor
 import androidx.navigation.NavController
 import com.example.health_tracker.HealthTrackerScreen
 import com.example.health_tracker.R
+import com.example.health_tracker.datastore.StoreAge
+import com.example.health_tracker.datastore.StoreGoal
+import com.example.health_tracker.datastore.StoreHeight
+import com.example.health_tracker.datastore.StoreName
+import com.example.health_tracker.datastore.StoreSurname
+import com.example.health_tracker.datastore.StoreUsername
+import com.example.health_tracker.datastore.StoreWeight
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 
 @Preview
@@ -74,13 +86,72 @@ fun ProfileSettings(/*navController: NavController*/){
     val surnamePopup = remember { mutableStateOf(false) }
     val currentSurname = remember { mutableStateOf("") }
     val agePopup = remember { mutableStateOf(false) }
-    val currentAge = remember { mutableStateOf("") }
+    val currentAge = remember { mutableStateOf( 0 ) }
     val weightPopup = remember { mutableStateOf(false) }
-    val currentWeight = remember { mutableStateOf("") }
+    val currentWeight = remember { mutableStateOf(0.0) }
     val heightPopup = remember { mutableStateOf(false) }
-    val currentHeight = remember { mutableStateOf("") }
+    val currentHeight = remember { mutableStateOf(0) }
     val goalPopup = remember { mutableStateOf(false) }
-    val currentGoal = remember { mutableStateOf("") }
+    val currentGoal = remember { mutableStateOf(0.0) }
+
+    //Context
+    val context = LocalContext.current
+    //scope
+    val scope = rememberCoroutineScope()
+
+    val usernameStore = StoreUsername(context)
+    val nameStore = StoreName(context)
+    val surnameStore = StoreSurname(context)
+    val ageStore = StoreAge(context)
+    val weightStore = StoreWeight(context)
+    val heightStore = StoreHeight(context)
+    val goalStore = StoreGoal(context)
+
+
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = usernameStore.getUsername
+            currentUsername.value = initialValue.first()!!
+        }
+    }
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = nameStore.getName
+            currentName.value = initialValue.first()!!
+        }
+    }
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = surnameStore.getSurname
+            currentSurname.value = initialValue.first()!!
+        }
+    }
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = ageStore.getAge
+            currentAge.value = initialValue.first()!!
+        }
+    }
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = weightStore.getWeight
+            currentWeight.value = initialValue.first()!!
+        }
+    }
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = heightStore.getHeight
+            currentHeight.value = initialValue.first()!!
+        }
+    }
+    LaunchedEffect(Unit) {
+        launch {
+            val initialValue = goalStore.getGoal
+            currentGoal.value = initialValue.first()!!
+        }
+    }
+
+
     //Conditions
     if(usernamePopup.value){
         UsernamePopUp(usernamePopup = usernamePopup, currentUsername = currentUsername)
@@ -570,7 +641,10 @@ fun SurnamePopUp(surnamePopup: MutableState<Boolean>, currentSurname: MutableSta
 }
 
 @Composable
-fun AgePopUp(agePopup: MutableState<Boolean>, currentAge: MutableState<String>){
+fun AgePopUp(
+    agePopup: MutableState<Boolean>,
+    currentAge: MutableState<Int>
+){
     if(agePopup.value){
         Dialog(onDismissRequest = { agePopup.value = false}) {
             Surface(
@@ -591,7 +665,7 @@ fun AgePopUp(agePopup: MutableState<Boolean>, currentAge: MutableState<String>){
                     TextField(
                             value = currentAge.value.toString(),
                             onValueChange = {
-                                val newValue = it
+                                val newValue = it.toIntOrNull() ?: 0
                                 currentAge.value = newValue
                             },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
@@ -616,7 +690,10 @@ fun AgePopUp(agePopup: MutableState<Boolean>, currentAge: MutableState<String>){
 }
 
 @Composable
-fun WeightPopUp(weightPopup: MutableState<Boolean>, currentWeight: MutableState<String>){
+fun WeightPopUp(
+    weightPopup: MutableState<Boolean>,
+    currentWeight: MutableState<Double>
+){
     if(weightPopup.value){
         Dialog(onDismissRequest = { weightPopup.value = false}) {
             Surface(
@@ -637,7 +714,7 @@ fun WeightPopUp(weightPopup: MutableState<Boolean>, currentWeight: MutableState<
                     TextField(
                         value = currentWeight.value.toString(),
                         onValueChange = {
-                            val newValue = it
+                            val newValue = it.toDoubleOrNull() ?: 0.0
                             currentWeight.value = newValue
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
@@ -662,7 +739,10 @@ fun WeightPopUp(weightPopup: MutableState<Boolean>, currentWeight: MutableState<
 }
 
 @Composable
-fun HeightPopUp(heightPopup: MutableState<Boolean>, currentHeight: MutableState<String>){
+fun HeightPopUp(
+    heightPopup: MutableState<Boolean>,
+    currentHeight: MutableState<Int>
+){
     if(heightPopup.value){
         Dialog(onDismissRequest = { heightPopup.value = false}) {
             Surface(
@@ -683,7 +763,7 @@ fun HeightPopUp(heightPopup: MutableState<Boolean>, currentHeight: MutableState<
                     TextField(
                         value = currentHeight.value.toString(),
                         onValueChange = {
-                            val newValue = it
+                            val newValue = it.toIntOrNull() ?: 0
                             currentHeight.value = newValue
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
@@ -708,7 +788,10 @@ fun HeightPopUp(heightPopup: MutableState<Boolean>, currentHeight: MutableState<
 }
 
 @Composable
-fun GoalPopUp(goalPopup: MutableState<Boolean>, currentGoal: MutableState<String>){
+fun GoalPopUp(
+    goalPopup: MutableState<Boolean>,
+    currentGoal: MutableState<Double>
+){
     if(goalPopup.value){
         Dialog(onDismissRequest = { goalPopup.value = false}) {
             Surface(
@@ -729,7 +812,7 @@ fun GoalPopUp(goalPopup: MutableState<Boolean>, currentGoal: MutableState<String
                     TextField(
                         value = currentGoal.value.toString(),
                         onValueChange = {
-                            val newValue = it
+                            val newValue = it.toDoubleOrNull() ?: 0.0
                             currentGoal.value = newValue
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))

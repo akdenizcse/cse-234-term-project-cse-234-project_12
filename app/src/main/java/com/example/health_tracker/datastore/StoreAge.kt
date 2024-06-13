@@ -17,12 +17,12 @@ class StoreAge(private val context: Context) {
     }
 
 
-    val getSteps : Flow<Int?> = context.dataStore.data
+    val getAge : Flow<Int?> = context.dataStore.data
         .map { preferences ->
             preferences[AGE] ?: 0
         }
 
-    suspend fun saveSteps(value : Int) {
+    suspend fun saveAge(value : Int) {
         context.dataStore.edit { preferences ->
             preferences[AGE] = value
         }

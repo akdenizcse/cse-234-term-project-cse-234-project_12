@@ -3,6 +3,7 @@ package com.example.health_tracker.datastore
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -13,16 +14,16 @@ class StoreGoal(private val context: Context) {
 
     companion object{
         private val Context.dataStore : DataStore<Preferences> by preferencesDataStore("Goal")
-        val GOAL   = intPreferencesKey("Goal")
+        val GOAL   = doublePreferencesKey("Goal")
     }
 
 
-    val getSteps : Flow<Int?> = context.dataStore.data
+    val getGoal : Flow<Double?> = context.dataStore.data
         .map { preferences ->
-            preferences[GOAL] ?: 0
+            preferences[GOAL] ?: 0.0
         }
 
-    suspend fun saveSteps(value : Int) {
+    suspend fun saveGoal(value : Double) {
         context.dataStore.edit { preferences ->
             preferences[GOAL] = value
         }
