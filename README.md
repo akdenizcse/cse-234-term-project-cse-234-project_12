@@ -40,33 +40,33 @@ The app consists of seven core sections, each designed to provide a specific use
 ## Screens:
 ### Login Page
 
-<img src="https://github.com/IsmailT0/obsidian/assets/116907755/6de125d1-0907-4088-8d3b-f18ded94132f" height="500">
+<img src="https://github.com/akdenizcse/cse-234-term-project-cse-234-project_12/assets/116907755/4c4cccff-dbd0-4f96-8daa-91ca0a5a6206" height="500">
 
 This is the login page for our application. If you already have an account, enter your email address and password in the designated fields. If you're new here, you can create a new account by clicking the "Sign Up" button. Forgot your password? No problem!
 Click the "Forgot Password" button to retrieve it. For any further assistance, you can reach us by clicking the "Contact Us" button.
 ### Sign Up Page
 
-<img src="https://github.com/IsmailT0/obsidian/assets/116907755/0b77382e-83a6-4404-9f71-3271e21b8dbb" height="500">
+<img src="https://github.com/akdenizcse/cse-234-term-project-cse-234-project_12/assets/116907755/0a68593d-6746-4b37-bbdf-50dd8f764dda" height="500">
 
 This is the sign-up page. Create a new account by entering your email address and choosing a password. Already have an account? Simply click the "Log In" button to access it. For any further assistance, you can reach us by clicking the "Contact Us" button.
 ### Forgot Password
 
-<img src="https://github.com/IsmailT0/obsidian/assets/116907755/7b60570a-76ef-404f-bfc3-ffc088c67b91" height="500">
+<img src="https://github.com/akdenizcse/cse-234-term-project-cse-234-project_12/assets/116907755/ec6a1035-ac87-4853-88fc-fc52f65d2bed" height="500">
 
 This is the Forgot Password screen. If you've forgotten your password, simply enter your email address here. We'll send a reset email to your registered email account. If you remember your password, you can always head back to the login page by clicking the "Log In" button.
 ### Activities Page 
 
-<img src="https://github.com/IsmailT0/obsidian/assets/116907755/497d8903-979c-48e8-92d5-e034d56356d0" height="500">
+<img src="https://github.com/akdenizcse/cse-234-term-project-cse-234-project_12/assets/116907755/d6ce0833-0916-4207-a52e-21d52ebba86b" height="500">
 
 This is the Activities Page. Here, you can view your currently active activities, as well as see a history of your completed activities. To create a new activity, simply click the "plus" button.
 ### Activity History Page
 
-<img src="https://github.com/IsmailT0/obsidian/assets/116907755/90a18da1-cbc8-4d5e-8495-e0e393b20d1c" height="500">
+<img src="https://github.com/akdenizcse/cse-234-term-project-cse-234-project_12/assets/116907755/b0f78e19-84c8-4cdd-9354-9f01fbb3fcf7" height="500">
 
 This is your Activity History screen. Here, you can view your past activities. You can navigate back to the previous screen by clicking the "back" button.
 ### Add Activity Page
 
-<img src="https://github.com/IsmailT0/obsidian/assets/116907755/09c227a1-dabd-4284-8108-60dbdbe0abee" height="500">
+<img src="https://github.com/akdenizcse/cse-234-term-project-cse-234-project_12/assets/116907755/5324bd9c-3dbb-48eb-9d12-aee2791b8a03" height="500">
 
 This is the Add Activity screen. Here, you can:
 - **Name your activity:** Choose a descriptive title for your activity.
@@ -74,7 +74,7 @@ This is the Add Activity screen. Here, you can:
 - **Choose the activity type:** Select the specific activity you'll be doing.
 ### Tracker Page
 
-<img src="https://github.com/IsmailT0/obsidian/assets/116907755/bcb581e9-1336-4f44-be1f-f306f7911f56" height="500">
+<img src="https://github.com/akdenizcse/cse-234-term-project-cse-234-project_12/assets/116907755/94458bbf-934a-4acd-9a4b-76c56d1b5076" height="500">
 
 This is the Tracker Page. Here, you can view your progress in several areas:
 - **Activity Route:** Track your activity path on a map.
@@ -85,7 +85,7 @@ This is the Tracker Page. Here, you can view your progress in several areas:
 - **Meditation Time:** Monitor the amount of time you spend meditating.
 ### Health Page
 
-<img src="https://github.com/IsmailT0/obsidian/assets/116907755/02e699ec-fea1-48d0-b9fc-fe8fdab3eb48" height="500">
+<img src="https://github.com/akdenizcse/cse-234-term-project-cse-234-project_12/assets/116907755/e26ec2c2-5e0f-4368-99f9-982d040734b5" height="500">
 
 This is the Health Page. While the Tracker Page displays your current progress, this page allows you to manually input specific health data for tracking purposes. You can enter values for:
 - **Medication Schedule:** Add upcoming medication reminders.
@@ -95,7 +95,7 @@ This is the Health Page. While the Tracker Page displays your current progress, 
 - **Meditation Time:** Log the amount of time you spend meditating.
 ### Profile Page
 
-<img src="https://github.com/IsmailT0/obsidian/assets/116907755/8e4067a3-e66f-406e-a893-d12c4016f825" height="500">
+<img src="https://github.com/akdenizcse/cse-234-term-project-cse-234-project_12/assets/116907755/a45daa9d-8c54-4cbc-86db-ab36f9493ea5" height="500">
 
 This is the Profile Page. It comprises two sections:
 
@@ -108,8 +108,7 @@ This is the Profile Page. It comprises two sections:
     - Log out of your account.
 ### Profile Settings Page
 
-<img src="https://github.com/IsmailT0/obsidian/assets/116907755/288543af-b99c-4b0c-8658-df4d82f6f0e3" height="500">
-
+<img src="https://github.com/akdenizcse/cse-234-term-project-cse-234-project_12/assets/116907755/8b7e9049-425f-4dcf-8375-0944bcd638ce" height="500">
 
 This is the Profile Settings page. Here, users can edit their personal information.
 
