@@ -14,11 +14,11 @@ This project prioritizes a user-centric interface and reliable tracking features
 ## Task Distribution
 
 - #### [@IsmailT0](https://github.com/IsmailT0) 
-    - 
+    - DataStore, navigation, input output for data store, bottom navigation bar, user interface for tracker pages
 - #### [@CanDundarCSE](https://github.com/CanDundarCSE) 
-    - 
+    - User Interface and ther functions for activity and profile pages
 - #### [@EmreTopcu04](https://github.com/EmreTopcu04) 
-    - 
+    - Authentication, Google Mapsa, local database, user interface for health, login, signup and forgot password pages, contact us and share intents
 
   
 ## App Structure:
