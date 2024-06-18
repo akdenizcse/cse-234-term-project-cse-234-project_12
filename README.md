@@ -18,7 +18,7 @@ This project prioritizes a user-centric interface and reliable tracking features
 - #### [@CanDundarCSE](https://github.com/CanDundarCSE) 
     - User Interface and ther functions for activity and profile pages
 - #### [@EmreTopcu04](https://github.com/EmreTopcu04) 
-    - Authentication, Google Mapsa, local database, user interface for health, login, signup and forgot password pages, contact us and share intents
+    - Authentication, Google Maps, local database, user interface for health, login, signup and forgot password pages, contact us and share intents
 
   
 ## App Structure:
